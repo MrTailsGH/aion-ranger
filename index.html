@@ -145,6 +145,20 @@ li.on .chk{background:var(--good);border-color:var(--good)} li.on .chk svg{opaci
 li.on b{text-decoration:line-through;color:var(--muted)}
 ul.plan small{display:block;color:var(--muted);font-size:13px}
 ul.plan .src{display:block;font-size:11px;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+.gchips{display:flex;flex-wrap:wrap;gap:8px}
+.gchips button{border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:99px;padding:6px 14px;cursor:pointer;font-weight:500}
+.gchips button[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft);color:var(--gold)}
+.gchips button small{font-family:var(--f-num);font-size:11px;color:var(--muted);margin-left:6px}
+table.gn{width:100%;border-collapse:collapse;font-size:14px}
+table.gn th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--line)}
+table.gn td{padding:9px 10px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+table.gn td.sl{font-family:var(--f-num);color:var(--gold);white-space:nowrap;width:56px}
+table.gn tr.key td{background:var(--gold-soft)}
+table.gn tr.key td:first-child{border-radius:8px 0 0 8px} table.gn tr.key td:last-child{border-radius:0 8px 8px 0}
+.diff{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:0 6px;border-radius:99px;background:var(--mid-soft);color:var(--mid);margin-left:6px;vertical-align:1px}
+.gbox{text-align:center}
+.gbox input{width:20px;height:20px;accent-color:var(--good);cursor:pointer}
+.matrix td,.matrix th{text-align:left}
 footer{font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 footer a{color:var(--aether)}
 .empty{padding:28px 16px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:12px}
@@ -171,6 +185,7 @@ footer a{color:var(--aether)}
     <button type="button" role="tab" data-tab="gear">Экипировка</button>
     <button type="button" role="tab" data-tab="skills">Skills и Stigma</button>
     <button type="button" role="tab" data-tab="stats">Arcana и статы</button>
+    <button type="button" role="tab" data-tab="pets">Pets / Genus</button>
     <button type="button" role="tab" data-tab="plan">План</button>
   </nav>
 
@@ -178,6 +193,7 @@ footer a{color:var(--aether)}
   <div id="pane-gear" class="pane" hidden></div>
   <div id="pane-skills" class="pane" hidden></div>
   <div id="pane-stats" class="pane" hidden></div>
+  <div id="pane-pets" class="pane" hidden></div>
   <div id="pane-plan" class="pane" hidden></div>
 
   <footer>
@@ -485,8 +501,58 @@ function renderPlan(R){
     li.onclick=tog; li.onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); tog(); } }; });
 }
 
+/* ================= pets / genus ================= */
+const GJ_ATK="Max Attack > Attack Bonus ≥ Boss Attack ≥ PvE Attack", GJ_HP="HP Increase ≥ Boss Defense", GJ_ACC="Accuracy Bonus ≥ Crit (до капа) > Power Shard Bonus";
+const GENUS={
+  Cogni:{s4J:"Damage Boost = Critical Damage Boost", s4A:"PvE Damage Boost", s7A:"PvE Damage Tolerance", pet:"Коллекция: +1 Might за питомца (до 3 ур.)", d4:"отличается", d7:"отличается"},
+  Fera:{s4J:"Damage Boost = Weapon Damage Boost", s4A:"Weapon Damage Boost", s7A:"PvE Damage Tolerance", pet:"", d4:"частично", d7:"отличается"},
+  Natura:{s4J:"PvE Damage Boost > Multi-hit Chance = Perfect Chance", s4A:"PvE Damage Boost", s7A:"PvE Damage Tolerance", pet:"Коллекция: +1 Precision за питомца (до 3 ур.)", d7:"отличается"},
+  Varian:{s4J:"Front Attack % = Back Attack % ≥ PvE Damage Boost", s4A:"PvE Damage Boost / Front / Back Damage", s7A:"PvE Damage Tolerance", pet:"Allyria (09.09): разработчики обещали ослабить Front Damage", d4:"другой порядок", d7:"отличается"},
+  Special:{s4J:"Double Chance > Damage Boost", s4A:"Double Chance", s7A:"Damage Tolerance", pet:"Rainbow Crystals — только сюда (Allyria)"}
+};
+function genusRows(g){ const G=GENUS[g];
+  return [
+    [1,GJ_ATK,"Max Attack"],[2,GJ_HP,"HP %"],[3,GJ_ACC,"Accuracy / Crit"],[4,G.s4J,G.s4A],[5,GJ_ATK,"Max Attack"],
+    [6,GJ_ACC,"Accuracy / Crit"],[7,"Damage Tolerance",G.s7A],[8,"HP Increase","HP %"],[9,GJ_ACC,"Accuracy / Crit"]];
+}
+const GKEY="ranger-genus"; let GCUR="Special", GHAVE={};
+try{ GHAVE=JSON.parse(localStorage.getItem(GKEY)||"{}")||{}; }catch(e){}
+try{ GCUR=localStorage.getItem(GKEY+"-tab")||"Special"; }catch(e){}
+
+function renderPets(){
+  const names=Object.keys(GENUS);
+  const done=g=>genusRows(g).filter(r=>GHAVE[g+r[0]]).length;
+  const rows=genusRows(GCUR).map(([n,j,a])=>{ const d=n===4?GENUS[GCUR].d4:n===7?GENUS[GCUR].d7:null; const id=GCUR+n;
+    return `<tr class="${n===4||n===7?"key":""}"><td class="sl">Slot ${n}${n===4?" ★":n===7?" ☆":""}</td><td>${esc(j)}</td><td>${esc(a)}${d?`<span class="diff">${d}</span>`:""}</td><td class="gbox"><input type="checkbox" id="g-${id}" data-g="${id}" ${GHAVE[id]?"checked":""} aria-label="Slot ${n}: нужный стат уже есть"></td></tr>`; }).join("");
+  const matrix=names.map(g=>`<tr><td><b>${g}</b></td><td>${esc(GENUS[g].s4J)}</td><td>${esc(GENUS[g].s4A)}${GENUS[g].d4?`<span class="diff">${GENUS[g].d4}</span>`:""}</td></tr>`).join("");
+  $("#pane-pets").innerHTML=`
+  <section class="box"><h2>Genus Insight: что ролить</h2>
+    <p class="lead">Слева — таблица Johnpal (Ranger Stat Priorities), справа — гайд Allyria. Отметьте слоты, где нужный стат уже выпал: отметки хранятся в этом браузере. ★ — главный слот, ☆ — второй по важности (Allyria).</p>
+    <div class="gchips">${names.map(g=>`<button type="button" data-gen="${g}" aria-pressed="${g===GCUR}">${g}<small>${done(g)}/9</small></button>`).join("")}</div>
+    ${GENUS[GCUR].pet?`<p class="lead">${esc(GENUS[GCUR].pet)}</p>`:""}
+    <div class="tw"><table class="gn"><tr><th>Слот</th><th>Johnpal</th><th>Allyria</th><th style="text-align:center">Есть</th></tr>${rows}</table></div>
+  </section>
+  <section class="box"><h2>Slot 4 во всех досках</h2><p class="lead">Самый важный слот: оба автора начинают с него. В Slot 7 Johnpal ставит Damage Tolerance, Allyria — PvE Damage Tolerance (кроме Special).</p>
+    <div class="tw"><table class="gn matrix"><tr><th>Genus</th><th>Johnpal</th><th>Allyria</th></tr>${matrix}</table></div></section>
+  <section class="box"><h2>Правила роллинга</h2>
+    <ul class="dont" style="margin:0;padding:0;display:flex;flex-direction:column;gap:8px;list-style:none">
+      <li><b>Порядок:</b> сначала Slot 4, потом Slot 7; HP% — по желанию, можно сразу идти в Attack и Accuracy/Crit <small class="muted">Allyria</small></li>
+      <li><b>Не фиксировать (lock) до 10 уровня</b> — кроме слотов 4 и 7, если выпал жёлтый/оранжевый ролл ~80%+ <small class="muted">Allyria</small></li>
+      <li><b>Slot 4 — с 9 уровня доски</b>, все доски довести до 10 ради титула <small class="muted">Johnpal</small></li>
+      <li><b>Цвет ролла для урона:</b> Red > Orange > Yellow > Blue <small class="muted">Johnpal</small></li>
+      <li><b>Первый пресет:</b> 75–80% от максимума достаточно; 90–95% — только для второго пресета, иначе уйдут тысячи кристаллов <small class="muted">Allyria</small></li>
+      <li><b>Power Shard Bonus</b> — нормальный временный вариант в слотах 3/6/9; позже в контенте нужно больше Accuracy/Crit <small class="muted">Johnpal</small></li>
+      <li><b>Max Attack лучше Attack</b>: масштабируется от Weapon Damage Boost <small class="muted">Allyria</small></li>
+      <li><b>Rainbow Crystals — только в Special</b> <small class="muted">Allyria</small></li>
+      <li><b>Порядок прокачки досок:</b> Cogni > Fera > Natura > Varian <small class="muted">Allyria</small> · питомцы Cogni и Natura до 3 ур. <small class="muted">Johnpal</small></li>
+      <li><b>Потолок крита 50%:</b> 10 Crit = 1%, цель 1000–1200 с учётом +300 от Bow of Blessing <small class="muted">Johnpal</small></li>
+    </ul></section>`;
+  $("#pane-pets").querySelectorAll("[data-gen]").forEach(b=>b.onclick=()=>{ GCUR=b.dataset.gen; try{localStorage.setItem(GKEY+"-tab",GCUR);}catch(e){} renderPets(); });
+  $("#pane-pets").querySelectorAll("input[data-g]").forEach(i=>i.onchange=()=>{ GHAVE[i.dataset.g]=i.checked; try{localStorage.setItem(GKEY,JSON.stringify(GHAVE));}catch(e){} renderPets(); });
+}
+
 /* ================= tabs ================= */
-const TABS=["overview","gear","skills","stats","plan"];
+const TABS=["overview","gear","skills","stats","pets","plan"];
 function showTab(t){ if(!TABS.includes(t)) t="overview";
   document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
   for(const x of TABS) $("#pane-"+x).hidden=x!==t;
@@ -514,7 +580,7 @@ function guidesBlock(){
 (function repoLink(){ const m=location.hostname.match(/^([^.]+)\.github\.io$/); const repo=location.pathname.split("/").filter(Boolean)[0];
   const a=$("#btn-refresh"); if(m&&repo){ a.href=`https://github.com/${m[1]}/${repo}/actions/workflows/update.yml`; a.title="Откроется GitHub: нажмите Run workflow, через 1–2 минуты обновите эту страницу"; } else a.hidden=true; })();
 try{ PLANSTATE=JSON.parse(localStorage.getItem("ranger-armory-plan")||"{}")||{}; }catch(e){}
-showTab(location.hash.slice(1));
+showTab(location.hash.slice(1)); renderPets();
 (async()=>{
   try{
     const r=await fetch("data.json?"+Date.now(),{cache:"no-store"}); if(!r.ok) throw new Error(r.status);
