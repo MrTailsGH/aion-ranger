@@ -1,0 +1,726 @@
+Aion 2 Ranger Guide
+by Allyria
+Global Edition  ·  PvE  ·  Last updated 18.09.2026
+
+  Reach me in #RangerClass or by DM
+Eng / Ger
+________________
+
+About this Guide
+This guide is written for the global release version of Aion 2.
+The guide was originally built to be up to date for TW, so you may find some content that will not be available on the Global version immediately upon release. However, I have put a lot of effort into making the guide easy to understand, so you should have no problem understanding what the current content is and what will be available in the future.
+The guide has been designed so that everyone should be able to use it from day one of the global release. This Guide will always be up to date for global, as long as I play the game.
+Disclaimer
+1. This guide assumes that you have a basic understanding of the game, its classes and systems. This includes reaching level 45, collecting feathers, strongholds, sealed dungeons etc.
+2. If you have any questions, suggestions or criticisms, you can contact me via #RangerClass or by DM on Discord. Criticisms without proper facts will be ignored.
+3. This guide is based on my experience, as well as information I have collected from TW/KR servers and player feedback.
+4. I am not currently deeply involved in PvP. However, a dedicated PvP section may be added in the future.
+5. You can check out the changelog to keep track of frequent changes since 26/08/26,  the guide is updated frequently.
+
+Chapter 1: Skills and Specialties
+The skill balance carries over from the current TW patch, so these priorities will apply from day one at Global. Allocate your points by tier. It's difficult/impossible to have this many skills at +20 in season 1 because we have fewer arcana cards, but you should aim to reach this level in the long term.
+1.1 Active Skill Levels
+
+Tier 1 ( +20 )
+	Tier 2 ( +16 )
+	Tier 3 ( +12 )
+	Tier 4 ( - )
+	Gale Arrow > Deadshot > Drill Dart > Tempest > Burst Arrow
+	Snipe > Marking Shot
+	Snare Shot > Explosion Trap > Arrow Scattershot
+	Defiance > Suppressing Arrow
+
+Tier 1 ( +20 )
+	Tier 2 ( +16 )
+	Tier 3 ( +12 )
+	Tier 4 ( - )
+
+	1.2 Passive Skill Levels
+
+S-Tier
+	Tier 1
+	Tier 2
+	Tier 3
+	Focused Eye > Hunter’s Resolve
+	Hunter’s Soul
+	Rooting / Concentrated > Melee Fire > Vigilant Eye
+	Revitalization > Wind Vigor > Unyielding
+	S-Tier
+	Tier 1
+	Tier 2
+	Tier 3
+
+1.3 Stagger - Bar
+Some boss monsters have a stagger bar located directly beneath their health bar. This bar sometimes needs to be destroyed very quickly, otherwise the group will be attacked.
+For example: Transcendenz 1 – Atiel
+Every class has Stagger Values on certain skills. If you know a boss needs to be staggered, save these skills for when the bar opens. Arrow Storm provides the highest stagger value of all Ranger skills. Arrow Storm is a stigma skill.
+
+Stagger Value Overview
+Skill
+	Stagger Value
+	Arrow Storm
+	50
+	Explosive Arrow
+	20
+	Griffon Arrow
+	20
+	Burst Arrow
+	15
+	Deadshot
+	10-16
+	Suppressing Arrow
+	10
+	Gale Arrow
+	10
+	Explosion Trap
+	10
+	Snare Shot
+	10
+	Marking Shot
+	7
+	Drill Dart
+	5
+	Tempest Shot
+	1
+
+1.4 Skill Traits
+As you can see from the tables, each skill has a skill trait priority. Skill traits are unlocked at certain skill levels. Right at the start, after reaching Level 45, you won't be able to choose all traits because your skill level won't be high enough. This is why there is a priority order. I will use the note section to provide you with useful information about the corresponding skill, as well as explanations or recommendations. These notes will change based on the balance patch we receive.
+
+Skill:
+	Snipe
+	Priority:
+	Orange > Red > Yellow
+	Note:
+	If you Struggle with HP you can go with 0.7% HP Reg instead of Multi hit %, early into global I would recommend it.
+
+Skill:
+	Tempest Shot
+	Priority:
+	Red > Blue > Yellow
+	Note:
+	-
+
+Skill:
+	Snare Shot
+	Priority:
+	Yellow > Blue >  Red
+	Note:
+	-
+
+Skill:
+	Marking Shot
+	Priority:
+	Green > Yellow > Red
+	Note:
+	Only use this skill to maintain buff uptime, do not spam it.
+
+Skill:
+	Drill Dart
+	Priority:
+	Red > Yellow > Orange
+	Note:
+	If you struggle with HP you can go with 3% HP Reg instead of multi hit, early into global I would recommend it.
+
+Skill:
+	Arrow Scattershot
+	Priority:
+	Red > Orange > Green
+	Note:
+	Only usable if the enemy got a break ~ 3-4 seconds, only use for quick CD reduction/ HP/MP refill if you need, otherwise can be ignored.
+
+Skill:
+	Gale Arrow
+	Priority:
+	Orange > Red > Yellow
+	Note:
+	+5s duration is only a thing early on in combination with increased Combat speed. After reaching LvL 16 switch towards -10s cooldown + increased combat speed. Reason for this is that later into the game you can reach 100% uptime without +5s duration and even early on you will benefit more from -10s cooldown.
+
+Skill:
+	Explosion Trap
+	Priority:
+	Green > Yellow > Red
+	Note:
+	In PvE this skill is only used for pulling mobs together aka grouping.
+
+Skill:
+	Burst Arrow
+	Priority:
+	Yellow > Red > Orange
+	Note:
+	If you struggle with HP you can go with 10% HP Reg instead of +20% damage or if you don't feel uncomfortable without the mobile trait against mobility.
+
+Skill:
+	Suppressing Arrow
+	Priority:
+	Yellow > Green
+	Note:
+	In PvE this skill is not used at all currently.
+
+Skill:
+	Deadshot
+	Priority:
+	Blue > Yellow > Red
+	Note:
+	Orange trait is nice for PvP, in PvE its total trash with a geared character. However early on in Season 1 before we gain good Multi % it might be better then Red.
+
+Skill:
+	Defiance
+	Priority:
+	Red > Yellow > Blue
+	Note:
+	-
+
+Chapter 2: Stigma Skills
+Stigma points are hard to gain, farming inside the Abyss at 25k AP per skill point remains the main source. The stigma system itself will change after launch.
+The Three to ALWAYS pick for PvE: Bow of Blessing, Vaizel’s Authority, Supporting Fire.
+4 Slots will only be available after reaching 45, not before so please do not get confused over this.
+2.1 Stigma build priority
+For the global launch, the PvE core is as follows:
+
+1. Vaizel’s Authority -> Main Buff
+2. Bow of Blessing -> Secondary Buff
+3. Supporting Fire -> Third Buff
+4. Flex:
+Arrow Rain -> Break/AoE
+Griffon Arrow -> DoT/DPS
+Mother Nature -> Survivability
+Kick -> Movement/Survivability
+2.2 Stigma Overview
+
+S-Tier Always use it
+	Additional Dps
+	Survivability
+	Good Break Value
+	Useless in PvE
+
+	Chapter 3: PvE Rotation & Macro
+Credit for the Macro Setup goes to:
+
+ THANK you for providing the macro settings for this guide.
+3.1 Skill Chains
+Once you have all the skills, build those skill chains. The macro is designed to provide the best damage output, but be aware that macros can change frequently due to balance patches and skill changes, so expect this one to be updated regularly. This macro was built on TW, so with a lower ping and adjustments from the global version, it's likely that a better one will be found in the future.
+Marking Shot, Scattershot, Suppressing, Trap and Mother Nature are not part of the macro.
+The reason for this is that: Marking Shot does not need to be spammed. It is a waste of animations, and it currently causes a lot of grief in terms of forced jump animations, which can lead to death. It's better to manually track the buff you gain from it and only use it manually to keep it up.
+Mother Nature is a survival skill and would not be active at the correct time if used inside a macro. Suppressing isn't used at all and Trap is situational for AoE/grouping.
+
+3.2 In Game Macro
+
+Set up the macro like this: copy and paste the skill chains after registering a key for the macro in the game settings. For example, I use the right mouse button as my macro key.
+To find the macro key settings, browse through the settings as follows:
+Key Settings > General > Gameplay > Macro.
+Choose a key that you like.
+
+3.3 Razer
+
+Now that you have set up the in-game macro and prepared your skill chains, we can move on to the final part: combining it with macro software. I personally use Razer, but if you are using different software, you will need to figure out how to set it up correctly yourself. It's important that you set the macro to run while the button is held down and to stop once released.
+
+For Razer it will look like this:
+
+For my example you can see:
+LMB  = Snipe
+RMB = In-Game Macro Key
+ 7       = Deadshot
+
+Frequently asked Questions about Macro:
+Can I use macros from Day 1 ?
+You can, but bear in mind that macros are always designed for the endgame, not the early game or story mode. You may experience clunky behaviour and rotas breaking until you reach certain checkpoints, especially with regard to combat speed, cooldown reduction and skill traits. There is no way around this due to the way progression and combat work in Aion 2. I tested the macro already on the network test for global after reaching level 16, and it worked for me even at a low level.
+Why do we need a 3rd party? Can´t we just use the In-Game macro as a standalone?
+In theory, you can only use the in-game macro, but this won't use stage 3 Deadshot, which results in significant damage loss. If you want to play without a third party to compensate, you will need to manually charge Deadshot towards stage three while holding LMB and the in-game macro.
+Is this bannable?
+No, it isn't. As long as you aren't building a macro that can run automatically (i.e. botting), you can use this tool without any problems.
+Isn't it sup-optimal to run Buffs inside the macro?
+Not really, since we usually run from boss to boss. It's also no issue to remove buffs from the macro and use them manually to have more control over them. Just try it out and see what you think. It's also good to know that thanks to the -1 sec CD Trait from Vaizels, you will later be able to keep it active with 100% uptime at certain combat speeds and CDR values. The same applies to Supporting Fire. The same applies to the Bow of Blessing, although it will take a bit longer since it has a longer base cooldown.
+How to use the macro for sustain open world mob farming?
+If you use the in-game macro key instead of the Razer key, you will automatically not use the Deadshot and LMB keybinds, which will make farming faster. If you are struggling with MP, you can either start holding the in-game macro key and the left mouse button (LMB) together, or use a second Razer macro without the Deadshot keybind.
+Macro isn´t working for me?
+If the macro doesn't work correctly, you've probably done something wrong. Feel free to ask for help in #Ranger-General, but bear in mind that neither I nor anyone else there is your technical support, especially if you don't use Razer as your macro software.
+Showcase of working macro Razer + Ingame on Network Test - low LvL
+
+https://youtu.be/zNM0JaITL1Y?si=a5yo8TWKPBtS5kVr
+
+Chapter 4: Daevanion Board
+Priority: Orange > Blue > Green > White, on all boards. The board is a marathon, not a sprint, the rules below keep every point you spend efficient.
+1. Start with the top-priority skills and passives (see Chapter 1) and work your way through them until you have unlocked most of them.
+
+2. For white tiles: Attack > Critical Hit > HP > Defence > Critical Defence > MP.
+
+3. Sometimes it’s better to prioritise blue over orange if you can reach a skill milestone for active skills (levels 8, 12, 16 and 20).
+
+4. If you cannot max out a board, try not to waste points on anything that does not increase your offensive attributes. Defence is considered less important.
+
+5. You can always reset the boards using the main in-game currency, Kinah.
+
+All Boards after the first 4 can be fully maxed and therefore do not appear in this guide.
+
+Unfortunately, I can't magically show you filled Daevenion boards since TW doesn't have the little boards anymore, and there isn't a website or anything that I could use to rebuild the old ones. You'll need to follow the instructions until I can upload perfect pictures after the global launch, but it's not like it'll hurt you, resetting the boards is really cheap.
+
+Nezekan:
+
+Zikel:
+
+Vaizel:
+
+Triniel:
+
+Chapter 5: Pets
+Four types: Cogni, Fera, Natura, Varian. Pets give a lot of flat stats and are important.
+Level priority: Cogni > Fera > Natura > Varian
+5.1 Global launch
+Focus on equipment rather than pets at launch. Pets will come over time, and you can later also get them from the daily dungeon. Don’t invest too much in this early on, gear will carry you further in the first few weeks. Once you have downtime between content you can start farming Pets.
+5.2 Genus Insight System - What to aim for on Slot 1-9
+General rules for rolling Slots:
+
+1. First, aim for slot 4, after slot 7. After that, you can decide whether or not you want more HP. If not, you can skip the HP% and aim directly for the other Atk and Acc/Crit on the other slots.
+2. Max Attack is better than Attack since it scales of Weapon Damage Boost
+3. Do not lock slots until level 10, except slots 4/7 - if you get a yellow/orange role with around 80% or higher
+4. On your first preset, keeping rolls with around 75-80% or more is fine, going for 90-95% or more is a very long process and you will burn through thousands of pet crystals, therefore you should aim for those min maxed values in your second preset NOT your first.
+5. Only use Rainbow Crystals for Special Genus Insight.
+
+5.2.1 Cogni Slot 1-9
+Slot 1 - Max Atk
+Slot 2 - HP%
+Slot 3 - Accuracy/Crit
+Slot 4 - PvE Damage Boost %
+Slot 5 - Max Atk
+Slot 6 - Accuracy/Crit
+Slot 7 - PvE Damage Tolerance %
+Slot 8 - HP%
+Slot 9 - Accuracy/Crit
+
+5.2.2 Fera Slot 1-9
+Slot 1 - Max Atk
+Slot 2 - HP%
+Slot 3 - Accuracy/Crit
+Slot 4 - Weapon Damage Boost
+Slot 5 - Max Atk
+Slot 6 - Accuracy/Crit
+Slot 7 - PvE Damage Tolerance
+Slot 8 - HP%
+Slot 9 - Accuracy/Crit
+
+5.2.3 Natura Slot 1-9
+Slot 1 - Max Atk
+Slot 2 - HP%
+Slot 3 - Accuracy/Crit
+Slot 4 - PvE Damage Boost
+Slot 5 - Max Atk
+Slot 6 - Accuracy/Crit
+Slot 7 - PvE Damage Tolerance
+Slot 8 - HP%
+Slot 9 - Accuracy/Crit
+
+5.2.4 Varian Slot 1-9
+Slot 1 - Max Atk
+Slot 2 - HP%
+Slot 3 - Accuracy/Crit
+Slot 4 - PvE Damage Boost / Front / Back DMG
+Slot 5 - Max Atk
+Slot 6 - Accuracy/Crit
+Slot 7 - PvE Damage Tolerance
+Slot 8 - HP%
+Slot 9 - Accuracy/Crit
+5.2.5 Special Slot 1-9
+
+Slot 1 - Max Atk
+Slot 2 - HP%
+Slot 3 - Accuracy/Crit
+Slot 4 - Double Chance %
+Slot 5 - Max Atk
+Slot 6 - Accuracy/Crit
+Slot 7 - Damage Tolerance
+Slot 8 - HP%
+Slot 9 - Accuracy/Crit
+
+Chapter 6: Gear and Stats
+
+I don’t recommend min-maxing anything except PvE crafted gear. I am not to be blamed for materials or money wasted on gear that isn’t worth it; if you’re not sure whether to upgrade something, ask first. Crafted gear is not considered to not be cheap but it is the best in slot Gear, so keep that in mind.
+
+This guide focuses on the best PvE-Rolls for every Gear piece to reach the best end result in terms of DPS. For every Piece of gear there will be a priority order since different tiers of gear ( Yellow, Red, etc ) have different amounts of lines for roles. As for what gear to aim for, PvE Crafted Gear is considered to be the best gear. So you will focus on building this as soon as possible to transition out of dungeon gear.
+Important: If you are a F2P player or a sub only you most likely will not be able to afford the crafted armor in season 1. You will not lose out on a lot of damage by using dungeon armor and it is common in Taiwan and Korea as well. However if you are a light spender or want to min max you definitely will go with full crafted gear regardless.
+
+6.1 Equipment and Soul Binding
+You can use the trait priority order for any content and any gear. Lower gear just has less trait lines and lower % so if your item for example only has a max of 5 traits instead of 7 you go with the top 5 and ignore the other traits listed below. If you have more Crit than Accuracy in Genus or vise versa you might need to adjust based on that.
+
+Weapon
+	Guard
+	1 Weapon Damage Boost
+2 Combat Speed
+3 Might
+4 Precision
+5 Damage Boost
+6 Multi Hit Chance
+7 Atk
+	1 Weapon Damage Boost >
+2 Combat Speed
+3 Might
+4 Precision
+5 Damage Boost
+6 Multi Hit Chance
+7 Atk
+	Picture Placeholder
+	Picture Placeholder
+
+Breastplate
+	Legs
+	1 Damage Boost
+2 Focused Eye
+3 Hunters Resolve
+4 Perfect Chance
+5 Crit
+6 Accuracy
+ 7 Attack
+	1 Damage Tolerance
+2  Focused Eye
+3 Hunters Resolve
+4 Perfect Chance
+5 Attack increase
+6 Crit
+7 Attack
+	Picture Placeholder
+	Picture Placeholder
+
+Helmet
+	Pauldrons
+	1 Incoming Heal
+2 Focused Eye
+3 Hunters Resolve
+4 Double chance %
+5 Attack increase %
+6 Crit
+7 Attack
+	1 Crit Damage Boost
+2 Focused Eye
+3 Hunters Resolve
+4 Double Chance %
+5 Crit
+6 Attack
+7 Accuracy
+	Picture Placeholder
+	Picture Placeholder
+
+Gloves
+	Boots
+	1 Combat Speed
+2 Focused Eye
+3 Hunters Resolve
+4 Crit
+5 Attack
+6 Accuracy
+7 Hunters Soul
+	1 Move Speed
+2 Focused Eye
+3 Hunters Resolve
+4 Perfect Chance
+5 Crit
+6 Attack
+7 Accuracy
+	Picture Placeholder
+	Picture Placeholder
+
+Cape
+	Necklace
+	1 Focused Eye
+2 Hunters Resolve
+3 Double Chance %
+4 Attack increase
+5 Crit
+6 Accuracy
+7 Attack
+	1 Focused Eye
+2 Hunters Resolve
+3 Combat Speed
+4 Might
+5 Precision
+6 Accuracy
+7 Crit
+	Picture Placeholder
+	Picture Placeholder
+
+Earrings
+	Rings
+	1 Focused Eye
+2 Hunters Resolve
+3 Might
+4 Precision
+5 Accuracy
+6 Crit
+7 Attack
+
+	1 Gale Arrow
+2 Deadshot
+3  Tempest Shot
+4 Drill Dart
+5 Might
+6 Precision
+7 Burst Arrow
+	Picture Placeholder
+	Picture Placeholder
+
+6.1.1 Amulet and Belt
+You will get both of those Items through world progression early on and will upgrade those by default until max.
+6.1.2 Pendant
+Will be added with Chapter 1 - LvL 50 Patch ( not available at launch ), works the same way as Belt and Amulet.
+
+6.1.3 Bracelets
+Bracelets are gained through the Sanctuary and give Divine Stats ( See more about Divine stats in 6.3 )
+
+Bracelet
+	Wisdom > Destruction > Time > Illusion > Death > Justice > Life > Space > Freedom > Destiny
+	Picture Placeholder
+
+6.1.4 Brooches
+Will be added with the implementation of Sanctuary 3 ( not available at launch )
+
+Brooches
+	Might > Precision > Accuracy > Crit > Constitution
+	Picture Placeholder
+
+6.1.5 Seals
+Will be added with the implementation of Sanctuary 4 ( not available at launch )
+
+Seals
+	Attack > Boss Attack > Max Attack > Crit Attack > PvE Attack > Power Shard Damage Bonus
+	Picture Placeholder
+
+6.1.6 Clash Runes
+Gives fixed attributes based on the tier of amplification, but because of the high rng in upgrading them its not recommended to try to get higher than 6/7
+
+6.2 Base Stats
+Stats are divided into 3 Categories. Divine Stats, Main Stats and Sup Stats.
+Your main focus will be Attack, Crit and Accuracy for Main Stats as well as Might and Precision.
+Also you will heavily focus into sup stats:
+Double Chance ( gives double DMG if triggered )
+Perfect Chance ( your weapon has min and max rng dmg , perfect makes it always hit with highest possible dmg role )
+Combat Speed ( makes you attack faster )
+Cooldown Reduction ( lets you use more skills )
+Double Chance > Perfect Chance in terms of focus.
+CDR and Combat Speed mostly come from Divine Stats and Equipment Soulbinds.
+
+Example of stat Distribution for endgame:
+Stat
+	Value
+	Stat
+	Value
+	Might
+	309
+	Precision
+	309
+	Agility
+	92
+	Willpower
+	107
+	Constitution
+	148
+	Intelligence
+	105
+
+6.3 Divine Stats
+
+Check Ingame what exactly the Divine Stats will give you in terms of stats.
+
+Priority for damage:
+
+Wisdom > Destruction > Time > Death > Illusion > Justice > Freedom > Space > Life > Destiny
+
+Example of stat Distribution for endgame:
+Stat
+	Value
+	Stat
+	Value
+	Wisdom
+	197
+	Space
+	93
+	Destruction
+	170
+	Life
+	89
+	Time
+	165
+	Freedom
+	73
+	Death
+	143
+	Justice
+	70
+	Illusion
+	117
+	Destiny
+	68
+	6.4 Theostones
+You can choose whatever, Theostones have 0 impact in PvE, there are some that are nice for PvP tho for example Silence.
+6.5 Soulstones and Manastones
+Soulstones and Manastones work exactly the same. Manastones are used for Armor and Weapons while Soulstones are used for Accessories.
+You have many options, on end end gear you would like 2 gold lines on each equipment piece, either 2x +100, 1x100 + Atk
+Crit / Acc are good stats as well, you can roll those on gear early on in season 1 since it's easy to get and the best decision to go for those early on, later after you have enough Crit / Acc without the rolls and you have your first red gear that you won't replace for a while you can aim for +100 Rolls, ofc if you roll 1. or 2. randomly through rng on lower gear you are still gonna keep it.
+1. +100 Rolls ( Weapon and Front/Back DMG are considered best in slot.
+2. Double Atk role - meanwhile only 35 Attack is same as 1 +100 line of wep/front Attack
+3. Crit / Acc
+Examples for keepworthy Soul/Manastone roles on Endgear:
+
+6.6 Wings
+6.6.1 Wing Progression timeline ( equipped )
+
+into
+
+into
+
+into
+
+6.6.2 Wing Stats ( owned )
+Wings can be enchanted until +10, it's not your first priority and not sure if this will be the case right at the global release already. You need to enhance all wings anyways for the current best ATK title.
+Focus on what gives you most value for example Nightmare wings on +10 give flat 2% more Smite for owning them.
+6.7 Titles
+Only Showing best in slot + filler until you get best in slot. You can check out the requirements for gaining the titles In-Game.
+
+Attack Title:
+
+Defense Title:
+
+Into
+
+Special Title:
+
+Into
+
+Chapter 7: Arcanas
+Stats on arcanas are random and need a lot of luck, so even a top player isn’t always running perfect arcanas. Through transmute preview you can always see which skills you can get at which arcana.
+Every Arcana Card can be upgraded from 0 up until +5. The higher the enhancement level is, the more expensive it becomes. With every enhancement lvl a random stat/skill line will be upgraded.
+Therefore my recommendation is to not +5 every Arcana, instead just to +1 or +2 and check if the stats you want to go up are going up, if not try again on a different arcana.
+7.1 At Global release
+Global starts with 5 arcana slots and only very limited ways of building.
+Best setup will be:  Red Marked Skills are Priority
+Additional Info about the Grail: On the Grail you can basically get any skill so in some cases Deadshot or Gale-Arrow etc might be the better fit here as well as other skills to reach +20, overall Tempest Shot, Gale and Deadshot as well as Drill Dart are considered skills that definitely should be at +20 and deal the most amount of your damage.
+Chalice of Vigor
+	Parchment of Vigor
+	Compass of Magic
+	Bell of Magic
+	Mirror of Magic
+
+	Skills to Focus:
+	Skills to Focus:
+	Skills to Focus:
+	Skills to Focus:
+	Skills to Focus:
+	Focused Eye, Hunter’s Resolve, Snipe, Tempest Shot
+	Drill Dart, Snipe, Burst Arrow, Tempest Shot
+	Burst Arrow, Scattershot, Deadshot, Gale Arrow
+	Hunter’s Resolve, Revitalization Contract, Vigilant Eye, Rooting Eye
+	Focused Eye, Concentrated Fire, Unyielding Resolve, Melee Fire
+	It's Important to run correct Sets like shown above, since different types of arcanas give different Divine Stats.
+Chapter 8: Pantheon
+In terms of the Pantheon you have 3 different types of things you can place.
+
+1. Artworks
+2. Statues
+3. Colossus
+
+Depending on the rarity you will have different amounts of stat lines. Hence why you aim for Yellow/Orange long term.
+
+You aim for Artworks that have Illusion + Wisdom. As a third stat there most of the time will be Destiny or Life. Life is better. But at the start of the game there won't be enough Artworks with Wisdom,Illusion, Life so you will use Wisdom,Illusion, Destiny as a filler.
+
+On Statues you want to aim for Yellow ones with Freedom, Death and Space. Early on you will use blue as filler with only 2 lines here. Go for either Death + Freedom or Death + Space, up to you I would recommend Freedom + Space, eventually less damage early on but the movement speed from Space helps a lot with evading and playing mechanics early on.
+
+As for the Colossus in Season 1 you will use Zikel/Kromede and with the Start of Season 2 you will want to switch as soon as possible towards Kaisinel. Everything else is considered no option.
+
+Pictures for reference (Overview):
+
+Optimal Artwork Yellow:
+
+Optimal Artwork Red:
+
+Optimal Statue Yellow:
+
+Optimal Colossus Season 1
+
+Optimal Colossus Season 2
+
+Changelog
+
+26.08.26
+
+* Added Changelog to be more transparent and for archive reasons.
+* Added Info about Changelog towards the Disclaimer inside the Introduction.
+* Replaced old Deadshot Specialty Screenshot with new one inside Chapter 1 after the Patch from the 25.08.26 - TW
+* Added Griffon Arrow towards the Good Break Value category at Chapter 2 ~ overlooked it
+* Added Roadmap towards Changelog ( to be done once i have time )
+
+28.08.26
+
+* Added Chapter 3 Content about macros, skill chains, macro setup etc
+* Credits towards JOEI for providing his macro to this guide
+* updated Introduction to not include macro info anymore
+
+29.08.26
+
+* Changed red text at genus insight chapter from argue to use.
+
+30.08.26
+
+* Added info about farming macro - second preset inside FaQ of macro Chapter
+
+31.08.26
+
+* Fully Reworked Chapter 6 to match the new Guide Style, added graphs, more detailed explanations etc
+* Reworked Skill Tables in Chapter 2 for better overview reasons, old version seems to have confused some people
+* Added Chapter 8 Pantheon
+* Added Chapter 6 Title section that was missing until now
+
+03.09.26
+
+* Chapter 7 Arcanas Reworked, everything related to Season 2 Arcanas and beyond removed - decision was made due to adjusting Guide more towards Global, more arcana showcases could be confusing. Will be added back in the future once we arrive at the content
+* reworked Skill Table to include “Broken Tier” ( S-Tier )
+
+06.09.26
+
+* Added disclaimer about skill setup in Chapter 1 about Season 1
+
+09.09.26
+
+* Changed the red text at genus to include a warning since the devs said in the last live stream that front dmg will get a nerf - They saw everyone stacking it currently 08.09.26 - Source Welphs Translation of the Stream on 08.09.26
+* small adjustment to the In-Game macro setup picture
+
+10.09.26
+
+* added Seals ~ Chapter 6 - 6.1.5
+* Changed Pendant to be 6.1.2 instead of 6.1.4
+* Added Tables for Skill LvL Priority active + passive and removed Info box about Focused Eye and Hunters Resolve since it was obsolete. ~ Chapter 1 Skills
+* Renamed “Broken Tier” into “S-Tier” ~ Chapter 1
+* Reworked List on Stigmas exchanged 3. Explosion Arrow with Supporting Fire , assuming global will have that stigma at launch ~ Chapter 2 Stigmas
+* Reworked Introduction a bit to better fit Global
+* added info about Daevenion boards being able to reset with Kinah
+
+11.09.26
+
+* changed Genus insight from recommending Atk towards Max Attack since Max Attack is better than normal Attack. ~ Source Kuro the Rat
+
+13.09.26
+
+* adjusted the info text boxes for the gear chapter to include a disclaimer about dungeon vs PvE armor
+* adjusted the skill trait boxes from “,” towards “>” to make the order of importance for the traits clearer
+* added a info box about macros and did some minor changes to make it easier to understand
+
+17.09.26
+
+* reworked Introduction ( adjusted it + removed statement )
+* reworked Chapter 1 for global launch ( adjuster some textes etc )
+* reworked Chapter 2 for global launch ( adjuster some textes etc )
+* reworked Chapter 3 for global launch ( mainly yeeted everything through deepl to eliminate grammar mistakes )
+* reworked Chapter 4 - removed TW- board and replaced with global. I cant show correct build setup since i dont have a way to magically gain enough daevenion points - use the instruction until i will be able to update boards
+* reworked Chapter 5 ( not done yet )
+
+18.09.26
+
+* preparation for Chapter 5 / 6 rework done
+* Chapter 5 Genus rework done
+* chapter 6 Rework done as far as possible with the current build
+* removed all gear pictures from Chapter 6 since Ncsoft changed trait lines , stats etc so TW pictures would be confusing.
+
+Roadmap:
+
+* chapter 4 add filled pictures of Daevenion Boards after launch
+* chapter 5 Pictures sometimes in the future
+* chapter 6 Pictures sometime in the future
+* chapter 7? ( most likely since i doubt they would not touch this … )
+
+1

@@ -1,0 +1,1104 @@
+Server: Israphel (Azmo)
+
+Main Guild
+Guild: Platoongoon
+Password: 6767
+
+Alt Guild
+Guild: kruwu
+Password: 6767
+
+This is a working document and will be updated as we go.  I’ll try to keep the Change log updated with any major changes.
+
+Ranger
+1. Ranger Information
+2. Daevanion Board
+3. Skills and Specialties
+4. Stigma
+5. Macro & Rotation
+6. Ranger Stat Priorities
+
+Sorc
+1. Sorc Information
+2. Sorc Daevanion Board
+3. Sorc Skills and Specialties
+4. Sorc Macro & Rotation
+5. Sorc Stigma
+6. Sorc Stat Prio
+
+Templar
+1. Templar Information
+2. Templar Daevanion Board
+3. Templar Skills
+4. Templar Stigmas
+5. Templar Macro
+
+Some good Settings to change!
+Other stuff External Links
+
+https://discord.gg/rtPJCGAFCb
+
+Feedback, questions, check my channel https://twitch.tv/johnpal
+
+Content Map (Weeklies/Dailies) https://docs.google.com/spreadsheets/d/1SkqLhVqdgQ5jvu4Ra06nqZreKoyzn8ygTxRvbNcqxM8/edit?gid=0#gid=0
+
+Gear Score Calculator (Make a Copy)
+https://docs.google.com/spreadsheets/d/1IfR-GeO6aR8CvHZ1jruqWOHMcTY8F1D-htPzSHWob8Q/edit?usp=sharing
+
+Youtube Stuff
+Game Overview: https://www.youtube.com/watch?v=8DJjArCl-Xk&t=1s
+(If you want/need explanations up to 2099, I didn’t add in the transcendence yet, watch this video)
+Gearing Guide 1000-2100+ https://youtu.be/YLn9gwWAkyk?si=2U9BxGyRcDg3OdiU
+Gearing Guide 2100-2800+ https://youtu.be/Vu9J5F9TABQ?si=_rRiPDJxsKdB7lw7Note
+Commands and Duties: https://youtu.be/r4Gxi3Scn4U?si=DUnlLhwmUKEPQXq-
+Arcana and Transcendence: https://www.youtube.com/watch?v=JNizUcM826Q  (Loud music, sorry!)
+Kina and how to farm it: https://www.youtube.com/watch?v=BaKbISK_jdI
+Crafting and Gathering: https://www.youtube.com/watch?v=-NsCsZ_743o&t=1s
+Ranger Guide: https://www.youtube.com/watch?v=otTvwv5pG1s&lc=UgxCssIrLabn67d7Q2V4AaABAg
+Shops and Currency Guide: https://youtu.be/WrJzVq-Mas4
+Item Collection, Pet Collection, and Genus: https://youtu.be/W2Q6LG8B-7s?si=sDbkmQd__edTw846
+
+Ludra Announcement, Event, Abyss Matchmaking:
+https://youtu.be/RXfqpk27tc4?si=5EYbTnbGIHSwC6uj
+
+MSQ to 1400 and beyond (Skip Tier 1 Dungeons)
+- 100% Regional Quests in YOUR faction AND Enemy Faction   (Wisdom, Daeva Crystals, Gear, Clash Runes)
+- 100% "?" Sealed Dungeons, Strongholds in YOUR faction (Wisdom, Daeva Crystals, materials, and belt enhancement scrolls)
+- Enemy Faction Strongholds/Mystery Dungeons (Enhance Stones, Kina, Abyss points)
+- Monolith to level 30 for enhancement scrolls and mats  (Extra feathers convert with substance morph to power shards)
+
+- Abyss Feathers (All) for 36 PVP Azphel tiles (counts toward PVE CP)
+
+- +10 Hone Bracelet, Weapon, and Guard AFTER you finish story quest + regionals
+- Enhance Amulet and Belt to Unique (Enhance to +10 and substance morph after equipping it)
+- +5 on all pieces of other gear (Minus Belt/Amulet)
+- Clash Runes (Tap to +1 100% chance, use EXTRAS to tap higher and equip the highest while only enhancing ones you do not have equipped)
+- ManaStone/Soulstone 1 time on each piece with lowest quality stones.
+
+Battlepass*
+Kuna Conversion*
+Shugo (Daeva Crystals, Stigma Shards)*
+Nightmare Dungeon (Daeva Crystals, Stigma Shards)*
+Abyss Shop*
+SHOP - Wind Breeze Odyle*
+Mileage (Cube Expansion other stuff)*
+Odyle Energy - Substance Morph (Character/Server)*
+
+Pet Genus, tap it to the next level then send a couple to change passive lines (Don’t lock until near max)  Goal is 9 Special (last one) First, roll line 4 until you hit double chance/damage% and then lock it (Heroic, unique is okay to settle on until later)  then go top down leveling them equally with the same strategy.
+
+1400-1600
+Expeditions  (Why Armor Dungeon)
+ Vakron Exploration, Claim 3x For first pity box (If you’re a sub you can adjust total claims)
+ Vakron Conquest, Farm 21-42 times for gear drops  (Pity Guard if possible or Craft it, max yield is swap to gugu)
+Hone these pieces evenly to +10 as you get them
+
+1600 Transcendence (Odyle energy) Do Each 1 1-2 times to get a card in every slot (+100 GS)
+
+1700+
+Out of Odyle energy?  Craft (Jewelry and work on crafted BIS weapon)
+Have Energy?
+Run Urugugu Canyon and Pity Weapon while getting jewelry slots filled
+Hone these pieces evenly to +10 as you get them
+
+1900 Transcendence (Odyle energy) can try for more green/blue cards  (Got 3 greens in my first run for +80 CP)
+
+Pet Genus - Tap lines to reach new levels, don’t worry about locking until you’re on the last near last level, free power.
+
+Road to 2800+ Gearscore and Combat Power increase!
+
+2100+
+
+Base Gear Farm
+- Crafting (Weapon > Rings >= Guard)
+- Horn Den
+  - Are you crafting?
+  - Explore Pity
+  - Expedition Pities (Ticket)
+  - Pity Guard
+- Fire Temple
+  - Are you crafting?
+  - Jewelry, Weapons
+
+Enhancement and Amplifying
+- +1 +5
+- Cost Savings, get low level unique and enhance it up and transfer.
+- +2/+3
+
+ManaStone/Soulstone
+- Work on your alchemy!
+  - Big Kina!
+- Ascension Trials (IMPORTANT!)
+- +4/+3/+2/+1
+
+Daevanion Point Farm
+- Hard Krao (30) Hard Draupnir (30)
+  - More in the data mine (Gugu/Vakron)
+- Shugo
+- Nightmare
+- Abyss Feathers
+- (DO NOT BUY DAEV ABYSS POINTS!)
+
+Arcana Enhancement
+2200/2500
+20 per rarity
+- +1 per level
+- Skill CP
+- 100% exp skill transfer
+2200/2500 Transcendence (Odyle energy) Farming for transcendence extract and direct upgrades
+
+Transmute gold card
+
+Stigmas
+Nightmare
+Shugo
+Abyss Point Shop
+        - Supply Requests
+        - Abyss Farm (Weekly)
+        - Commands
+        - Duties
+        - Corridors
+        - WB Substance Morph
+        - PVP
+
+Sync Lines
+Shugo, Alts, Kina
+Sync Bind
+Sync Reset
+
+Wings
+- Equipped & Owned
+Talisra, Forest Spirit, Dark Veil
+
+Pets / Pet Genus
+- Cogni, Natura
+- Genus Board
+
+Pantheon
+Paintings (Dungeons, Shops)
+Statue (Zikel)
+Shugo
+
+Titles
+
+Theostones
+
+RANGER BUILD AND INFORMATION
+This is a working guide and compile as we test and build out ranger in Aion 2 Global.
+
+Ranger Video https://www.youtube.com/watch?v=otTvwv5pG1s&lc=UgxCssIrLabn67d7Q2V4AaABAg
+
+Ranger
+1. Ranger Information
+2. Daevanion Board
+3. Skills and Specialties
+4. Stigma
+5. Macro & Rotation
+
+Craft Priorities Weapon > Guard >= Rings
+(reset for combat speed, very important for rangers)
+
+Daevanion Board
+Starter (Fresh 45 + Mystery Dungeons)
+* Please note that the starter board is missing some key nodes that you will need to fill in for your major skills.  The main objective is to take the key passives, actives, and avoid MP nodes.  Prioritize your damage over defensive passives.
+* You unlock 1 board at a time and can just apply the points below as shown then move on to the next.
+Nezekan
+
+Zikel
+
+Vaizel
+
+Triniel
+
+Daevanion Board (400+)
+
+Ariel (WIP)
+
+Ariel
+* There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+
+Skills
+Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
+
+For which skill to level use the priorities listed below.
+
+Do not use scattershot (flashes on boss stagger) it’s a DPS loss.  You can use the ability for a  heal as well on stagger.
+
+Specialties
+
+* NOTE: Skill levels may have different priorities.
+*      * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+   * Red highlights I haven’t checked/tested yet
+   * 50% Crit cap means we can run 35 at 16 and 235 (Over cap) or 135 (Mana reduction lul?)
+
+Skill
+	Level 8
+	 Level 12
+	Level 16
+	Level 20
+	Priority
+	Snipe
+	3
+	34
+	45
+	345
+	Very High
+	Tempest Shot
+	3
+	23
+	35 (Over 50% crit) otherwise 2/5
+	235
+	Very High
+	Snare
+	2 | 3 Mobility
+	23
+
+	Medium
+	Marking Shot
+	3
+	13
+
+	High
+	Drill Dart
+	3
+	34
+	35
+	345
+	High
+	Arrow Scattershot
+
+	14
+
+	NOPE
+	Gale Arrow
+	1
+	14
+	45
+	345
+	Very High
+	Explosion Trap
+	3
+	13
+
+	Medium
+	Burst Arrow
+	2
+	34
+	45
+
+	High
+	Suppressing Arrow
+	1
+	13
+
+	Medium
+	Deadshot
+	2 | 3 Mobility
+	23
+	25 | 23* Mobility
+	245 | 235* Mobiliy
+	Very High
+
+Passive
+	Priority
+	Focused Eye
+	Very High
+	Hunter’s Resolve
+	Very High
+	Hunter’s Soul
+	Very High
+	Concentrated Fire
+	High
+	Melee Fire
+	Medium
+	Rooting Eye
+	Medium
+	Vigilant Eye
+	Medium - Low
+	Wind Vigor
+	Medium - Low
+	Revitalization Contract
+	Low
+	Unyielding Resolve
+	Low
+
+Buffs
+   * Vaizels Authority
+   * Big Self buff
+   * At 20 Crits reset all cooldowns including self buff
+   * Bow of Blessing
+   * Big self buff
+   * Supporting Fire*
+   * 1.5% Life steal on chance to hit + additional damage
+   * Marking Shot*
+   * Watch your buff above your mana bar.  Cast it and don’t recast until it’s at 1 second, if you cast on cooldown it is a DPS loss.
+
+ACTIVE SKILLS
+Snipe
+
+Tempest Shot
+
+Snare Shot
+
+Marking Shot
+
+Drill Dart
+
+Arrow Scattershot
+
+Explosion Trap
+
+Burst Arrow
+
+Suppressing Arrow
+
+Deadshot
+
+Defiance
+
+Gale Arrow
+
+PASSIVE SKILLS
+Concentrated Fire
+
+Wind Vigor
+
+Focused Eye
+
+Hunters Resolve
+
+Unyielding Resolve
+
+Rooting Eye
+
+Melee Fire
+
+Revitalization Contract
+
+Hunters Soul
+
+Stigma Placement
+Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
+
+	Vaizels Authority
+	Supporting Fire
+	Bow of Blessing
+	Griffon Arrow
+	Explosive Arrow
+	Level 22
+
+	1-5
+
+	Level 27
+	1
+	10
+
+	Level 37
+	1
+	10
+
+	1
+	32 Stigma
+	10
+	10
+	1
+
+	1
+	50 Stigma
+	10
+	10
+	10
+
+	5
+	110 Stigma
+	20
+	10
+	10
+
+	5
+	120 Stigma
+	20
+	5
+	5
+	15
+
+	160 Stigma
+	20
+	10
+	15
+	15
+
+	180 Stigma
+	20
+	15
+	15
+	15
+
+	220 Stigma
+	20
+	20
+	15
+	15
+
+	260 Stigma
+	20
+	20
+	20
+	15
+
+	300 Stigma
+	20
+	20
+	20
+	20
+
+Why Explosive Arrow over Griffon Early Game?
+They do the same damage early, but you can reduce the cooldown of explosive arrow by 15s at rank 1. We swap to Griffon at 15 which has dot damage which helps proc other effects.
+
+Where do I get more stigma points?
+Nightmare Dungeon Shop
+You can clear the first 10 levels of the far left bosses (First column and spend on Daevanion crystals and stigma shards.  After that you should hold for the statue after Zikel.
+
+Breakpoints
+   * Tested 20/20/15/5 and it was break even with 20/15/15/15 but at a loss of HP/sustain.
+
+Shugo Festival Shop
+Abyss Shop
+   * Abyss Farm Siege
+   * Abyss Commands
+   * Nornir Commands
+   * Duties
+   * Abyss Corridors
+   * Supply Request
+Ranger Stat priorities and map (Note this is a working document, updating it as I go)
+https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIie6U/edit?gid=0#gid=0
+
+   * Currently Evaluating Crit Damage caps
+   * Accuracy for Ludra (KR) was 1200
+   * Precision Increases Accuracy by a multiplier
+   * Natura = +1 Precision per pet to 3
+   * 50% Crit Cap
+   * Target 1000-1200 (Including +300 with bow of blessing)
+   * 10 crit = 1%
+   * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+
+Macro Setup
+   1. Setup your Skills vertically like below
+   1. While leveling, just add what you have as you go
+   2. AUTOMATIC/LAZY
+   3.      4. SELF BUFF
+   5.         1. More damage with efficient usage (plan around boss dying soon/next boss)
+      2. We also stack Trap + Arrow in priority order for use
+      6.       2. Set up your Macro by clicking THE MACRO button in the top right of your skills
+      1.
+      2. Click each skill and select the horizontal (main row) skill
+      3. AUTOMATIC/LAZY LEVELING
+      4.         5. MANUAL (MORE DAMAGE)
+         1. (Testing new macro setup, 2vigor/3magic minor mana problems if you have short fast targets)
+         6.               3. Enter your settings and bind the macro key
+            1.
+
+Rotation
+               1. Hold left and right click
+               2. Marking Shot
+               1. Marking shot lasts longer than the cooldown so make sure to wait until it’s at 1 second before recasting. (Especially with Vaizels 20)
+               2. Marking shot has a movement component if you’re actively holding a direction, use it for a stamina free move.
+               3. Self Buff necessary for damage windows or automate with macro
+               4. Manually Cast Deadshot (Hold until Max)
+
+1+2 are also used for PVP/PVE grinding.
+You can move the buffs (Supporting fire, Vaizels, and Guardian out of your macro for more control of your damage and burst in later content)
+Swap Griffon and Explosive in your macro depending on your stigma.
+
+Why do you have drill dart/tempest twice?
+At level 16 you can have two charges of it, it is also tied to your mana “dump” tempest shot which will use itself twice through the cycle of the macro 1234.
+
+Left image is with double drill dart, 3 stack macro.
+Right is with 2 macro simplified.
+
+SORC BUILD AND INFORMATION
+This is a working guide and compile as we test and build out sorc in Aion 2 Global.
+
+Sorc
+               1. Sorc Information
+               2. Sorc Daevanion Board
+               3. Sorc Skills and Specialties
+               4. Sorc Macro & Rotation
+               5. Sorc Stigma
+               6. Sorc Stat Prio
+
+Skills
+Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
+
+For which skill to level use the priorities listed below.
+
+Ice Chain is used early to mid game in your macro for a DPS increase until you reach 16 on a few skills AND CDR/CS breakpoints.  You can also put this in your macro for better AOE/Leveling early game.  It can still be a DPS increase even after reaching the breakpoints.  TEST YOUR SKILLS!
+               * Wish
+               * Hellfire
+               * Blaze
+               * Flame Arrow
+
+After some testing (samples below) Blaze 16, Flame 16, Wish 16 is where I found the breakpoint with 8.8% CDR to where I could take Ice Chain out, but since it is break even or slightly ahead I’m leaving it in for now for better farming and corridors.
+
+Blaze For now, do not push for +20 we stop at +16 for CDR.
+
+Flame Scattershot can be used for heal (level 8) OR pushed to 16 in edge case scenarios for CDR.  You will most likely be point starved and unable to do this.
+
+Specialties
+
+               * NOTE: Skill levels may have different priorities.
+               *                     * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+                  *
+
+Skill
+	Level 8
+	 Level 12
+	Level 16
+	Level 20
+	Priority
+	Flame Arrow
+	3
+	34
+	45
+	345
+	Very High
+	Ice Chain
+	2
+	24
+	45
+	345
+	Medium
+	Firestorm
+	2
+	24
+	45
+	245
+	High
+	Bittercold Wind
+	1
+	14
+	14
+	145
+	Medium
+	Blaze
+	3
+	34
+	35
+	345
+	Very High
+	Flame Scattershot
+	1
+
+	NOPE
+	Frost
+	3
+	23
+	35
+	235
+	Low
+	Winters Shackle
+	3
+	34
+	35
+	345
+	Medium
+	Frost Burst
+	2
+	24
+	25* Mobility
+	245
+	Medium
+	Wish of Concentration
+	2
+	24
+	45
+	245
+	Very High
+	Hellfire
+	1
+	14
+	15
+	145
+	Very High
+
+Passive
+	Priority
+	Robe of Flame
+	Very High
+	Robe of Earth
+	High
+	Robe of Cold
+	High
+	Fire Mark
+	Medium-High
+	Grace of Enhancement
+	Medium
+	Cold Snap
+	Medium
+	Vitality Evaporation
+	Low-Medium
+	Absorb Essence
+	Low
+	Revitalization Contract
+	Low
+	Grace of Resist
+	Low
+
+Buffs
+                  * Wish of Concentration
+                  * Element Enhancement
+
+                  1. Option 1 (Firestorm) in macro
+
+                  2. Option 2, Firestorm out of Macro
+
+                  3. Click Macro and add the base skills
+
+                  4. Change macro to Right Click
+
+                  1. Buff Self 1
+                  2. Hold Left Click (Flame Arrow auto attack)
+                  3. Hold Right Click (Macro)
+                  4. Deploy Ground Effects (3)
+                  1. Wait for a pattern to start before sending these.
+                  5. Hellfire
+                  1. Press and hold Hellfire to MAX
+      5a. Firestorm To Reset Hellfire (or put it in your macro)
+                  6. REPEAT
+
+Use FROST for Stagger
+Stigma Placement
+Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
+
+	Element Enhancement
+	Delayed Explosion
+	Fire Wall
+	Cold Storm
+	Level 22
+
+	1-5
+	Level 27
+	5
+
+	5
+	Level 37
+	5
+
+	5
+	5
+	32 Stigma
+	10
+	5
+	5
+	5
+	50 Stigma
+	10
+	10
+	10
+	5
+	86 Stigma
+	20
+	5
+	5
+	1
+	110 Stigma
+	20
+	10
+	10
+	5
+	120 Stigma
+	20
+	10
+	10
+	10
+	160 Stigma
+	20
+	20
+	5
+	5
+	220 Stigma
+	20
+	20
+	15
+	15
+	260 Stigma
+	20
+	20
+	20
+	15
+	300 Stigma
+	20
+	20
+	20
+	20
+
+Where do I get more stigma points?
+Nightmare Dungeon Shop
+You can clear the first 10 levels of the far left bosses (First column and spend on Daevanion crystals and stigma shards.  After that you should hold for the statue after Zikel.
+
+Shugo Festival Shop
+Abyss Shop
+                  * Abyss Farm Siege
+                  * Abyss Commands
+                  * Nornir Commands
+                  * Duties
+                  * Abyss Corridors
+                  * Supply Request
+
+Sorc Stat Priorities, Document in Progress.
+https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIie6U/edit?gid=1229977754#gid=1229977754
+
+                  * Currently Evaluating Crit Damage caps
+                  * Accuracy for Ludra (KR) was 1200
+                  * Precision Increases Accuracy by a multiplier
+                  * Natura = +1 Precision per pet to 3
+                  * 50% Crit Cap
+                  * Target 1000-1200 (Including +300 with bow of blessing)
+                  * 10 crit = 1%
+                  * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+Work in progress.
+
+Templar
+                  1. Templar Information
+                  2. Templar Daevanion Board
+                  3. Templar Skills
+                  4. Templar Stigmas
+                  5. Templar Macro
+
+Skills
+Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
+
+For which skill to level use the priorities listed below.
+
+Flash Rampage can be used for heal (level 8) OR pushed to 16 in edge case scenarios for CDR.  You will most likely be point starved and unable to do this.
+
+Specialties
+
+                  * NOTE: Skill levels may have different priorities.
+                  *                        * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+                     *
+
+Skill
+	Level 8
+	 Level 12
+	Level 16
+	Level 20
+	Priority
+	Judgement
+	3 | 1 Leveling
+	34
+	35
+	345
+	Very High
+	Poach
+	1
+	13
+	14 | 13 Farm
+	134
+	Medium
+	Vicious Strike
+	3
+	34
+	45
+	345
+	High
+	Shield Smite
+	2
+	34
+	34
+	234
+	Medium
+	Punishment
+	3
+	23 | 34 Mobile
+	35
+	235
+	High
+	Flash Rampage
+	1
+
+	NOPE
+	Debilitating Smash
+	2
+	24
+	45
+	245
+	Low
+	Warding Strike
+	1
+	14
+	15
+	145
+	Medium
+	Shield Rush
+	2
+	24
+
+	Low
+	Annihilate
+	1
+	13
+	34
+	134 | 345 Farm
+	High
+	Pummel
+	3
+	34
+	34
+	345
+	High
+
+Passive
+	Priority
+	Fury
+	Very High
+	Impact Hit
+	High
+	Insulting Roar
+	High
+	Punishing Benediction
+	Medium-High
+	Enhance Health
+	Medium
+	Warding Shield
+	Medium
+	Ironclad Defense
+	Medium-Low
+	Block Pain
+	Low
+	Survival Willpower
+	Low
+	Guarding Seal
+	Low
+
+Stigma Placement
+Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
+
+Farm Build (Instant/Flicker Strike)
+Doom Shield 15 > Noble Armor 15 > Whatever else
+
+Stigma
+Nezekan’s Shield, Banner, and Empyrean’s Lord are for your flex slot.  Pick ONE.
+
+	Noble Armor
+	Shield of Protection
+	Taunt
+	Empyrean Lord’s (Stagger and leveling)
+	Nezekan’s Shield (Situational Survivability)
+	Banner (Multi Purpose)
+	Doom Shield (Leveling and Farming)
+	Level 22
+
+	1-5
+
+	Level 27
+
+	5
+
+	5
+
+	Level 37
+
+	5
+
+	5
+
+	5
+	32 Stigma
+	10
+	5
+	5
+	5*
+	5*
+	5*
+
+	50 Stigma
+	15
+	5
+	5
+	5*
+	5*
+	5*
+
+	110 Stigma
+	15
+	5
+	15
+	15*
+	15*
+	15*
+
+	120 Stigma
+	15
+	10
+	15
+	15*
+	15*
+	15*
+
+	160 Stigma
+	15
+	10
+	20*
+	15*
+	15*
+	15*
+
+	220 Stigma
+	15
+	15
+	20
+	20*
+	20*
+	20*
+
+	260 Stigma
+	20
+	15
+	20
+	20*
+	20*
+	20*
+
+	300 Stigma
+	20
+	20
+	20
+	20
+
+Where do I get more stigma points?
+Nightmare Dungeon Shop
+You can clear the first 10 levels of the far left bosses (First column and spend on Daevanion crystals and stigma shards.  After that you should hold for the statue after Zikel.
+
+Shugo Festival Shop
+Abyss Shop
+                     * Abyss Farm Siege
+                     * Abyss Commands
+                     * Nornir Commands
+                     * Duties
+                     * Abyss Corridors
+                     * Supply Request
+
+                     1. Setup Skills like below (Default)
+                     1.                           2. Farm Build
+                        3.           IF YOU’RE LAZY MOVE THE SELF BUFF BUTTONS ON 5 INTO THE E SLOT
+                           4. Click Macro and add the base skills
+USE THIS IF YOU’RE LEVELING, TAKE OUT DEBILITATING AFTER GETTING JUDGEMENT 16.
+
+IF YOU HAVE JUDGEMENT 16 DO THIS.
+
+                              5. Change macro to Right Click
+
+                              1. Buff Self (5)
+                              1. Noble Armor
+                              2. Banner
+                              2. PUNISHMENT (2) FOR DAMAGE + STAGGER (HOLD) + BUFF
+                              3. Left + Right Click (Vicious Strikes + Macro)
+                              4. USE POACH (1) AND SHIELD RUSH (3) FOR MOVEMENT
+                              5. SHIELD OF PROTECTION (Activate to block next attack/damage source)
+                              6. REPEAT
+
+Targeting
+
+                              *                                 * Auto Target on Skill use
+                              *                                 * Turn off Floating Combat Text
+                              *                                 * Screen Shake/Out of combat weapon
+                              *                                 * Increase sound effects and turn down everything else for hidden cubes
+                              *                                 * Front/Back indicator
+                              *                                 * Nameplates off, pets off, spirits off
+                              *
+
+Performance (WB/PVP) Improvements
+
+Display Identical Player Skins Abyss/Field
+
+Particle effect changes
+
+Mass combat Quality (Renders less on the screen)
+
+TELEPORT EFFECT COLOR, REDUCE FLASHBANG
+
+Auto Dismantle
+
+Buffs/Debuffs on top, less interface
+
+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
+
+Code with third ability bar present on left
+
+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
+Builds for all classes
+https://daevaos.com/guides/classes
+
+Material Map
+https://questlog.gg/aion-2/en/map
+
+Resource/Material map
+https://interactivemap.app/aion2/maps/altgard
+
+Material Map
+https://www.aion2timers.com/map/
+
+METER
+https://notmeter.com/
+https://loxin.gg/
+
+Timers
+https://www.aion2timers.com/
+
+Ranger Stuff
+https://docs.google.com/document/d/1evrt_6e6WSHRT1vMem2i3O7ZlfANJbqyZoSn66IFrBo/edit?tab=t.0
+
+Settings
+https://www.reddit.com/r/Aion2/comments/1wxfhbm/settings_that_made_aion_2_feel_much_better_for_me/
+
+Kanon’s Bible
+https://docs.google.com/document/d/11u4wLCG1WfL-xSka2Aze0rI9vYRa7mq3N3Gp1bt0AWY/preview?pru=AAABoTGnmOQ*cdujembm2N6lZm14vSp1NA&tab=t.0#
+
+Stoopzz’ Preset From Info
+https://docs.google.com/document/d/1_U3kYu6UIsCqea8WYulIkW-PYvjPJUeQ18h5EDqr0Cg/edit?tab=t.0
+
+Global Sorc https://app.notion.com/p/AION2-Sorcerer-PVE-Guide-Global-Version-3e61a9239eae8160a852d91773f0d21a
+
+Templar
+https://app.notion.com/p/Templar-s-Guide-How-Not-to-Brick-Your-Account-037d77a0f9b643d0af3fca41da45c7de
+
+Spiritmaster
+https://docs.google.com/document/d/1KW6pTkgMuQ-0sN-0QZr6giUtoik7pj1Jyd6ZqBKR5TE/edit?tab=t.41ab81i2b30i
+
+Pet Compendium (Scooter Jon’)
+https://docs.google.com/spreadsheets/d/1KerWteYAt900Uk5zg-rsdRSGXmolUe0hlUKQClV2b14/edit?gid=3362702#gid=3362702
+
+Cube map
+https://aion2maps.com/altgard/?lp=travel&L=labels,boss,dmark,svc:portal,teleport,dungeon,rift,svc:storage,svc:general,svc:craft,svc:table,svc:morph,svc:command,cube&show=gather:sapphire
+
+Pet Tracker Utility:
+https://loxin.gg/
+
+Unique Stuff in there
+
+(Boost Bracelet)
+
+Heroic
+
+More Card slots
+New Slots
+
+Hard Mode Sync Stones
+
+New Slot you substance morph up
+
+2026.10.31 - Adjusted the arcana stat priorities in the (working) stat sheet.
+
+2026.10.30 - Added in sorc to the stat prio document.  Templar Macro, Skills, and Stigmas mapped out.
+
+2026.10.27 - Added in TW Sorc and Ranger Stigmas to 25. Added in Ludra drops, Exp, Sanctuary, and Transcendence information from TW.
+
+2026.10.17 - Added in a sorc section with daevanion, skills, specialties, macro, and stigmas. WIP
+
+2026.10.15 - Adjusted Macro for self buffing after further testing.  Found a DPS increase in re-adjusting the macro into a 2 stack with an additional cast (3 in macro down from 4).  Added in pet Genus stat priorities (what I’m shooting for) onto the stat sheet.
+
+2026.10.14 - Broke out document into sections and adjusted specialties on skills based on testing.  Added in skill priorities for passives/actives.

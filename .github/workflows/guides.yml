@@ -1,0 +1,41 @@
+name: Check guides
+
+on:
+  schedule:
+    - cron: "37 5 * * *"     # every day, 08:37 Moscow time
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: check-guides
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Download the guides and compare
+        id: run
+        run: node scripts/guides.mjs | tee out.txt && grep '^CHANGED=' out.txt >> "$GITHUB_OUTPUT"
+      - name: Commit
+        run: |
+          git config user.name "armory-bot"
+          git config user.email "armory-bot@users.noreply.github.com"
+          git pull --rebase --autostash origin main || true
+          git add guides
+          if git diff --cached --quiet; then echo "No changes"; else git commit -m "Guides checked" && git push; fi
+      - name: Open an issue so GitHub notifies you
+        if: steps.run.outputs.CHANGED != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "@${{ github.repository_owner }}"; echo; head -c 60000 guides/last-change.md; } > body.md
+          gh issue create --title "Гайды обновились: ${{ steps.run.outputs.CHANGED }}" --body-file body.md
