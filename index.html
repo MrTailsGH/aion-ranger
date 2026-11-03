@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Оружейная Стрелка</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column. Identity band (who + refresh) → sticky tabs → panes. Gear is a card grid; skills are level rails with breakpoint ticks. */
+:root{
+  --bg:#eef2f7; --panel:#ffffff; --sunk:#f5f7fb; --fg:#17202e; --muted:#5d6878; --line:#d5dce6;
+  --gold:#9a7420; --gold-soft:#f3ead3; --aether:#2f5d9e; --aether-soft:#e3ebf7;
+  --good:#2f7d5b; --good-soft:#dcefe5; --warn:#a2471f; --warn-soft:#f8e7df; --mid:#7a6a1f; --mid-soft:#f4efd6;
+  --f-display:"Forum","Georgia",serif; --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-num:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1320; --panel:#151d2d; --sunk:#111827; --fg:#e4e9f1; --muted:#95a1b4; --line:#26314a;
+  --gold:#d8b25c; --gold-soft:#2a2516; --aether:#7ea6e0; --aether-soft:#1a2740;
+  --good:#5fbf91; --good-soft:#17302a; --warn:#e58a5f; --warn-soft:#2e1d16; --mid:#d6c26a; --mid-soft:#2a2814; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1320; --panel:#151d2d; --sunk:#111827; --fg:#e4e9f1; --muted:#95a1b4; --line:#26314a;
+  --gold:#d8b25c; --gold-soft:#2a2516; --aether:#7ea6e0; --aether-soft:#1a2740;
+  --good:#5fbf91; --good-soft:#17302a; --warn:#e58a5f; --warn-soft:#2e1d16; --mid:#d6c26a; --mid-soft:#2a2814; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 64px;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;margin:0;text-wrap:balance}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+button{font:inherit}
+.btn{text-decoration:none;display:inline-block;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:500}
+.btn:hover{border-color:var(--gold)}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:var(--panel)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn:focus-visible,.tabs button:focus-visible,.chk:focus-visible{outline:2px solid var(--aether);outline-offset:2px}
+
+/* identity band */
+.who{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.crest{width:64px;height:64px;border-radius:12px;background:var(--gold-soft);display:grid;place-items:center;font-family:var(--f-display);font-size:30px;color:var(--gold)}
+.who h1{font-size:clamp(28px,5vw,38px);line-height:1.05}
+.who .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin-top:4px}
+.who .meta b{color:var(--fg);font-weight:600}
+.act{display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:0}
+.status{font-size:12px;color:var(--muted);text-align:right;max-width:260px}
+.status.err{color:var(--warn)}
+.prog{height:4px;background:var(--line);border-radius:2px;overflow:hidden;width:200px}
+.prog i{display:block;height:100%;background:var(--gold);width:0;transition:width .2s}
+@media (max-width:640px){.who{grid-template-columns:auto 1fr}.act{grid-column:1/-1;align-items:stretch}.status{text-align:left;max-width:none}.prog{width:100%}}
+
+.setup{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.setup label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.setup input,.setup select{font:inherit;font-size:15px;text-transform:none;letter-spacing:0;color:var(--fg);background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--bg);display:flex;gap:2px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font-weight:500;font-size:15px;padding:10px 14px 8px;cursor:pointer;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--gold)}
+.pane{display:flex;flex-direction:column;gap:18px}
+
+section.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+section.box>h2{font-size:23px}
+.lead{margin:0;color:var(--muted);font-size:14px;max-width:70ch}
+
+/* overview */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.kpi span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kpi b{font-family:var(--f-num);font-weight:500;font-size:24px}
+.kpi small{color:var(--muted);font-size:12.5px}
+ol.todo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:t}
+ol.todo li{counter-increment:t;display:grid;grid-template-columns:28px 1fr;gap:4px 10px;padding:10px 12px;border-radius:10px;background:var(--sunk)}
+ol.todo li::before{content:counter(t);font-family:var(--f-num);color:var(--gold);font-size:14px;padding-top:1px;text-align:right}
+ol.todo li div{min-width:0}
+ol.todo b{font-weight:600}
+ol.todo small{display:block;color:var(--muted);font-size:13px}
+.chip{display:inline-block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:1px 7px;border-radius:99px;margin-right:6px;vertical-align:1px;font-weight:600;background:var(--aether-soft);color:var(--aether)}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;background:var(--sunk);font-size:14px}
+.check i{flex:0 0 20px;height:20px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700}
+.check.ok i{background:var(--good-soft);color:var(--good)} .check.no i{background:var(--warn-soft);color:var(--warn)} .check.mid i{background:var(--mid-soft);color:var(--mid)}
+.check small{display:block;color:var(--muted);font-size:12.5px}
+
+/* gear cards */
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card header{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start}
+.card .slot{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.card h3{font-size:19px;line-height:1.15}
+.card .sub{font-size:12.5px;color:var(--muted)}
+.grade{font-family:var(--f-display);font-size:26px;line-height:1;min-width:46px;text-align:center;padding:6px 6px 4px;border-radius:8px}
+.g-Sp,.g-S{background:var(--gold-soft);color:var(--gold)} .g-A{background:var(--good-soft);color:var(--good)} .g-B{background:var(--aether-soft);color:var(--aether)} .g-C,.g-D{background:var(--warn-soft);color:var(--warn)}
+ul.lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+ul.lines li{display:grid;grid-template-columns:18px 1fr auto;gap:8px;align-items:baseline;font-size:14px}
+ul.lines li .v{font-family:var(--f-num);font-size:12.5px;color:var(--muted)}
+.mk{width:12px;height:12px;border-radius:3px;display:inline-block;transform:translateY(1px)}
+.t-best{background:var(--good)} .t-good{background:color-mix(in srgb,var(--good) 55%,transparent)} .t-ok{background:var(--mid)} .t-junk{background:var(--warn)}
+li.junk .n{color:var(--warn)}
+.en{font-size:11.5px;color:var(--muted);margin-left:4px}
+.todo-line{font-size:13px;background:var(--sunk);border-radius:8px;padding:8px 10px}
+.todo-line b{font-weight:600}
+.bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--aether)}
+.stones{font-size:12.5px;color:var(--muted)}
+.stones b{color:var(--fg);font-weight:500}
+
+/* skills */
+table.sk{width:100%;border-collapse:collapse;font-size:14px}
+table.sk th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
+table.sk td{padding:8px 8px 8px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+table.sk td.n{font-family:var(--f-num);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}
+.rail{position:relative;height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:5px;min-width:140px}
+.rail i{position:absolute;inset:0 auto 0 0;background:var(--aether);border-radius:4px}
+.rail i.done{background:var(--good)}
+.rail u{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--muted);text-decoration:none;opacity:.6}
+.rail em{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--gold);font-style:normal}
+.tier{font-size:11px;font-weight:600;letter-spacing:.06em;padding:1px 7px;border-radius:99px;white-space:nowrap}
+.tier.t1{background:var(--gold-soft);color:var(--gold)} .tier.t2{background:var(--aether-soft);color:var(--aether)} .tier.t3{background:var(--sunk);color:var(--muted)} .tier.t4{background:var(--warn-soft);color:var(--warn)}
+
+/* stats */
+.dv{display:grid;grid-template-columns:150px 1fr 54px;gap:6px 12px;align-items:center;font-size:14px}
+.dv .track{height:12px;background:var(--sunk);border:1px solid var(--line);border-radius:6px;position:relative;overflow:hidden}
+.dv .track i{position:absolute;inset:0 auto 0 0;background:var(--aether)}
+.dv .track i.hi{background:var(--gold)}
+@media (max-width:480px){.dv{grid-template-columns:110px 1fr 46px}}
+.boards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.boards div{background:var(--sunk);border-radius:8px;padding:8px 10px;font-size:13px}
+.boards b{font-family:var(--f-num);font-weight:500}
+
+/* plan */
+ul.plan{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ul.plan li{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;align-items:flex-start}
+ul.plan li:last-child{border-bottom:0}
+.chk{flex:0 0 22px;height:22px;border:1.5px solid var(--muted);border-radius:5px;display:grid;place-items:center;margin-top:1px}
+.chk svg{width:14px;height:14px;opacity:0;stroke:var(--panel);stroke-width:3;fill:none}
+li.on .chk{background:var(--good);border-color:var(--good)} li.on .chk svg{opacity:1}
+li.on b{text-decoration:line-through;color:var(--muted)}
+ul.plan small{display:block;color:var(--muted);font-size:13px}
+ul.plan .src{font-size:11px;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+footer{font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+footer a{color:var(--aether)}
+.empty{padding:28px 16px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:12px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="who">
+    <div class="crest" aria-hidden="true">Т</div>
+    <div style="min-width:0">
+      <h1 id="cname">Персонаж</h1>
+      <div class="meta" id="cmeta"><span>Данные ещё не загружены</span></div>
+    </div>
+    <div class="act">
+      <a class="btn" id="btn-refresh" href="#" target="_blank" rel="noopener">Обновить вручную</a>
+      <div class="status" id="status">Загружаю данные…</div>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Разделы">
+    <button type="button" role="tab" data-tab="overview">Обзор</button>
+    <button type="button" role="tab" data-tab="gear">Экипировка</button>
+    <button type="button" role="tab" data-tab="skills">Skills и Stigma</button>
+    <button type="button" role="tab" data-tab="stats">Arcana и статы</button>
+    <button type="button" role="tab" data-tab="plan">План</button>
+  </nav>
+
+  <div id="pane-overview" class="pane"></div>
+  <div id="pane-gear" class="pane" hidden></div>
+  <div id="pane-skills" class="pane" hidden></div>
+  <div id="pane-stats" class="pane" hidden></div>
+  <div id="pane-plan" class="pane" hidden></div>
+
+  <footer>
+    <span>Данные персонажа — официальная оружейная AION 2 (aion2.plaync.com), обновляются автоматически через GitHub Actions. Оценки и советы — по гайдам стрелка: Allyria (Ranger Guide, Global) и Johnpal (Gearing Path и таблица приоритетов статов).</span>
+    <span>Где авторы расходятся, обе строки считаются хорошими. Оценка вещи — доля «правильных» строк по этим гайдам, а не процент топ-игроков.</span>
+  </footer>
+</div>
+
+<script>
+/* ================= guide data ================= */
+const L = { // stat & skill keys → labels
+  wdb:["Урон оружия","Weapon Damage Boost"], cs:["Скорость боя","Combat Speed"], might:["Мощь","Might"], prec:["Меткость","Precision"],
+  dmg:["Усиление урона","Damage Boost"], multi:["Шанс мультиудара","Multi-hit Chance"], atk:["Атака","Attack"], perfect:["Шанс идеального удара","Perfect Chance"],
+  crit:["Крит","Critical Hit"], acc:["Точность","Accuracy"], dc:["Двойной шанс","Double Chance"], atkinc:["Рост атаки","Attack increase"],
+  cdb:["Усиление крит. урона","Critical Damage Boost"], ms:["Скорость бега","Move Speed"], tol:["Стойкость к урону","Damage Tolerance"], heal:["Входящее лечение","Incoming Heal"],
+  pvedmg:["Урон в PvE","PvE Damage Boost"],
+  gale:["Шквал стрел","Gale Arrow"], deadshot:["Прицельный выстрел","Deadshot"], tempest:["Скоростная стрельба","Tempest Shot"], drill:["Пронзающая стрела","Drill Dart"],
+  burst:["Рассекающая стрела","Burst Arrow"], snipe:["Меткий выстрел","Snipe"], marking:["Помечающий выстрел","Marking Shot"], snare:["Опутывающий выстрел","Snare Shot"],
+  trap:["Взрывной капкан","Explosion Trap"], scatter:["Град из стрел","Arrow Scattershot"], suppress:["Поражающая стрела","Suppressing Arrow"], defiance:["Снятие шока","Defiance"],
+  fe:["Око концентрации","Focused Eye"], hr:["Решимость охотника","Hunter's Resolve"], hs:["Душа охотника","Hunter's Soul"], conc:["Шквальный огонь","Concentrated Fire"],
+  rooting:["Пленяющий взгляд","Rooting Eye"], melee:["Melee Fire","Melee Fire"], vigilant:["Vigilant Eye","Vigilant Eye"], revit:["Revitalization Contract","Revitalization Contract"],
+  unyield:["Unyielding Resolve","Unyielding Resolve"], wind:["Wind Vigor","Wind Vigor"],
+  vaizel:["Сила Байзела","Vaizel's Authority"], bob:["Благословенный лук","Bow of Blessing"], sf:["Поддерживающий огонь","Supporting Fire"], griffon:["Стрела грифона","Griffon Arrow"],
+  explosive:["Взрывная стрела","Explosive Arrow"], storm:["Ураган стрел","Arrow Storm"], mother:["Mother Nature's Breath","Mother Nature's Breath"]
+};
+const STAT_RX = [["wdb",/weapon damage boost/],["pvedmg",/pve damage boost/],["cdb",/critical damage boost|crit(ical)? damage/],["dmg",/^damage boost/],
+  ["cs",/combat speed/],["might",/^might/],["prec",/^precision/],["multi",/multi-?hit/],["perfect",/perfect/],["dc",/double chance/],["atkinc",/attack increase/],
+  ["atk",/^attack( bonus)?$/],["crit",/^critical hit$/],["acc",/^accuracy/],["ms",/move speed/],["tol",/^damage tolerance/],["heal",/heal/]];
+const SKILL_RX = [["gale",/gale arrow/],["deadshot",/deadshot/],["tempest",/tempest/],["drill",/drill dart/],["burst",/burst arrow/],["snipe",/snipe/],["marking",/marking/],
+  ["snare",/snare/],["trap",/explosion trap/],["scatter",/scattershot/],["suppress",/suppressing/],["defiance",/defiance/],["fe",/focused eye/],["hr",/hunter.s resolve/],
+  ["hs",/hunter.s soul/],["conc",/concentrated/],["rooting",/rooting/],["melee",/melee fire/],["vigilant",/vigilant/],["revit",/revitali/],["unyield",/unyielding/],["wind",/wind vigor/],
+  ["vaizel",/vaizel/],["bob",/bow of blessing/],["sf",/supporting fire/],["griffon",/griffon/],["explosive",/explosive arrow/],["storm",/arrow storm/],["mother",/mother nature/]];
+const statKey = n => { const s=(n||"").toLowerCase().trim(); for(const [k,r] of STAT_RX) if(r.test(s)) return k; return null; };
+const skillKey = n => { const s=(n||"").toLowerCase(); for(const [k,r] of SKILL_RX) if(r.test(s)) return k; return null; };
+const ru = k => (L[k]||[k,k])[1], en = k => "";
+const OTHER_RU = {"hp":"HP","mp":"MP","natural mp regen":"Регенерация MP","natural hp regen":"Регенерация HP","critical hit resist":"Сопротивление криту","block":"Блок",
+  "defense":"Защита","evasion":"Уклонение","evasion bonus":"Уклонение","dexterity":"Ловкость","constitution":"Телосложение","willpower":"Сила воли","flight power":"Сила полёта",
+  "front defense":"Защита спереди","accuracy bonus":"Точность","critical hit":"Крит","attack":"Атака"};
+const otherRu = n => n;
+
+// Soul-binding line priority per slot. A = Allyria, J = Johnpal (stat-priority sheet).
+const PRI = {
+  weapon:{A:["wdb","cs","might","prec","dmg","multi","atk"], J:["wdb","cs","might","prec","dmg","multi","atk"]},
+  guard:{A:["wdb","cs","might","prec","dmg","multi","atk"], J:["wdb","cs","might","prec","dmg","multi","atk"]},
+  helm:{A:["heal","fe","hr","dc","atkinc","crit","atk"], J:["dc","atkinc","hr","fe","heal","crit","atk"]},
+  shoulder:{A:["cdb","fe","hr","dc","crit","atk","acc"], J:["cdb","fe","hr","dc","crit","atk","acc"]},
+  torso:{A:["dmg","fe","hr","perfect","crit","acc","atk"], J:["dmg","fe","hr","perfect","crit","acc","atk"]},
+  pants:{A:["tol","fe","hr","perfect","atkinc","crit","atk"], J:["atkinc","fe","hr","perfect","tol","crit","atk"]},
+  gloves:{A:["cs","fe","hr","crit","atk","acc","hs"], J:["cs","fe","hr","crit","atk","acc","hs"]},
+  boots:{A:["ms","fe","hr","perfect","crit","atk","acc"], J:["ms","fe","hr","perfect","crit","atk","acc"]},
+  cape:{A:["fe","hr","dc","atkinc","crit","acc","atk"], J:["dc","fe","hr","atkinc","crit","acc","atk"]},
+  necklace:{A:["fe","hr","cs","might","prec","acc","crit"], J:["fe","hr","cs","might","prec","acc","crit"]},
+  earring:{A:["fe","hr","might","prec","acc","crit","atk"], J:["fe","hr","might","prec","acc","crit","atk"]},
+  ring:{A:["gale","deadshot","tempest","drill","might","prec","burst"], J:["deadshot","tempest","gale","drill","might","prec","burst"]}
+};
+const SLOT = { // slotPosName → [kind, RU name, weight for priority]
+  MainHand:["weapon","Weapon",1.4], SubHand:["guard","Guard",1.3], Helmet:["helm","Helm",1], Shoulder:["shoulder","Pauldrons",1], Torso:["torso","Breastplate",1.1],
+  Pants:["pants","Greaves",1], Gloves:["gloves","Gloves",1], Boots:["boots","Boots",1], Cape:["cape","Cloak",1], Necklace:["necklace","Necklace",1],
+  Earring1:["earring","Earring 1",1], Earring2:["earring","Earring 2",1], Ring1:["ring","Ring 1",1.3], Ring2:["ring","Ring 2",1.3]
+};
+const ARC = { // arcana: good skills per card (union of both guides), set expected
+  Chalice:{ru:"Chalice",set:"Vigor",good:["fe","hr","snipe","tempest","deadshot","drill","gale"],ok:[]},
+  Parchment:{ru:"Parchment",set:"Vigor",good:["drill","snipe","burst","tempest"],ok:[]},
+  Compass:{ru:"Compass",set:"Magic",good:["deadshot","gale","burst"],ok:["marking","scatter"]},
+  Bell:{ru:"Bell",set:"Magic",good:["hr","rooting","vigilant","revit"],ok:[]},
+  Mirror:{ru:"Mirror",set:"Magic",good:["fe","conc","unyield","melee","hs"],ok:[]}
+};
+const ACTIVE = [ // [key, target, tier label, tier class]
+  ["gale",20,"Tier 1 · +20","t1"],["deadshot",20,"Tier 1 · +20","t1"],["drill",20,"Tier 1 · +20","t1"],["tempest",20,"Tier 1 · +20","t1"],["burst",20,"Tier 1 · +20","t1"],
+  ["snipe",16,"Tier 2 · +16","t2"],["marking",16,"Tier 2 · +16","t2"],
+  ["snare",12,"Tier 3 · +12","t3"],["trap",12,"Tier 3 · +12","t3"],["scatter",12,"Tier 3 · +12","t3"],
+  ["defiance",0,"Не вкладывать","t4"],["suppress",0,"Не вкладывать","t4"]
+];
+const PASSIVE = [["fe","S","t1"],["hr","S","t1"],["hs","Tier 1","t1"],["rooting","Tier 2","t2"],["conc","Tier 2","t2"],["melee","Tier 2","t2"],["vigilant","Tier 2","t2"],["revit","Tier 3","t3"],["wind","Tier 3","t3"],["unyield","Tier 3","t3"]];
+const STIG_LADDER = [ // Johnpal: points → [vaizel, sf, bob, griffon]
+  [160,20,10,15,15],[180,20,15,15,15],[220,20,20,15,15],[260,20,20,20,15],[300,20,20,20,20]
+];
+const DIVINE = [ // Allyria priority with her endgame example
+  ["Wisdom","Wisdom","Double Chance",197],["Destruction","Destruction","Attack increase",170],["Time","Time","Combat Speed",165],["Death","Death","Critical Hit",143],
+  ["Illusion","Illusion","Cooldown",117],["Justice","Justice","Perfect Chance",70],["Freedom","Freedom","Accuracy",73],["Space","Space","Move Speed",93],
+  ["Life","Life","HP",89],["Destiny","Destiny","MP",68]
+];
+const THRESH = [[2100,"Horn Den и Fire Temple (вещи 86 ур.)"],[2200,"Transcendence ★3"],[2500,"Transcendence ★4"],[2800,"Ludra · Accuracy ~1200"]];
+const GOOD_STONES = ["front","back","atk","wdb","crit","acc","dmg"];
+const PLAN = [
+  ["craft","Крафт лучшей экипировки: Weapon → Rings ≥ Guard","Оба гайда считают скрафченную PvE-экипировку лучшей. Allyria: без доната на сезон 1 хватит экипировки из подземелий","Johnpal + Allyria"],
+  ["horn","Horn Den: пити Exploration, Expedition и Guard","Если не крафтишь — основной источник брони","Johnpal"],
+  ["fire","Fire Temple: бижутерия и Weapon","","Johnpal"],
+  ["trial","Ascension Trial — каждую неделю","Johnpal помечает как ВАЖНО","Johnpal"],
+  ["enh","Заточка: дешёвый уник низкого уровня заточить и перенести","Экономит материалы","Johnpal"],
+  ["alch","Качать Alchemy под Manastones и Soulstones","Это большие Kinah; Superior — только на финальные вещи","Johnpal"],
+  ["dp","Daevanion: Hard Krao 30, Hard Draupnir 30, Shugo Festival, Nightmare, Abyss Feathers","Не покупать Daevanion Crystals за Abyss Points","Johnpal"],
+  ["trans","Transcendence 2200/2500: Transcendence Extract, прямые улучшения, Transmute золотой карты","","Johnpal"],
+  ["stig","Stigma Shards: Nightmare, Shugo Festival, Abyss Shop","Abyss Points: Supply Requests, фарм Abyss, Commands, Duties, Abyss Corridors","Johnpal + Allyria"],
+  ["sync","Sync: Shugo Festival, альты, Kinah","Sync для вещей от 86 уровня, потом Bind до 100%","Johnpal"],
+  ["wings","Wings: надетые и в коллекции — Talisra, Forest Spirit, Dark Veil","Заточить все Wings: нужно для лучшего атакующего титула","Johnpal + Allyria"],
+  ["pets","Pets: Cogni и Natura до 3 уровня","Natura: +1 Precision за питомца","Johnpal"],
+  ["genus","Genus Insight: сначала слот 4, потом 7; не фиксировать до 10 уровня","Rainbow Crystals — только в Special. 75–80% ролла на первом пресете достаточно","Allyria"],
+  ["pantheon","Pantheon: Artworks Illusion + Wisdom (+Life), Statues Freedom/Death/Space, Colossus Zikel/Kromede","","Allyria"],
+  ["runes","Clash Runes: не выше +6/+7, точить запасные","Неудача может уничтожить руну","Allyria + Johnpal"]
+];
+
+/* ================= analysis ================= */
+function lineTier(kind, key, N){
+  const p=PRI[kind]; if(!p||!key) return "junk";
+  const a=p.A.indexOf(key), j=p.J.indexOf(key);
+  const inA=a>=0&&a<N, inJ=j>=0&&j<N;
+  if(inA&&inJ) return "best"; if(inA||inJ) return "good"; if(a>=0||j>=0) return "ok"; return "junk";
+}
+const W={best:3,good:2.5,ok:1.2,junk:0};
+function letter(r){ return r>=.95?"S+":r>=.8?"S":r>=.65?"A":r>=.45?"B":r>=.25?"C":"D"; }
+function analyzeItem(eq, d){
+  const meta=SLOT[eq.slotPosName]; if(!meta||!d) return null;
+  const [kind,label,wt]=meta; const N=Math.max(d.subStatCount||0,1);
+  const lines=[];
+  for(const s of d.subStats||[]){ const k=statKey(s.name); lines.push({key:k,name:k?ru(k):otherRu(s.name),en:k?en(k):(otherRu(s.name)!==s.name?s.name:""),value:s.value,skill:false}); }
+  for(const s of d.subSkills||[]){ const k=skillKey(s.name); lines.push({key:k,name:k?ru(k)+" +"+s.level:s.name,en:k?en(k):"",value:"",skill:true}); }
+  const seen=new Set();
+  for(const l of lines){ l.tier = l.key&&seen.has(l.key) ? "ok" : lineTier(kind,l.key,N); if(l.key) seen.add(l.key); }
+  const score=Math.min(1, lines.reduce((s,l)=>s+W[l.tier],0)/(3*N));
+  const p=PRI[kind]; const have=new Set(lines.map(l=>l.key));
+  const cand=[...new Set([...p.A.slice(0,N),...p.J.slice(0,N)])].filter(k=>!have.has(k))
+    .sort((x,y)=>(p.A.indexOf(x)+p.J.indexOf(x))-(p.A.indexOf(y)+p.J.indexOf(y)));
+  const reroll=[...lines.filter(l=>l.tier==="junk"),...lines.filter(l=>l.tier==="ok")];
+  const stones=(d.magicStoneStat||[]).map(s=>{ const n=s.name.toLowerCase(); const k=/front/.test(n)?"front":/back/.test(n)?"back":statKey(s.name.replace(/ bonus$/i,"")); return {...s,good:GOOD_STONES.includes(k)}; });
+  return {eq,d,kind,label,wt,N,lines,score,grade:letter(score),targets:cand,reroll,stones,bind:parseFloat(d.soulBindRate||"0")};
+}
+function analyzeArcana(d){
+  const cat=d.categoryName; const a=ARC[cat]; if(!a) return null;
+  const lines=(d.subSkills||[]).map(s=>{ const k=skillKey(s.name); return {key:k,name:k?ru(k):s.name,en:k?en(k):"",lvl:s.level,tier:a.good.includes(k)?"best":a.ok.includes(k)?"ok":"junk"}; });
+  const score=lines.length?lines.reduce((s,l)=>s+W[l.tier],0)/(3*lines.length):0;
+  const setOk=(d.name||"").includes(a.set);
+  return {d,cat,ru:a.ru,setWant:a.set,setOk,lines,score,grade:letter(score),junk:lines.filter(l=>l.tier==="junk")};
+}
+function analyze(snap){
+  const items=snap.items||{}; const R={gear:[],arc:[],other:{}};
+  for(const e of snap.equipment||[]){
+    const d=items[e.slotPos];
+    if(SLOT[e.slotPosName]) R.gear.push(analyzeItem(e,d));
+    else if(/^Arcana/.test(e.slotPosName)&&d){ const a=analyzeArcana(d); if(a) R.arc.push(a); }
+    else R.other[e.slotPosName]={e,d};
+  }
+  R.gear=R.gear.filter(Boolean);
+  const order=Object.keys(SLOT); R.gear.sort((a,b)=>order.indexOf(a.eq.slotPosName)-order.indexOf(b.eq.slotPosName));
+  const ARC_ORDER=["Chalice","Parchment","Compass","Bell","Mirror"]; R.arc.sort((a,b)=>ARC_ORDER.indexOf(a.cat)-ARC_ORDER.indexOf(b.cat));
+  const sk={}; for(const s of snap.skills||[]){ const k=skillKey(s.name); if(k) sk[k]=s; } R.skills=sk;
+  const st={}; for(const s of snap.info?.stats||[]) st[s.type]=s.value; R.stats=st;
+  R.ilvl=st.ItemLevel||0;
+  R.avg=R.gear.length?R.gear.reduce((s,g)=>s+g.score,0)/R.gear.length:0;
+  return R;
+}
+function stigmaNext(sk){
+  const lv=k=>sk[k]?.skillLevel||0; const cur=[lv("vaizel"),lv("sf"),lv("bob"),lv("griffon")];
+  for(const row of STIG_LADDER){ const need=row.slice(1); const miss=need.map((v,i)=>v-cur[i]); if(miss.some(m=>m>0)) return {row,cur,miss}; }
+  return null;
+}
+function actions(R){
+  const out=[];
+  for(const g of R.gear){
+    if(g.score>=.95) continue;
+    const gain=(1-g.score)*g.N*g.wt;
+    const r=g.reroll.slice(0,2).map(l=>l.name).join(", "); const t=g.targets.slice(0,3).map(ru).join(", ");
+    out.push({p:gain*2.2,tag:"Sync",t:g.label+": перекинуть "+(r||"слабые строки"),s:"Цель: "+(t||"—")+". Потом Bind до 100%."});
+  }
+  const sn=stigmaNext(R.skills);
+  if(sn){ const names=["vaizel","sf","bob","griffon"]; const i=sn.miss.findIndex(m=>m>0);
+    out.push({p:5.5,tag:"Stigma",t:ru(names[i])+": "+sn.cur[i]+" → "+sn.row[i+1],s:"Следующая ступень Johnpal ("+sn.row[0]+" Stigma points): "+names.map((n,j)=>ru(n)+" "+sn.row[j+1]).join(" · ")}); }
+  for(const [k,target,,cls] of ACTIVE){ if(cls!=="t1") continue; const l=R.skills[k]?.skillLevel||0; if(l>=target) continue;
+    const nb=[8,12,16,20].find(b=>b>l); out.push({p:4+(nb-l===1?1.5:0),tag:"Skill",t:ru(k)+": "+l+" → "+nb,s:"Порог Specialty. Уровни дают Arcana, Rings (строки скиллов) и Daevanion."}); }
+  const w=R.gear.find(g=>g.kind==="weapon"); if(w){ const bad=w.stones.filter(s=>!s.good).length; if(bad) out.push({p:5,tag:"Manastones",t:"Weapon: "+bad+" из "+w.stones.length+" Manastones бесполезны",s:"Нужны Front/Back Attack Damage, Attack, Weapon Damage Boost, Critical Hit, Accuracy. Лук уже финальный — сюда можно вкладывать."}); }
+  const belt=R.other.Belt; if(belt&&belt.e.enchantLevel<(belt.d?.maxEnchantLevel||10)) out.push({p:4.5,tag:"Belt",t:"Belt +"+belt.e.enchantLevel+" → +"+(belt.d?.maxEnchantLevel||10),s:"Johnpal: Belt и Amulet заточить до максимума и улучшить до Unique."});
+  const br=["Bracelet1","Bracelet2"].map(k=>R.other[k]).filter(Boolean); if(br.some(b=>(b.d?.level||0)<80)) out.push({p:3,tag:"Bracelets",t:"Заменить Bracelets на браслеты из Sanctuary",s:"Строки у браслетов фиксированные; ценятся Divine Stats: Wisdom > Destruction > Time."});
+  for(const a of R.arc){ if(a.d.grade!=="Unique") out.push({p:4,tag:"Arcana",t:a.ru+": "+a.d.grade+" → Unique",s:"Нужные строки: "+ARC[a.cat].good.map(ru).join(", ")}); }
+  const dv=DIVINE.slice(0,5).map(([t,r,,ex])=>({r,ratio:(R.stats[t]||0)/ex})).sort((a,b)=>a.ratio-b.ratio)[0];
+  if(dv&&dv.ratio<.4) out.push({p:3,tag:"Divine Stats",t:dv.r+" сильно отстаёт",s:"Источники: Arcana, Pantheon Artworks, Sanctuary Bracelets."});
+  const syncs=out.filter(a=>a.tag==="Sync").sort((a,b)=>b.p-a.p);
+  const rest=out.filter(a=>a.tag!=="Sync");
+  const extra=syncs.length>4?[{p:0,tag:"Sync",t:"Ещё "+(syncs.length-4)+" вещей",s:"Полный список — на вкладке «Экипировка»."}]:[];
+  return [...syncs.slice(0,4),...rest].sort((a,b)=>b.p-a.p).concat(extra);
+}
+const gradeRu=g=>g;
+
+/* ================= render ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+const CHECK='<svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg>';
+let DOC=null, PLANSTATE={};
+
+function renderAll(){
+  const snap=DOC?.snap;
+  const panes=["overview","gear","skills","stats","plan"];
+  if(!snap){
+    for(const p of panes) if(p!=="plan") $("#pane-"+p).innerHTML='<div class="empty">Данные ещё не загружены. Они появятся после первого запуска обновления на GitHub (вкладка Actions → Update character → Run workflow).</div>';
+    renderPlan(null); return;
+  }
+  const R=analyze(snap); const p=snap.info?.profile||{};
+  $("#cname").textContent=p.characterName||"Персонаж";
+  $("#cmeta").innerHTML=`<span>${esc(p.raceName)} · ${esc(p.className)} Lv ${esc(p.characterLevel)}</span><span>${esc(p.serverName)} (${esc((DOC.query?.region||"").toUpperCase())})</span><span>Legion <b>${esc(p.regionName||"—")}</b></span><span>Обновлено <b>${DOC.fetchedAt?new Date(DOC.fetchedAt).toLocaleString("ru-RU",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"—"}</b></span>`;
+  renderOverview(R,snap); renderGear(R); renderSkills(R); renderStats(R,snap); renderPlan(R);
+}
+function histBlock(){
+  if(!HIST||HIST.length<2) return "";
+  const W=600,H=120,P=8; const xs=HIST.map(h=>h.t), ys=HIST.map(h=>h.cp);
+  const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const X=t=>P+(x1===x0?0:(t-x0)/(x1-x0))*(W-2*P), Y=v=>H-P-(y1===y0?0.5:(v-y0)/(y1-y0))*(H-2*P);
+  const pts=HIST.map(h=>X(h.t).toFixed(1)+","+Y(h.cp).toFixed(1)).join(" ");
+  const last=HIST[HIST.length-1], first=HIST[0];
+  const d=new Date(first.t).toLocaleDateString("ru-RU",{day:"numeric",month:"short"});
+  return `<section class="box"><h2>Рост Combat Power</h2><p class="lead">С ${d}: ${first.cp.toLocaleString("ru-RU")} → <b>${last.cp.toLocaleString("ru-RU")}</b> (${last.cp-first.cp>=0?"+":""}${(last.cp-first.cp).toLocaleString("ru-RU")}). Item Level ${first.ilvl} → ${last.ilvl}.</p>
+  <svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" preserveAspectRatio="none" role="img" aria-label="График Combat Power"><polyline points="${pts}" fill="none" stroke="var(--gold)" stroke-width="2.5" vector-effect="non-scaling-stroke"/><circle cx="${X(last.t)}" cy="${Y(last.cp)}" r="4" fill="var(--gold)"/></svg></section>`;
+}
+function kpi(label,val,sub){ return `<div class="kpi"><span>${label}</span><b>${val}</b><small>${sub}</small></div>`; }
+function renderOverview(R,snap){
+  const p=snap.info.profile; const next=THRESH.find(t=>t[0]>R.ilvl);
+  const acts=actions(R).slice(0,10);
+  const checks=quickChecks(R,snap);
+  $("#pane-overview").innerHTML=`
+  <div class="kpis">
+    ${kpi("Combat Power",(p.combatPower||0).toLocaleString("ru-RU"),"по оружейной")}
+    ${kpi("Item Level",R.ilvl.toLocaleString("ru-RU"),next?"дальше: "+next[0]+" — "+next[1]:"все пороги сезона пройдены")}
+    ${kpi("Экипировка по гайдам",letter(R.avg),Math.round(R.avg*100)+"% строк в приоритете")}
+    ${kpi("Titles",(snap.info.titles?.owned||0)+" / "+(snap.info.titles?.total||0),"собрано")}
+  </div>
+  ${histBlock()}
+  <section class="box"><h2>Что делать сначала</h2>
+    <p class="lead">Список собран из данных персонажа и приоритетов двух гайдов. Порядок — оценка выгоды: синхронизация считается по числу «неправильных» строк и важности слота.</p>
+    <ol class="todo">${acts.map(a=>`<li><div><span class="chip">${esc(a.tag)}</span><b>${esc(a.t)}</b><small>${esc(a.s)}</small></div></li>`).join("")}</ol>
+  </section>
+  <section class="box"><h2>Быстрые проверки</h2><div class="checks">${checks.map(c=>`<div class="check ${c[0]}"><i>${c[0]==="ok"?"✓":c[0]==="no"?"!":"~"}</i><div>${esc(c[1])}<small>${esc(c[2])}</small></div></div>`).join("")}</div></section>`;
+}
+function quickChecks(R,snap){
+  const c=[]; const o=R.other;
+  const belt=o.Belt, am=o.Amulet;
+  if(belt) c.push([belt.e.enchantLevel>=(belt.d?.maxEnchantLevel||10)?"ok":"no","Belt +"+belt.e.enchantLevel,"Цель — максимум, затем Unique (Johnpal)"]);
+  if(am) c.push([am.e.enchantLevel>=(am.d?.maxEnchantLevel||10)?"ok":"no","Amulet +"+am.e.enchantLevel,"Цель — максимум (Johnpal)"]);
+  const runes=["Rune1","Rune2"].map(k=>o[k]).filter(Boolean);
+  if(runes.length) c.push([runes.every(r=>r.e.enchantLevel<=7)?"ok":"mid","Clash Runes "+runes.map(r=>"+"+r.e.enchantLevel).join(" / "),"Allyria: выше +6/+7 не стоит — риск уничтожения"]);
+  const vig=R.arc.filter(a=>a.setWant==="Vigor"&&a.setOk).length, mag=R.arc.filter(a=>a.setWant==="Magic"&&a.setOk).length;
+  c.push([vig===2&&mag===3?"ok":"no","Arcana: "+vig+" Vigor + "+mag+" Magic","Цель обоих гайдов: 2 Vigor (Chalice, Parchment) + 3 Magic"]);
+  const nu=R.arc.filter(a=>a.d.grade!=="Unique").length; c.push([nu?"no":"ok",nu?"Arcana не Unique: "+nu:"Все Arcana — Unique","Unique дают больше строк скиллов"]);
+  const tl=snap.info.titles?.list||[]; const want=["Unbound by Genus","Saint of Altgard","Through Hell and Back"]; const has=want.filter(w=>tl.some(t=>t.name===w)).length;
+  c.push([has===3?"ok":"mid","Titles: "+has+" из 3 рекомендованных","Attack: Unbound by Genus · Defense: Saint of Altgard · Special: Through Hell and Back"]);
+  const wing=snap.info.petwing?.wing?.name||""; c.push([/talisra|forest spirit|dark veil/i.test(wing)?"ok":"mid","Wings: "+(wing||"—"),"Johnpal: Talisra, Forest Spirit, Dark Veil"]);
+  const ariel=(snap.info.daevanion||[]).find(b=>b.name==="Ariel"); if(ariel) c.push([ariel.open?"ok":"mid","Ariel: "+(ariel.open?ariel.openNodeCount+" / "+ariel.totalNodeCount:"не открыта"),"Johnpal: доска для 400+ очков (раздел ещё в работе)"]);
+  const vz=R.skills.vaizel?.skillLevel||0; c.push([vz>=20?"ok":"no","Vaizel's Authority "+vz,"Главная стигма — первой до 20"]);
+  const unb=R.gear.filter(g=>g.bind<100).length; c.push([unb?"mid":"ok",unb?"Soul Binding < 100%: "+unb+" вещей":"Soul Binding 100% на всех вещах","После Sync — Bind до 100%"]);
+  return c;
+}
+function renderGear(R){
+  const cards=R.gear.map(g=>{
+    const tgt=g.targets.slice(0,Math.max(1,g.reroll.length));
+    const gl=g.grade==="S+"?"Sp":g.grade;
+    const stonesOk=g.stones.filter(s=>s.good).length;
+    return `<article class="card">
+      <header><div style="min-width:0"><div class="slot">${esc(g.label)}</div><h3>${esc(g.eq.name)}</h3><div class="sub">+${g.eq.enchantLevel}${g.eq.exceedLevel?" · Exceed "+g.eq.exceedLevel:""} · ${g.d.grade} · Lv ${g.d.level}</div></div><div class="grade g-${gl}" title="Доля строк в приоритете гайдов">${g.grade}</div></header>
+      <ul class="lines">${g.lines.map(l=>`<li class="${l.tier}"><span class="mk t-${l.tier}" title="${tierTitle(l.tier)}"></span><span class="n">${esc(l.name)}${l.en&&l.en!==l.name.replace(/ \+\d+$/,"")?`<span class="en">${esc(l.en)}</span>`:""}</span><span class="v">${esc(l.value)}</span></li>`).join("")}</ul>
+      ${g.reroll.length?`<div class="todo-line"><b>Перекинуть:</b> ${g.reroll.map(l=>esc(l.name)).join(", ")}<br><b>Целиться в:</b> ${tgt.map(k=>esc(ru(k))).join(", ")||"—"}</div>`:`<div class="todo-line"><b>Строки как в гайдах.</b> ${g.kind==="weapon"?"Когда Soul Binding 100% — Soul Fuse: добавить Precision.":"Bind до 100%."}</div>`}
+      <div><div class="sub" style="display:flex;justify-content:space-between"><span>Soul Binding</span><span class="num">${g.bind}%</span></div><div class="bar"><i style="width:${Math.min(100,g.bind)}%"></i></div></div>
+      ${g.stones.length?`<div class="stones">Manastones: <b>${stonesOk} из ${g.stones.length}</b> полезных${g.stones.some(s=>!s.good)?" · лишние: "+[...new Set(g.stones.filter(s=>!s.good).map(s=>otherRu(s.name)))].map(esc).join(", "):""}</div>`:""}
+    </article>`;}).join("");
+  $("#pane-gear").innerHTML=`<section class="box"><h2>Sync по гайдам</h2>
+    <p class="lead">Для вещи с N строками цель — первые N строк из списка приоритетов слота. Списки Allyria и Johnpal почти совпадают; где расходятся, засчитываются оба варианта.</p>
+    <div class="legend"><span><i class="mk t-best"></i>в топе у обоих</span><span><i class="mk t-good"></i>в топе у одного</span><span><i class="mk t-ok"></i>в списке, но ниже</span><span><i class="mk t-junk"></i>бесполезна — перекинуть</span></div></section>
+    <div class="cards">${cards}</div>
+    <section class="box"><h2>Manastones и Soulstones</h2><p class="lead">Johnpal: Front Attack Damage ≥ Back Attack Damage, Attack, Weapon Damage Boost, Critical Hit, Accuracy, Damage Boost. Allyria: на финальных вещах — две золотые строки +100 (Weapon или Front/Back Damage). На старте Critical Hit и Accuracy — нормальный выбор. Superior-камни ставить только на вещи, которые не будешь менять.</p></section>`;
+}
+const tierTitle=t=>({best:"В топе у обоих гайдов",good:"В топе у одного гайда",ok:"Есть в списке, но ниже",junk:"Нет в списках — перекинуть"})[t];
+function renderSkills(R){
+  const rail=(lvl,target)=>{ const pct=v=>Math.min(100,v/20*100); return `<div class="rail"><i class="${target&&lvl>=target?"done":""}" style="width:${pct(lvl)}%"></i>${[8,12,16].map(b=>`<u style="left:${pct(b)}%"></u>`).join("")}${target?`<em style="left:calc(${pct(target)}% - 1px)"></em>`:""}</div>`; };
+  const act=ACTIVE.map(([k,target,tier,cls])=>{ const l=R.skills[k]?.skillLevel||0; const nb=[8,12,16,20].find(b=>b>l);
+    return `<tr><td>${esc(ru(k))}</td><td><span class="tier ${cls}">${tier}</span></td><td class="n">${l}</td><td style="width:40%">${rail(l,target)}</td><td class="n">${target?(l>=target?"готово":"до "+(nb&&nb<=target?nb:target)+": "+((nb&&nb<=target?nb:target)-l)):"—"}</td></tr>`; }).join("");
+  const pas=PASSIVE.map(([k,t,cls])=>{ const l=R.skills[k]?.skillLevel||0; return `<tr><td>${esc(ru(k))}<span class="en">${esc(en(k)!==ru(k)?en(k):"")}</span></td><td><span class="tier ${cls}">${t}</span></td><td class="n">${l}</td><td style="width:40%">${rail(l,0)}</td></tr>`; }).join("");
+  const names=["vaizel","sf","bob","griffon"]; const sn=stigmaNext(R.skills);
+  const cur=names.map(n=>R.skills[n]?.skillLevel||0);
+  const ladder=STIG_LADDER.map(row=>{ const met=row.slice(1).every((v,i)=>cur[i]>=v); const isNext=sn&&sn.row===row;
+    return `<tr${isNext?' style="background:var(--gold-soft)"':""}><td class="n">${row[0]}</td>${row.slice(1).map((v,i)=>`<td class="n" style="${cur[i]>=v?"color:var(--good)":""}">${v}</td>`).join("")}<td>${met?"✓":isNext?"следующий шаг":""}</td></tr>`; }).join("");
+  $("#pane-skills").innerHTML=`
+  <section class="box"><h2>Active Skills</h2><p class="lead">Цели по Allyria: Tier 1 до +20, Tier 2 до +16, Tier 3 до +12. Пороги Specialty — 8 / 12 / 16 / 20 (засечки на шкале, золотая — цель). Johnpal: Arcana — сначала +16, потом +20 для Deadshot, Gale Arrow, Tempest Shot и Drill Dart.</p>
+    <div class="tw"><table class="sk"><tr><th>Skill</th><th>Приоритет</th><th class="n">Ур.</th><th>Шкала</th><th class="n">Осталось</th></tr>${act}</table></div></section>
+  <section class="box"><h2>Passive Skills</h2><p class="lead">Allyria: S — Focused Eye > Hunter's Resolve; Tier 1 — Hunter's Soul. Именно эти строки оба гайда ставят высоко на броне и бижутерии.</p>
+    <div class="tw"><table class="sk"><tr><th>Passive</th><th>Приоритет</th><th class="n">Ур.</th><th>Шкала</th></tr>${pas}</table></div></section>
+  <section class="box"><h2>Stigma</h2><p class="lead">Сейчас: ${names.map((n,i)=>esc(ru(n))+" <b class=\"num\">"+cur[i]+"</b>").join(" · ")}. Лестница Johnpal по сумме Stigma points (Explosive Arrow меняют на Griffon Arrow с 15 уровня).</p>
+    <div class="tw"><table class="sk"><tr><th class="n">Points</th>${names.map(n=>`<th class="n">${esc(ru(n))}</th>`).join("")}<th></th></tr>${ladder}</table></div></section>`;
+}
+function renderStats(R,snap){
+  const arc=R.arc.map(a=>{ const gl=a.grade==="S+"?"Sp":a.grade; return `<article class="card"><header><div style="min-width:0"><div class="slot">${esc(a.ru)} · нужен сет ${a.setWant}</div><h3>${esc(a.d.name)}</h3><div class="sub">+${a.d.enchantLevel} / ${a.d.maxEnchantLevel} · ${a.d.grade} · ${a.setOk?"сет верный":"<span style='color:var(--warn)'>не тот сет</span>"}</div></div><div class="grade g-${gl}">${a.grade}</div></header>
+    <ul class="lines">${a.lines.map(l=>`<li class="${l.tier}"><span class="mk t-${l.tier}"></span><span class="n">${esc(l.name)}${l.en&&l.en!==l.name?`<span class="en">${esc(l.en)}</span>`:""}</span><span class="v">+${l.lvl}</span></li>`).join("")}</ul>
+    <div class="todo-line">${a.d.grade!=="Unique"?"<b>Заменить на Unique.</b> ":""}${a.junk.length?`<b>Точить осторожно:</b> заточка поднимает случайную строку, а тут пустые — ${a.junk.map(l=>esc(l.name)).join(", ")}. Allyria: +1/+2 и смотреть, растут ли нужные.`:"<b>Все строки полезные</b> — можно точить до максимума."}</div></article>`; }).join("");
+  const max=Math.max(...DIVINE.map(d=>Math.max(d[3],R.stats[d[0]]||0)));
+  const dv=DIVINE.map(([t,r,eff,ex],i)=>{ const v=R.stats[t]||0; return `<span>${i+1}. ${r} <span class="en">${eff}</span></span><div class="track" title="Пример Allyria для эндгейма: ${ex}"><i class="${i<5?"hi":""}" style="width:${v/max*100}%"></i><u style="position:absolute;top:0;bottom:0;left:${ex/max*100}%;width:2px;background:var(--fg);opacity:.35"></u></div><span class="num" style="text-align:right">${v}</span>`; }).join("");
+  const prim=[["STR","Might"],["AGI","Precision"],["DEX","Dexterity"],["CON","Constitution"],["WIS","Willpower"]].map(([t,n])=>`<div><span class="muted">${n}</span><br><b>${R.stats[t]??"—"}</b></div>`).join("");
+  const boards=(snap.info.daevanion||[]).map(b=>`<div>${esc(b.name)}<br><b>${b.openNodeCount} / ${b.totalNodeCount}</b> ${b.open?"":"<span class='muted'>· закрыта</span>"}</div>`).join("");
+  $("#pane-stats").innerHTML=`
+  <section class="box"><h2>Arcana</h2><p class="lead">Оба гайда: 2 карты Vigor (Chalice, Parchment) + 3 карты Magic (Compass, Bell, Mirror) — ради правильных Divine Stats. Зелёным отмечены скиллы, которые гайды советуют на этой карте.</p></section>
+  <div class="cards">${arc}</div>
+  <section class="box"><h2>Divine Stats</h2><p class="lead">Порядок важности для урона по Allyria. Полоса — твоё значение, тонкая черта — её пример эндгейм-персонажа. Главные пять подсвечены.</p><div class="dv">${dv}</div></section>
+  <section class="box"><h2>Primary Stats и Daevanion</h2><p class="lead">Allyria: в фокусе Might и Precision (в её примере эндгейма по 309). Daevanion: оранжевые > синие > зелёные > белые; из белых — Attack > Critical Hit > HP. Иногда синий узел важнее оранжевого, если он доводит скилл до порога.</p>
+    <div class="boards">${prim}</div><div class="boards">${boards}</div></section>`;
+}
+function renderPlan(R){
+  const html=`<section class="box"><h2>Путь 2100 → 2800</h2><p class="lead">Дела из гайда Johnpal «Road to 2800+» и правил Allyria. Отметки сохраняются.</p>
+    <ul class="plan">${PLAN.map(([id,t,s,src])=>`<li data-id="${id}" class="${PLANSTATE[id]?"on":""}" tabindex="0" role="checkbox" aria-checked="${!!PLANSTATE[id]}"><div class="chk">${CHECK}</div><div style="min-width:0"><b>${esc(t)}</b>${s?`<small>${esc(s)}</small>`:""}<span class="src">${esc(src)}</span></div></li>`).join("")}</ul></section>`;
+  $("#pane-plan").innerHTML=html;
+  $("#pane-plan").querySelectorAll("li[data-id]").forEach(li=>{ const tog=()=>{ PLANSTATE[li.dataset.id]=!PLANSTATE[li.dataset.id]; savePlan(); renderPlan(R); };
+    li.onclick=tog; li.onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); tog(); } }; });
+}
+
+/* ================= tabs ================= */
+const TABS=["overview","gear","skills","stats","plan"];
+function showTab(t){ if(!TABS.includes(t)) t="overview";
+  document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  for(const x of TABS) $("#pane-"+x).hidden=x!==t;
+  try{ history.replaceState(null,"","#"+t); }catch(e){ location.hash=t; } }
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+window.addEventListener("hashchange",()=>showTab(location.hash.slice(1)));
+
+/* ================= storage & boot (GitHub Pages) ================= */
+function setStatus(msg,err){ const s=$("#status"); s.textContent=msg; s.className="status"+(err?" err":""); }
+function savePlan(){ try{ localStorage.setItem("ranger-armory-plan",JSON.stringify(PLANSTATE)); }catch(e){} }
+let HIST=[];
+(function repoLink(){ const m=location.hostname.match(/^([^.]+)\.github\.io$/); const repo=location.pathname.split("/").filter(Boolean)[0];
+  const a=$("#btn-refresh"); if(m&&repo){ a.href=`https://github.com/${m[1]}/${repo}/actions/workflows/update.yml`; a.title="Откроется GitHub: нажмите Run workflow, через 1–2 минуты обновите эту страницу"; } else a.hidden=true; })();
+try{ PLANSTATE=JSON.parse(localStorage.getItem("ranger-armory-plan")||"{}")||{}; }catch(e){}
+showTab(location.hash.slice(1));
+(async()=>{
+  try{
+    const r=await fetch("data.json?"+Date.now(),{cache:"no-store"}); if(!r.ok) throw new Error(r.status);
+    DOC=await r.json();
+    try{ const h=await fetch("history.json?"+Date.now(),{cache:"no-store"}); if(h.ok) HIST=await h.json(); }catch(e){}
+    renderAll(); setStatus("Обновляется автоматически каждые 4 часа");
+  }catch(e){ renderAll(); setStatus("Не удалось загрузить data.json",true); }
+})();
+</script>
+
+</body>
+</html>
