@@ -144,7 +144,7 @@ ul.plan li:last-child{border-bottom:0}
 li.on .chk{background:var(--good);border-color:var(--good)} li.on .chk svg{opacity:1}
 li.on b{text-decoration:line-through;color:var(--muted)}
 ul.plan small{display:block;color:var(--muted);font-size:13px}
-ul.plan .src{font-size:11px;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+ul.plan .src{display:block;font-size:11px;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
 footer{font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 footer a{color:var(--aether)}
 .empty{padding:28px 16px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:12px}
@@ -480,7 +480,7 @@ function renderStats(R,snap){
 function renderPlan(R){
   const html=`<section class="box"><h2>Путь 2100 → 2800</h2><p class="lead">Дела из гайда Johnpal «Road to 2800+» и правил Allyria. Отметки сохраняются.</p>
     <ul class="plan">${PLAN.map(([id,t,s,src])=>`<li data-id="${id}" class="${PLANSTATE[id]?"on":""}" tabindex="0" role="checkbox" aria-checked="${!!PLANSTATE[id]}"><div class="chk">${CHECK}</div><div style="min-width:0"><b>${esc(t)}</b>${s?`<small>${esc(s)}</small>`:""}<span class="src">${esc(src)}</span></div></li>`).join("")}</ul></section>`;
-  $("#pane-plan").innerHTML=html;
+  $("#pane-plan").innerHTML=guidesBlock()+html;
   $("#pane-plan").querySelectorAll("li[data-id]").forEach(li=>{ const tog=()=>{ PLANSTATE[li.dataset.id]=!PLANSTATE[li.dataset.id]; savePlan(); renderPlan(R); };
     li.onclick=tog; li.onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); tog(); } }; });
 }
@@ -497,7 +497,20 @@ window.addEventListener("hashchange",()=>showTab(location.hash.slice(1)));
 /* ================= storage & boot (GitHub Pages) ================= */
 function setStatus(msg,err){ const s=$("#status"); s.textContent=msg; s.className="status"+(err?" err":""); }
 function savePlan(){ try{ localStorage.setItem("ranger-armory-plan",JSON.stringify(PLANSTATE)); }catch(e){} }
-let HIST=[];
+let HIST=[], GSTAT=null;
+function repoBase(){ const m=location.hostname.match(/^([^.]+)\.github\.io$/); const repo=location.pathname.split("/").filter(Boolean)[0]; return m&&repo?`https://github.com/${m[1]}/${repo}`:null; }
+function guidesBlock(){
+  if(!GSTAT) return "";
+  const rb=repoBase(); const f=t=>t?new Date(t).toLocaleString("ru-RU",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"—";
+  const FILES={allyria:"allyria.txt","johnpal":"johnpal.txt","johnpal-stats":"johnpal-stats.csv"};
+  const rows=Object.entries(GSTAT).map(([id,g])=>{
+    const recent=g.changedAt&&(Date.now()-new Date(g.changedAt))<14*864e5;
+    const state=g.error?`<span style="color:var(--warn)">Ошибка проверки: ${esc(g.error)}</span>`:g.changedAt?`Изменён <b>${f(g.changedAt)}</b>: +${g.lastAdded} / −${g.lastRemoved} строк`:`Без изменений с ${f(g.firstSeen)}`;
+    const sample=recent&&g.lastSample?.length?`<small style="font-family:var(--f-num)">${g.lastSample.slice(0,4).map(l=>"+ "+esc(l.trim().slice(0,140))).join("<br>")}</small>`:"";
+    return `<div class="check ${g.error?"no":recent?"mid":"ok"}"><i>${g.error?"!":recent?"~":"✓"}</i><div style="min-width:0"><a href="${esc(g.link)}" target="_blank" rel="noopener" style="color:var(--fg);font-weight:600">${esc(g.name)}</a>${g.authorDate?` <span class="muted">· автор: ${esc(g.authorDate)}</span>`:""}<small>${state}</small>${sample}${rb?`<small><a href="${rb}/commits/main/guides/${FILES[id]}" target="_blank" rel="noopener" style="color:var(--aether)">История правок</a></small>`:""}</div></div>`; }).join("");
+  const any=Object.values(GSTAT)[0];
+  return `<section class="box"><h2>Слежение за гайдами</h2><p class="lead">Раз в день GitHub скачивает все три гайда и сравнивает с прошлой версией. Если что-то изменилось, здесь появится отметка, а на GitHub откроется issue — вам придёт уведомление. Последняя проверка: ${f(any?.checkedAt)}.${rb?` <a href="${rb}/blob/main/guides/CHANGES.md" target="_blank" rel="noopener" style="color:var(--aether)">Все изменения</a>`:""}</p><div class="checks">${rows}</div><p class="lead">Советы на этой странице сами не меняются: когда гайд обновится, пришлите изменения Claude, и логику подправят.</p></section>`;
+}
 (function repoLink(){ const m=location.hostname.match(/^([^.]+)\.github\.io$/); const repo=location.pathname.split("/").filter(Boolean)[0];
   const a=$("#btn-refresh"); if(m&&repo){ a.href=`https://github.com/${m[1]}/${repo}/actions/workflows/update.yml`; a.title="Откроется GitHub: нажмите Run workflow, через 1–2 минуты обновите эту страницу"; } else a.hidden=true; })();
 try{ PLANSTATE=JSON.parse(localStorage.getItem("ranger-armory-plan")||"{}")||{}; }catch(e){}
@@ -507,6 +520,7 @@ showTab(location.hash.slice(1));
     const r=await fetch("data.json?"+Date.now(),{cache:"no-store"}); if(!r.ok) throw new Error(r.status);
     DOC=await r.json();
     try{ const h=await fetch("history.json?"+Date.now(),{cache:"no-store"}); if(h.ok) HIST=await h.json(); }catch(e){}
+    try{ const g=await fetch("guides/status.json?"+Date.now(),{cache:"no-store"}); if(g.ok) GSTAT=await g.json(); }catch(e){}
     renderAll(); setStatus("Обновляется автоматически каждые 4 часа");
   }catch(e){ renderAll(); setStatus("Не удалось загрузить data.json",true); }
 })();
