@@ -1078,6 +1078,9 @@ https://aion2maps.com/altgard/?lp=travel&L=labels,boss,dmark,svc:portal,teleport
 Pet Tracker Utility:
 https://loxin.gg/
 
+Crafting Approximates
+https://questlog.gg/aion-2/en/crafting?server=2101
+
 Unique Stuff in there
 
 (Boost Bracelet)
