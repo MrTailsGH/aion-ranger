@@ -175,10 +175,28 @@ footer a{color:var(--aether)}
       <div class="meta" id="cmeta"><span>Данные ещё не загружены</span></div>
     </div>
     <div class="act">
-      <a class="btn" id="btn-refresh" href="#" target="_blank" rel="noopener">Обновить вручную</a>
+      <button class="btn primary" id="btn-refresh" type="button">Обновить персонажа</button>
+      <div class="prog" id="prog" hidden><i></i></div>
       <div class="status" id="status">Загружаю данные…</div>
     </div>
   </div>
+
+  <form class="setup" id="tokform" hidden>
+    <div style="flex:1 1 100%;font-size:14px;max-width:70ch">
+      <b>Один раз: ключ доступа GitHub.</b> Кнопка запускает обновление на GitHub от вашего имени, для этого нужен ключ.
+      Он хранится только в этом браузере и не попадает на сайт и в репозиторий. На телефоне его нужно ввести отдельно.
+      <ol style="margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:3px">
+        <li>Откройте <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:var(--aether)">github.com → новый fine-grained token</a>.</li>
+        <li>Token name: <code>aion-ranger</code>, Expiration: на ваш выбор (например, 1 год).</li>
+        <li>Repository access: <b>Only select repositories</b> → <code>aion-ranger</code>.</li>
+        <li>Permissions → Repository permissions → <b>Actions: Read and write</b>. Больше ничего не включайте.</li>
+        <li>Generate token, скопируйте и вставьте сюда.</li>
+      </ol>
+    </div>
+    <label for="f-token">Ключ (github_pat_…)<input id="f-token" type="password" autocomplete="off" spellcheck="false" style="min-width:min(360px,100%)"></label>
+    <button class="btn primary" type="submit">Сохранить и обновить</button>
+    <button class="btn" type="button" id="btn-tokcancel">Отмена</button>
+  </form>
 
   <nav class="tabs" role="tablist" aria-label="Разделы">
     <button type="button" role="tab" data-tab="overview">Обзор</button>
@@ -577,8 +595,60 @@ function guidesBlock(){
   const any=Object.values(GSTAT)[0];
   return `<section class="box"><h2>Слежение за гайдами</h2><p class="lead">Раз в день GitHub скачивает все три гайда и сравнивает с прошлой версией. Если что-то изменилось, здесь появится отметка, а на GitHub откроется issue — вам придёт уведомление. Последняя проверка: ${f(any?.checkedAt)}.${rb?` <a href="${rb}/blob/main/guides/CHANGES.md" target="_blank" rel="noopener" style="color:var(--aether)">Все изменения</a>`:""}</p><div class="checks">${rows}</div><p class="lead">Советы на этой странице сами не меняются: когда гайд обновится, пришлите изменения Claude, и логику подправят.</p></section>`;
 }
-(function repoLink(){ const m=location.hostname.match(/^([^.]+)\.github\.io$/); const repo=location.pathname.split("/").filter(Boolean)[0];
-  const a=$("#btn-refresh"); if(m&&repo){ a.href=`https://github.com/${m[1]}/${repo}/actions/workflows/update.yml`; a.title="Откроется GitHub: нажмите Run workflow, через 1–2 минуты обновите эту страницу"; } else a.hidden=true; })();
+/* ---------- refresh button: dispatches the GitHub workflow with the viewer's own token ---------- */
+const TOKKEY="aion-ranger-gh-token";
+const REPO=(()=>{ const m=location.hostname.match(/^([^.]+)\.github\.io$/); const r=location.pathname.split("/").filter(Boolean)[0]; return m&&r?{owner:m[1],repo:r}:null; })();
+const getTok=()=>{ try{ return localStorage.getItem(TOKKEY)||""; }catch(e){ return ""; } };
+const setTok=t=>{ try{ t?localStorage.setItem(TOKKEY,t):localStorage.removeItem(TOKKEY); }catch(e){} };
+const gh=(path,opt={})=>fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.repo}${path}`,{...opt,headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer "+getTok(),"X-GitHub-Api-Version":"2022-11-28",...(opt.body?{"Content-Type":"application/json"}:{})}});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let busy=false;
+function prog(p){ const el=$("#prog"); el.hidden=p==null; if(p!=null) el.querySelector("i").style.width=Math.round(p*100)+"%"; }
+async function reloadData(){
+  const r=await fetch("data.json?"+Date.now(),{cache:"no-store"}); if(!r.ok) return null; const d=await r.json();
+  try{ const h=await fetch("history.json?"+Date.now(),{cache:"no-store"}); if(h.ok) HIST=await h.json(); }catch(e){}
+  return d;
+}
+async function runRefresh(){
+  if(busy||!REPO) return;
+  if(!getTok()){ $("#tokform").hidden=false; $("#f-token").focus(); return; }
+  busy=true; const btn=$("#btn-refresh"); btn.disabled=true;
+  const before=DOC?.fetchedAt||0, t0=Date.now();
+  try{
+    setStatus("Запускаю обновление на GitHub…"); prog(.05);
+    const r=await gh("/actions/workflows/update.yml/dispatches",{method:"POST",body:JSON.stringify({ref:"main"})});
+    if(r.status===401){ setTok(""); throw new Error("Ключ не подошёл или истёк. Нажмите кнопку ещё раз и вставьте новый."); }
+    if(r.status===403||r.status===404) throw new Error("У ключа нет доступа. Проверьте: репозиторий aion-ranger и Actions: Read and write.");
+    if(!r.ok) throw new Error("GitHub ответил "+r.status);
+    // follow the run, then wait for GitHub Pages to publish the new data.json
+    let runUrl=null, phase="run";
+    for(let i=0;i<72;i++){                       // up to ~6 minutes
+      await sleep(5000);
+      const el=(Date.now()-t0)/1000;
+      if(phase==="run"){
+        try{
+          const rr=await gh("/actions/workflows/update.yml/runs?per_page=1&event=workflow_dispatch"); const j=await rr.json(); const run=j.workflow_runs?.[0];
+          if(run&&new Date(run.created_at).getTime()>t0-60000){ runUrl=run.html_url;
+            if(run.status!=="completed"){ setStatus(run.status==="queued"?"Ждёт очереди на GitHub…":"Скачиваю персонажа из оружейной…"); prog(Math.min(.6,.1+el/120)); continue; }
+            if(run.conclusion!=="success") throw Object.assign(new Error("Обновление на GitHub завершилось с ошибкой."),{runUrl});
+            phase="pages"; }
+          else { setStatus("Ждёт очереди на GitHub…"); prog(.1); continue; }
+        }catch(e){ if(e.runUrl) throw e; }
+      }
+      setStatus("Данные получены, публикую страницу…"); prog(Math.min(.95,.65+el/400));
+      const d=await reloadData();
+      if(d&&d.fetchedAt>before){ DOC=d; renderAll(); prog(1); setStatus("Готово: данные обновлены только что"); return; }
+    }
+    throw Object.assign(new Error("GitHub ещё публикует страницу. Обновите её через пару минут."),{runUrl});
+  }catch(e){
+    setStatus(e.message,true);
+    if(e.runUrl){ const s=$("#status"); s.append(" "); const a=document.createElement("a"); a.href=e.runUrl; a.target="_blank"; a.rel="noopener"; a.textContent="Открыть запуск"; a.style.color="var(--aether)"; s.append(a); }
+  }finally{ busy=false; btn.disabled=false; setTimeout(()=>prog(null),1500); }
+}
+if(!REPO) $("#btn-refresh").hidden=true;
+$("#btn-refresh").onclick=runRefresh;
+$("#btn-tokcancel").onclick=()=>{ $("#tokform").hidden=true; };
+$("#tokform").addEventListener("submit",e=>{ e.preventDefault(); const t=$("#f-token").value.trim(); if(!/^(github_pat_|ghp_)/.test(t)){ setStatus("Это не похоже на ключ GitHub: он начинается с github_pat_",true); return; } setTok(t); $("#f-token").value=""; $("#tokform").hidden=true; runRefresh(); });
 try{ PLANSTATE=JSON.parse(localStorage.getItem("ranger-armory-plan")||"{}")||{}; }catch(e){}
 showTab(location.hash.slice(1)); renderPets();
 (async()=>{
@@ -587,7 +657,7 @@ showTab(location.hash.slice(1)); renderPets();
     DOC=await r.json();
     try{ const h=await fetch("history.json?"+Date.now(),{cache:"no-store"}); if(h.ok) HIST=await h.json(); }catch(e){}
     try{ const g=await fetch("guides/status.json?"+Date.now(),{cache:"no-store"}); if(g.ok) GSTAT=await g.json(); }catch(e){}
-    renderAll(); setStatus("Обновляется автоматически каждые 4 часа");
+    renderAll(); setStatus("Обновляется автоматически каждые 4 часа"+(getTok()?"":" · «Обновить персонажа» — обновить прямо сейчас"));
   }catch(e){ renderAll(); setStatus("Не удалось загрузить data.json",true); }
 })();
 </script>
