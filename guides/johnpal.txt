@@ -55,6 +55,9 @@ Arcana and Transcendence: https://www.youtube.com/watch?v=JNizUcM826Q  (Loud mus
 Kina and how to farm it: https://www.youtube.com/watch?v=BaKbISK_jdI
 Crafting and Gathering: https://www.youtube.com/watch?v=-NsCsZ_743o&t=1s
 Ranger Guide: https://www.youtube.com/watch?v=otTvwv5pG1s&lc=UgxCssIrLabn67d7Q2V4AaABAg
+Sorc Guide:
+https://youtu.be/jYVsMQpsavs?si=af51fJnouSCfGiRl
+
 Shops and Currency Guide: https://youtu.be/WrJzVq-Mas4
 Item Collection, Pet Collection, and Genus: https://youtu.be/W2Q6LG8B-7s?si=sDbkmQd__edTw846
 
@@ -182,6 +185,33 @@ Titles
 
 Theostones
 
+* * 50% Crit Cap
+   * Target 1600 (Including +300 with bow of blessing) For Ludra
+* PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+   * Targeting 1400 for Ludra
+
+Health on hard mode 360,000,000
+
+10 * 60 = 600 seconds  10 minute enrage
+8  * 60 = 480 seconds   8 minute prediction with 2 minute downtime
+
+342,342,000 / 600 = 570,570  (10 Minute)
+
+342,342,000 / 480 = 713,212 (8 Minute)
+
+570,570 / 10 = 57,057 (10 Minute all players)
+
+713,212 / 10 = 71,312 (8 minutes all players)
+713,212 /  8 = 89,151 (68players (-2 clerics for “Carry” 0))
+
+Normal Mode 190,000,000
+
+190,000,000 / 600 = 316,666 (10 Min)
+190,000,000 / 480 = 395,833 (8 Min)
+
+316,666 / 10 = 31,666 (8 Minutes all players)
+395,833 /   8 = 49,479 ( 8 Minutes 8 players (Factoring clerics at 0))
+
 RANGER BUILD AND INFORMATION
 This is a working guide and compile as we test and build out ranger in Aion 2 Global.
 
@@ -215,6 +245,7 @@ Ariel (WIP)
 
 Ariel
 * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+* We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
 
 Skills
 Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
@@ -473,13 +504,13 @@ Ranger Stat priorities and map (Note this is a working document, updating it as 
 https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIie6U/edit?gid=0#gid=0
 
    * Currently Evaluating Crit Damage caps
-   * Accuracy for Ludra (KR) was 1200
    * Precision Increases Accuracy by a multiplier
    * Natura = +1 Precision per pet to 3
    * 50% Crit Cap
-   * Target 1000-1200 (Including +300 with bow of blessing)
+   * Target 1600 (Including +300 with bow of blessing) For Ludra
    * 10 crit = 1%
    * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+   * Targeting 1400 for Ludra
 
 Macro Setup
    1. Setup your Skills vertically like below
@@ -517,6 +548,8 @@ Right is with 2 macro simplified.
 
 SORC BUILD AND INFORMATION
 This is a working guide and compile as we test and build out sorc in Aion 2 Global.
+Video guide
+https://youtu.be/jYVsMQpsavs?si=af51fJnouSCfGiRl
 
 Sorc
                1. Sorc Information
@@ -525,6 +558,10 @@ Sorc
                4. Sorc Macro & Rotation
                5. Sorc Stigma
                6. Sorc Stat Prio
+
+Ariel
+               * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+               * We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
 
 Skills
 Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
@@ -748,13 +785,13 @@ Sorc Stat Priorities, Document in Progress.
 https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIie6U/edit?gid=1229977754#gid=1229977754
 
                   * Currently Evaluating Crit Damage caps
-                  * Accuracy for Ludra (KR) was 1200
                   * Precision Increases Accuracy by a multiplier
                   * Natura = +1 Precision per pet to 3
                   * 50% Crit Cap
-                  * Target 1000-1200 (Including +300 with bow of blessing)
+                  * Target 1600 (Including +300 with bow of blessing) For Ludra
                   * 10 crit = 1%
                   * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+                  * Targeting 1400 for Ludra
 Work in progress.
 
 Templar
@@ -763,6 +800,10 @@ Templar
                   3. Templar Skills
                   4. Templar Stigmas
                   5. Templar Macro
+
+Ariel
+                  * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+                  * We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
 
 Skills
 Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
