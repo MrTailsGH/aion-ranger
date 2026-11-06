@@ -56,3 +56,17 @@
                       * Accuracy for Ludra (KR) was 1200
                       * Target 1000-1200 (Including +300 with bow of blessing)
 
+
+## 2026-11-06 — Johnpal — Ranger Stat Priorities
+
+Добавлено строк: 1, удалено: 2. [Открыть гайд](https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIie6U/edit?gid=0)
+
+**Добавлено:**
+
+    "","Ludra CRIT DEFENSE requires 1600 CRIT and has an ACCURACY requirement of 1300-1400.","","","","","","","",""
+
+**Удалено:**
+
+    "","Accuracy will be used to determine if you can hit bosses (Ludra, pending global) ","","","","","","","",""
+    "","We were given the 1200 number for accuracy breakpoint.  Precision","","","","","","","",""
+
