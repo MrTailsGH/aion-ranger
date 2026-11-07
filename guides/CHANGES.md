@@ -70,3 +70,15 @@
     "","Accuracy will be used to determine if you can hit bosses (Ludra, pending global) ","","","","","","","",""
     "","We were given the 1200 number for accuracy breakpoint.  Precision","","","","","","","",""
 
+
+## 2026-11-07 — Johnpal — Gearing Path/Guides
+
+Добавлено строк: 4, удалено: 0. [Открыть гайд](https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit)
+
+**Добавлено:**
+
+    Arcana Calculator
+    https://docs.google.com/spreadsheets/d/1WBlOZta8CCwrNMvLidjDs5PhpR1tlWRPMLSjMR0OXVY/edit?usp=sharing
+    Do you need alts?: https://youtu.be/0aPr5jpl-lE?si=N1sJNQphCJ4p9SNq
+    Classes
+
