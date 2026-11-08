@@ -196,7 +196,7 @@ Theostones
 * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
    * Targeting 1400 for Ludra
 
-Health on hard mode 360,000,000
+Health on hard mode 342,342,000
 
 10 * 60 = 600 seconds  10 minute enrage
 8  * 60 = 480 seconds   8 minute prediction with 2 minute downtime

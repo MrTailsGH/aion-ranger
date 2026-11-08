@@ -82,3 +82,16 @@
     Do you need alts?: https://youtu.be/0aPr5jpl-lE?si=N1sJNQphCJ4p9SNq
     Classes
 
+
+## 2026-11-08 — Johnpal — Gearing Path/Guides
+
+Добавлено строк: 1, удалено: 1. [Открыть гайд](https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit)
+
+**Добавлено:**
+
+    Health on hard mode 342,342,000
+
+**Удалено:**
+
+    Health on hard mode 360,000,000
+
