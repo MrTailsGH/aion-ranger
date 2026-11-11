@@ -95,3 +95,52 @@
 
     Health on hard mode 360,000,000
 
+
+## 2026-11-11 — Johnpal — Gearing Path/Guides
+
+Добавлено строк: 42, удалено: 0. [Открыть гайд](https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit)
+
+**Добавлено:**
+
+    * Palace
+    snapshot
+    	PVE damage is reduced by 25%.
+    	Aiming arrow
+    	PVE damage is reduced by 10%.
+    	Target arrow
+    	The Precision effect adds a +20% increase to status ailment hit chance.
+    Specialization No. 1 "Increase Perfect by 5% during duration" effect is changed to "Increase Perfect by 10%" effect.
+    	awl arrow
+    	The cooldown is changed from 5 seconds to 4 seconds.
+    	The skill animation is improved to allow traps to be placed more quickly than before in place without moving.
+    	snare arrow
+    	The duration of the slow effect is changed from 5 seconds to 3 seconds.
+    	Rupture arrow
+    	PVE damage is increased by 10%.
+    Changed so that the "Sensitivity" effect is gained upon hitting while in "Precision" state.
+    "Sensitivity": Increases all elemental damage by 20% for 5 seconds
+    Changed to deal 150% additional damage upon hitting in "Precision" state.
+    Specialization 4's effect "Damage increases by up to 20% for fewer targets hit" is changed to "Increased additional damage in Precision state". (Additional damage 150% → 200%)
+    The chance to reset the cooldown of Specialization 5's [Rupture Arrow] is changed from 25% to 35%.
+    	Arrow barrage
+    	As a basic effect, a Rapid Fire effect is added that increases all elemental damage amplification by 1% for 5 seconds upon hitting. (Stacks up to 10 times)
+    	The power of Vaisel
+    	Specialization 4 effect "50% chance to reduce all cooldowns by 1 second on critical hit during duration" is changed to "50% chance to reduce [Vaizel's Power] cooldown by 1 second on critical hit during duration".
+    Specialization No. 3 "Increases [Hunter's Spirit] effect by 1.5x during duration" is changed to "Increases [Hunter's Resolve] effect by 1.5x".
+    	The recast time is changed from 2 minutes to 1 minute.
+    	Explosive arrow
+    	PVE damage is increased by 80%.
+    When hitting while in the "Sensitive" state, the [Arrow Barrage] skill activation effect is added for 3 seconds.
+    The effect "Increases damage by 20% when target is slowed or bound" is changed to "Increases additional damage by 25% while in Sensitive state".
+    Specialization 1's "Reduce cooldown by 15 seconds" effect is changed to "Reduce cooldown by 20 seconds" effect.
+    Specialization 2 effect "Increases damage to slowed and bound targets by an additional 10%" is changed to "Increases damage to sensitive effects by an additional 50%".
+    Specialization 4 effect "Increases damage to slowed and bound targets by an additional 20%" is changed to "Increases damage to sensitive effects by an additional 125%".
+    Specialization 5 "Reduces [Explosive Arrow] cooldown by 50% when hitting a target slowed or bound" effect is changed to "Reduces [Explosive Arrow] cooldown by 50% when hitting while in Sensitive state" effect.
+    	Griffin arrow
+    	The 2nd specialization effect "Increases duration of damage over time by 5 seconds" is changed to "Increases duration of damage over time by 10 seconds".
+    	Support fire
+    	PVE damage is increased by 15%.
+    	The breath of nature
+    	Specialization No. 5 “Increases chance of Nature effect activation by 25%” effect is changed to “Nature effect always activates” effect.
+    … и ещё 2
+
