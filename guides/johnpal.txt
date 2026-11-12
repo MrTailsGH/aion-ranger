@@ -17,6 +17,7 @@ Ranger
 4. Stigma
 5. Macro & Rotation
 6. Ranger Stat Priorities
+7. Ranger TW/KR Update 11/11/2026
 
 Sorc
 1. Sorc Information
@@ -221,6 +222,9 @@ Normal Mode 190,000,000
 RANGER BUILD AND INFORMATION
 This is a working guide and compile as we test and build out ranger in Aion 2 Global.
 
+Latest Patch Note Findings
+Ranger TW/KR Update 11.11.26
+
 Ranger Video https://www.youtube.com/watch?v=otTvwv5pG1s&lc=UgxCssIrLabn67d7Q2V4AaABAg
 
 Ranger
@@ -233,7 +237,64 @@ Ranger
 Craft Priorities Weapon > Guard >= Rings
 (reset for combat speed, very important for rangers)
 
-* Palace
+The combat rework is changing the overall flow of combat, I’m drafting up an outline as I test through the changes.
+
+Stigma Changes
+1. Vaizels Authority
+   1. Vaizels Authority now only reduces its own cooldown at level 20.
+   2. The third specialty at level 15 no longer enhances Hunter’s Soul and now Enhances Hunter’s Resolve.  You will most likely want to target Hunter’s resolve over Hunter’s soul on any passive lines on your sync lines with this change.
+      1.      3.         2. Supporting Fire
+      1. +15% Damage
+      2.            3. Bow of Blessing
+         1. Cooldown Reduced from 2m to 1m.  With the +5s duration we’re looking close to 50% uptime up from 25% in our version with CDR from Vaizels.
+         2.               4. Griffon Arrow
+            1. The level 10 perk now increases the duration by an additional 10 seconds up from 5 seconds.
+            2.                  5. Mother Nature’s Breath
+               1. Mother’s Nature embrace level 25 (5th) specialty is activated instead of a % chance.
+               2.                     6. Explosive Arrow
+                  1. Explosive Arrow now gains additional damage while inspiration is active on level 10, 20, and in addition will reduce the cooldown of explosive arrow by 50% if sent during inspiration.
+                  2.
+
+Combat Flow and Skills
+Precision -> Snare Shot -> Burst Arrow -> Explosive Arrow
+                     1. Marking Shot grants Precision and perfect chance for 10% instead of 5% now.
+                     1.                           2. Snare shot will apply the slow effect to the boss for 3 seconds, this might give us cause to get the skill to 16 for the increased slow duration for a more comfortable window.
+                        1.                              3.  Burst Arrow requires a slowed target (has the debuff) and grants inspiration IF precision is present.  Inspiration is a damage increase + 20% (Specialty 4)
+                           1.                                 4. Explosive Arrow has increased damage by 175% + 20% modifier from Inspiration when inspiration is present. Which in turn grants us [ARROW SCATTERSHOT] for 3 seconds (our stagger move).  This will most likely result in us needing to get Arrow Scattershot to 16 for the MASTERY reduction to allow for smooth rotation.
+                              1.                                    5. Arrow Scattershot now increases your element Damage boost by 1 stack up to 10 stacks upon triggering.  This effect lasts for 5 seconds and will refresh its duration if you scattershot again.  There will most likely be a use-case for the 16 specialty here to allow for cooldown reduction on masteries to sync up the new “burst” rotation.
+                                 1.
+
+Cooldown Issues
+We’re breaking apart our skills here to facilitate the new change.  Marking shot by itself is removed from the equation since we can have 100% uptime.  Pre scattershot seems clunky in initial testing.
+
+Skill Name
+	Mastery/Stigma
+	Cooldown
+	Notes
+	Snare Shot
+	Mastery
+	15s
+	Slow effect persists for 3s
+	Burst Arrow
+	Mastery
+	20s
+	Grants Inspiration for 5s
+	Explosive Arrow
+	Stigma
+	25s (12.5s with level 25 Stigma)
+
+The above cooldowns means we’ll need to reduce our overall cooldowns by 10s using Arrow Scattershot (after explosive 25) to get our burst to get close to lining up again.  Need to test the cooldown reduction on scattershot.  Currently, I get 5 casts off in the window with a multi hit of 4 hits.  If all 4 hits count per cast that means we’ll be able to reduce our cooldowns by 10s per scattershot window which will line up the other cooldowns.
+
+Summary
+
+We’re getting a tactical nuke with Mark -> Snare -> Burst -> Explosive Arrow -> Scattershot for reset of masteries.
+
+The Stigma windows are also giving us bigger windows for damage instead of a pure uptime macro.
+
+I would probably think about saving arrow scattershot pieces to reach level 16 in it just in case.  You can target this on your compass and will only need to get it to +16 which would be 1 point in it.  So we could think about getting a +Deadshot/Gale and have +1 there and/or on a ring.  As a backup for “comfort” (doesn’t seem needed) you could also save something that gives you snare shot for a longer window to activate. The Snareshot window will require further testing.
+
+Hunter’s Soul will lose value with the 1.5x multiplier being removed and changed to Hunter’s Resolve.  Hunter’s Resolve will yield more damage with the new multiplier.
+                                    * Palace
 snapshot
 	PVE damage is reduced by 25%.
 	Aiming arrow
@@ -278,8 +339,8 @@ Specialization 5 "Reduces [Explosive Arrow] cooldown by 50% when hitting a targe
 
 Daevanion Board
 Starter (Fresh 45 + Mystery Dungeons)
-* Please note that the starter board is missing some key nodes that you will need to fill in for your major skills.  The main objective is to take the key passives, actives, and avoid MP nodes.  Prioritize your damage over defensive passives.
-* You unlock 1 board at a time and can just apply the points below as shown then move on to the next.
+                                    * Please note that the starter board is missing some key nodes that you will need to fill in for your major skills.  The main objective is to take the key passives, actives, and avoid MP nodes.  Prioritize your damage over defensive passives.
+                                    * You unlock 1 board at a time and can just apply the points below as shown then move on to the next.
 Nezekan
 
 Zikel
@@ -293,8 +354,9 @@ Daevanion Board (400+)
 Ariel (WIP)
 
 Ariel
-* There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
-* We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
+                                    * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+                                    * We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
+                                    * We’re focusing on Damage and Boss Tolerance and re-gaining tiles for more damage. 2026.11.11
 
 Skills
 Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
@@ -305,10 +367,10 @@ Do not use scattershot (flashes on boss stagger) it’s a DPS loss.  You can use
 
 Specialties
 
-* NOTE: Skill levels may have different priorities.
-*      * Below in the chart this would be “235” as in skill line 2, 3, and 5.
-   * Red highlights I haven’t checked/tested yet
-   * 50% Crit cap means we can run 35 at 16 and 235 (Over cap) or 135 (Mana reduction lul?)
+                                    * NOTE: Skill levels may have different priorities.
+                                    *                                          * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+                                       * Red highlights I haven’t checked/tested yet
+                                       * 50% Crit cap means we can run 35 at 16 and 235 (Over cap) or 135 (Mana reduction lul?)
 
 Skill
 	Level 8
@@ -402,15 +464,15 @@ Passive
 	Low
 
 Buffs
-   * Vaizels Authority
-   * Big Self buff
-   * At 20 Crits reset all cooldowns including self buff
-   * Bow of Blessing
-   * Big self buff
-   * Supporting Fire*
-   * 1.5% Life steal on chance to hit + additional damage
-   * Marking Shot*
-   * Watch your buff above your mana bar.  Cast it and don’t recast until it’s at 1 second, if you cast on cooldown it is a DPS loss.
+                                       * Vaizels Authority
+                                       * Big Self buff
+                                       * At 20 Crits reset all cooldowns including self buff
+                                       * Bow of Blessing
+                                       * Big self buff
+                                       * Supporting Fire*
+                                       * 1.5% Life steal on chance to hit + additional damage
+                                       * Marking Shot*
+                                       * Watch your buff above your mana bar.  Cast it and don’t recast until it’s at 1 second, if you cast on cooldown it is a DPS loss.
 
 ACTIVE SKILLS
 Snipe
@@ -539,51 +601,51 @@ Nightmare Dungeon Shop
 You can clear the first 10 levels of the far left bosses (First column and spend on Daevanion crystals and stigma shards.  After that you should hold for the statue after Zikel.
 
 Breakpoints
-   * Tested 20/20/15/5 and it was break even with 20/15/15/15 but at a loss of HP/sustain.
+                                       * Tested 20/20/15/5 and it was break even with 20/15/15/15 but at a loss of HP/sustain.
 
 Shugo Festival Shop
 Abyss Shop
-   * Abyss Farm Siege
-   * Abyss Commands
-   * Nornir Commands
-   * Duties
-   * Abyss Corridors
-   * Supply Request
+                                       * Abyss Farm Siege
+                                       * Abyss Commands
+                                       * Nornir Commands
+                                       * Duties
+                                       * Abyss Corridors
+                                       * Supply Request
 Ranger Stat priorities and map (Note this is a working document, updating it as I go)
 https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIie6U/edit?gid=0#gid=0
 
-   * Currently Evaluating Crit Damage caps
-   * Precision Increases Accuracy by a multiplier
-   * Natura = +1 Precision per pet to 3
-   * 50% Crit Cap
-   * Target 1600 (Including +300 with bow of blessing) For Ludra
-   * 10 crit = 1%
-   * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
-   * Targeting 1400 for Ludra
+                                       * Currently Evaluating Crit Damage caps
+                                       * Precision Increases Accuracy by a multiplier
+                                       * Natura = +1 Precision per pet to 3
+                                       * 50% Crit Cap
+                                       * Target 1600 (Including +300 with bow of blessing) For Ludra
+                                       * 10 crit = 1%
+                                       * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+                                       * Targeting 1400 for Ludra
 
 Macro Setup
-   1. Setup your Skills vertically like below
-   1. While leveling, just add what you have as you go
-   2. AUTOMATIC/LAZY
-   3.      4. SELF BUFF
-   5.         1. More damage with efficient usage (plan around boss dying soon/next boss)
-      2. We also stack Trap + Arrow in priority order for use
-      6.       2. Set up your Macro by clicking THE MACRO button in the top right of your skills
-      1.
-      2. Click each skill and select the horizontal (main row) skill
-      3. AUTOMATIC/LAZY LEVELING
-      4.         5. MANUAL (MORE DAMAGE)
-         1. (Testing new macro setup, 2vigor/3magic minor mana problems if you have short fast targets)
-         6.               3. Enter your settings and bind the macro key
-            1.
+                                       1. Setup your Skills vertically like below
+                                       1. While leveling, just add what you have as you go
+                                       2. AUTOMATIC/LAZY
+                                       3.                                          4. SELF BUFF
+                                       5.                                             1. More damage with efficient usage (plan around boss dying soon/next boss)
+                                          2. We also stack Trap + Arrow in priority order for use
+                                          6.                                           2. Set up your Macro by clicking THE MACRO button in the top right of your skills
+                                          1.
+                                          2. Click each skill and select the horizontal (main row) skill
+                                          3. AUTOMATIC/LAZY LEVELING
+                                          4.                                             5. MANUAL (MORE DAMAGE)
+                                             1. (Testing new macro setup, 2vigor/3magic minor mana problems if you have short fast targets)
+                                             6.                                                   3. Enter your settings and bind the macro key
+                                                1.
 
 Rotation
-               1. Hold left and right click
-               2. Marking Shot
-               1. Marking shot lasts longer than the cooldown so make sure to wait until it’s at 1 second before recasting. (Especially with Vaizels 20)
-               2. Marking shot has a movement component if you’re actively holding a direction, use it for a stamina free move.
-               3. Self Buff necessary for damage windows or automate with macro
-               4. Manually Cast Deadshot (Hold until Max)
+                                                   1. Hold left and right click
+                                                   2. Marking Shot
+                                                   1. Marking shot lasts longer than the cooldown so make sure to wait until it’s at 1 second before recasting. (Especially with Vaizels 20)
+                                                   2. Marking shot has a movement component if you’re actively holding a direction, use it for a stamina free move.
+                                                   3. Self Buff necessary for damage windows or automate with macro
+                                                   4. Manually Cast Deadshot (Hold until Max)
 
 1+2 are also used for PVP/PVE grinding.
 You can move the buffs (Supporting fire, Vaizels, and Guardian out of your macro for more control of your damage and burst in later content)
@@ -601,16 +663,16 @@ Video guide
 https://youtu.be/jYVsMQpsavs?si=af51fJnouSCfGiRl
 
 Sorc
-               1. Sorc Information
-               2. Sorc Daevanion Board
-               3. Sorc Skills and Specialties
-               4. Sorc Macro & Rotation
-               5. Sorc Stigma
-               6. Sorc Stat Prio
+                                                   1. Sorc Information
+                                                   2. Sorc Daevanion Board
+                                                   3. Sorc Skills and Specialties
+                                                   4. Sorc Macro & Rotation
+                                                   5. Sorc Stigma
+                                                   6. Sorc Stat Prio
 
 Ariel
-               * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
-               * We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
+                                                   * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+                                                   * We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
 
 Skills
 Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
@@ -618,10 +680,10 @@ Some skill and stigma loadouts will have different results based on your stat br
 For which skill to level use the priorities listed below.
 
 Ice Chain is used early to mid game in your macro for a DPS increase until you reach 16 on a few skills AND CDR/CS breakpoints.  You can also put this in your macro for better AOE/Leveling early game.  It can still be a DPS increase even after reaching the breakpoints.  TEST YOUR SKILLS!
-               * Wish
-               * Hellfire
-               * Blaze
-               * Flame Arrow
+                                                   * Wish
+                                                   * Hellfire
+                                                   * Blaze
+                                                   * Flame Arrow
 
 After some testing (samples below) Blaze 16, Flame 16, Wish 16 is where I found the breakpoint with 8.8% CDR to where I could take Ice Chain out, but since it is break even or slightly ahead I’m leaving it in for now for better farming and corridors.
 
@@ -631,9 +693,9 @@ Flame Scattershot can be used for heal (level 8) OR pushed to 16 in edge case sc
 
 Specialties
 
-               * NOTE: Skill levels may have different priorities.
-               *                     * Below in the chart this would be “235” as in skill line 2, 3, and 5.
-                  *
+                                                   * NOTE: Skill levels may have different priorities.
+                                                   *                                                         * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+                                                      *
 
 Skill
 	Level 8
@@ -730,26 +792,26 @@ Passive
 	Low
 
 Buffs
-                  * Wish of Concentration
-                  * Element Enhancement
+                                                      * Wish of Concentration
+                                                      * Element Enhancement
 
-                  1. Option 1 (Firestorm) in macro
+                                                      1. Option 1 (Firestorm) in macro
 
-                  2. Option 2, Firestorm out of Macro
+                                                      2. Option 2, Firestorm out of Macro
 
-                  3. Click Macro and add the base skills
+                                                      3. Click Macro and add the base skills
 
-                  4. Change macro to Right Click
+                                                      4. Change macro to Right Click
 
-                  1. Buff Self 1
-                  2. Hold Left Click (Flame Arrow auto attack)
-                  3. Hold Right Click (Macro)
-                  4. Deploy Ground Effects (3)
-                  1. Wait for a pattern to start before sending these.
-                  5. Hellfire
-                  1. Press and hold Hellfire to MAX
+                                                      1. Buff Self 1
+                                                      2. Hold Left Click (Flame Arrow auto attack)
+                                                      3. Hold Right Click (Macro)
+                                                      4. Deploy Ground Effects (3)
+                                                      1. Wait for a pattern to start before sending these.
+                                                      5. Hellfire
+                                                      1. Press and hold Hellfire to MAX
       5a. Firestorm To Reset Hellfire (or put it in your macro)
-                  6. REPEAT
+                                                      6. REPEAT
 
 Use FROST for Stagger
 Stigma Placement
@@ -823,36 +885,36 @@ You can clear the first 10 levels of the far left bosses (First column and spend
 
 Shugo Festival Shop
 Abyss Shop
-                  * Abyss Farm Siege
-                  * Abyss Commands
-                  * Nornir Commands
-                  * Duties
-                  * Abyss Corridors
-                  * Supply Request
+                                                      * Abyss Farm Siege
+                                                      * Abyss Commands
+                                                      * Nornir Commands
+                                                      * Duties
+                                                      * Abyss Corridors
+                                                      * Supply Request
 
 Sorc Stat Priorities, Document in Progress.
 https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIie6U/edit?gid=1229977754#gid=1229977754
 
-                  * Currently Evaluating Crit Damage caps
-                  * Precision Increases Accuracy by a multiplier
-                  * Natura = +1 Precision per pet to 3
-                  * 50% Crit Cap
-                  * Target 1600 (Including +300 with bow of blessing) For Ludra
-                  * 10 crit = 1%
-                  * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
-                  * Targeting 1400 for Ludra
+                                                      * Currently Evaluating Crit Damage caps
+                                                      * Precision Increases Accuracy by a multiplier
+                                                      * Natura = +1 Precision per pet to 3
+                                                      * 50% Crit Cap
+                                                      * Target 1600 (Including +300 with bow of blessing) For Ludra
+                                                      * 10 crit = 1%
+                                                      * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+                                                      * Targeting 1400 for Ludra
 Work in progress.
 
 Templar
-                  1. Templar Information
-                  2. Templar Daevanion Board
-                  3. Templar Skills
-                  4. Templar Stigmas
-                  5. Templar Macro
+                                                      1. Templar Information
+                                                      2. Templar Daevanion Board
+                                                      3. Templar Skills
+                                                      4. Templar Stigmas
+                                                      5. Templar Macro
 
 Ariel
-                  * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
-                  * We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
+                                                      * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+                                                      * We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
 
 Skills
 Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
@@ -863,9 +925,9 @@ Flash Rampage can be used for heal (level 8) OR pushed to 16 in edge case scenar
 
 Specialties
 
-                  * NOTE: Skill levels may have different priorities.
-                  *                        * Below in the chart this would be “235” as in skill line 2, 3, and 5.
-                     *
+                                                      * NOTE: Skill levels may have different priorities.
+                                                      *                                                            * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+                                                         *
 
 Skill
 	Level 8
@@ -1061,41 +1123,41 @@ You can clear the first 10 levels of the far left bosses (First column and spend
 
 Shugo Festival Shop
 Abyss Shop
-                     * Abyss Farm Siege
-                     * Abyss Commands
-                     * Nornir Commands
-                     * Duties
-                     * Abyss Corridors
-                     * Supply Request
+                                                         * Abyss Farm Siege
+                                                         * Abyss Commands
+                                                         * Nornir Commands
+                                                         * Duties
+                                                         * Abyss Corridors
+                                                         * Supply Request
 
-                     1. Setup Skills like below (Default)
-                     1.                           2. Farm Build
-                        3.           IF YOU’RE LAZY MOVE THE SELF BUFF BUTTONS ON 5 INTO THE E SLOT
-                           4. Click Macro and add the base skills
+                                                         1. Setup Skills like below (Default)
+                                                         1.                                                               2. Farm Build
+                                                            3.           IF YOU’RE LAZY MOVE THE SELF BUFF BUTTONS ON 5 INTO THE E SLOT
+                                                               4. Click Macro and add the base skills
 USE THIS IF YOU’RE LEVELING, TAKE OUT DEBILITATING AFTER GETTING JUDGEMENT 16.
 
 IF YOU HAVE JUDGEMENT 16 DO THIS.
 
-                              5. Change macro to Right Click
+                                                                  5. Change macro to Right Click
 
-                              1. Buff Self (5)
-                              1. Noble Armor
-                              2. Banner
-                              2. PUNISHMENT (2) FOR DAMAGE + STAGGER (HOLD) + BUFF
-                              3. Left + Right Click (Vicious Strikes + Macro)
-                              4. USE POACH (1) AND SHIELD RUSH (3) FOR MOVEMENT
-                              5. SHIELD OF PROTECTION (Activate to block next attack/damage source)
-                              6. REPEAT
+                                                                  1. Buff Self (5)
+                                                                  1. Noble Armor
+                                                                  2. Banner
+                                                                  2. PUNISHMENT (2) FOR DAMAGE + STAGGER (HOLD) + BUFF
+                                                                  3. Left + Right Click (Vicious Strikes + Macro)
+                                                                  4. USE POACH (1) AND SHIELD RUSH (3) FOR MOVEMENT
+                                                                  5. SHIELD OF PROTECTION (Activate to block next attack/damage source)
+                                                                  6. REPEAT
 
 Targeting
 
-                              *                                 * Auto Target on Skill use
-                              *                                 * Turn off Floating Combat Text
-                              *                                 * Screen Shake/Out of combat weapon
-                              *                                 * Increase sound effects and turn down everything else for hidden cubes
-                              *                                 * Front/Back indicator
-                              *                                 * Nameplates off, pets off, spirits off
-                              *
+                                                                  *                                                                     * Auto Target on Skill use
+                                                                  *                                                                     * Turn off Floating Combat Text
+                                                                  *                                                                     * Screen Shake/Out of combat weapon
+                                                                  *                                                                     * Increase sound effects and turn down everything else for hidden cubes
+                                                                  *                                                                     * Front/Back indicator
+                                                                  *                                                                     * Nameplates off, pets off, spirits off
+                                                                  *
 
 Performance (WB/PVP) Improvements
 
@@ -1183,6 +1245,8 @@ New Slots
 Hard Mode Sync Stones
 
 New Slot you substance morph up
+
+2026.11.11 - Added in a section explaining the latest patch notes on TW/KR for combat overhaul.
 
 2026.10.31 - Adjusted the arcana stat priorities in the (working) stat sheet.
 

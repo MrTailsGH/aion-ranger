@@ -144,3 +144,96 @@
     	Specialization No. 5 “Increases chance of Nature effect activation by 25%” effect is changed to “Nature effect always activates” effect.
     … и ещё 2
 
+
+## 2026-11-12 — Johnpal — Gearing Path/Guides
+
+Добавлено строк: 184, удалено: 132. [Открыть гайд](https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit)
+
+**Добавлено:**
+
+    7. Ranger TW/KR Update 11/11/2026
+    Latest Patch Note Findings
+    Ranger TW/KR Update 11.11.26
+    The combat rework is changing the overall flow of combat, I’m drafting up an outline as I test through the changes.
+    Stigma Changes
+    1. Vaizels Authority
+       1. Vaizels Authority now only reduces its own cooldown at level 20.
+       2. The third specialty at level 15 no longer enhances Hunter’s Soul and now Enhances Hunter’s Resolve.  You will most likely want to target Hunter’s resolve over Hunter’s soul on any passive lines on your sync lines with this change.
+          1.      3.         2. Supporting Fire
+          1. +15% Damage
+          2.            3. Bow of Blessing
+             1. Cooldown Reduced from 2m to 1m.  With the +5s duration we’re looking close to 50% uptime up from 25% in our version with CDR from Vaizels.
+             2.               4. Griffon Arrow
+                1. The level 10 perk now increases the duration by an additional 10 seconds up from 5 seconds.
+                2.                  5. Mother Nature’s Breath
+                   1. Mother’s Nature embrace level 25 (5th) specialty is activated instead of a % chance.
+                   2.                     6. Explosive Arrow
+                      1. Explosive Arrow now gains additional damage while inspiration is active on level 10, 20, and in addition will reduce the cooldown of explosive arrow by 50% if sent during inspiration.
+                      2.
+    Combat Flow and Skills
+    Precision -> Snare Shot -> Burst Arrow -> Explosive Arrow
+                         1. Marking Shot grants Precision and perfect chance for 10% instead of 5% now.
+                         1.                           2. Snare shot will apply the slow effect to the boss for 3 seconds, this might give us cause to get the skill to 16 for the increased slow duration for a more comfortable window.
+                            1.                              3.  Burst Arrow requires a slowed target (has the debuff) and grants inspiration IF precision is present.  Inspiration is a damage increase + 20% (Specialty 4)
+                               1.                                 4. Explosive Arrow has increased damage by 175% + 20% modifier from Inspiration when inspiration is present. Which in turn grants us [ARROW SCATTERSHOT] for 3 seconds (our stagger move).  This will most likely result in us needing to get 
+                                  1.                                    5. Arrow Scattershot now increases your element Damage boost by 1 stack up to 10 stacks upon triggering.  This effect lasts for 5 seconds and will refresh its duration if you scattershot again.  There will most likely be a use-case 
+                                     1.
+    Cooldown Issues
+    We’re breaking apart our skills here to facilitate the new change.  Marking shot by itself is removed from the equation since we can have 100% uptime.  Pre scattershot seems clunky in initial testing.
+    Skill Name
+    	Mastery/Stigma
+    	Cooldown
+    	Notes
+    	Snare Shot
+    	Mastery
+    	15s
+    	Slow effect persists for 3s
+    	Mastery
+    	20s
+    	Grants Inspiration for 5s
+    … и ещё 144
+
+**Удалено:**
+
+    * Palace
+    * Please note that the starter board is missing some key nodes that you will need to fill in for your major skills.  The main objective is to take the key passives, actives, and avoid MP nodes.  Prioritize your damage over defensive passives.
+    * You unlock 1 board at a time and can just apply the points below as shown then move on to the next.
+    * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+    * We re-worked for focus on damage and crit and lost 1.5% damage tolerance 2026.11.4
+    * NOTE: Skill levels may have different priorities.
+    *      * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+       * Red highlights I haven’t checked/tested yet
+       * 50% Crit cap means we can run 35 at 16 and 235 (Over cap) or 135 (Mana reduction lul?)
+       * Vaizels Authority
+       * Big Self buff
+       * At 20 Crits reset all cooldowns including self buff
+       * Bow of Blessing
+       * Big self buff
+       * Supporting Fire*
+       * 1.5% Life steal on chance to hit + additional damage
+       * Marking Shot*
+       * Watch your buff above your mana bar.  Cast it and don’t recast until it’s at 1 second, if you cast on cooldown it is a DPS loss.
+       * Tested 20/20/15/5 and it was break even with 20/15/15/15 but at a loss of HP/sustain.
+       * Abyss Farm Siege
+       * Abyss Commands
+       * Nornir Commands
+       * Duties
+       * Abyss Corridors
+       * Supply Request
+       * Currently Evaluating Crit Damage caps
+       * Precision Increases Accuracy by a multiplier
+       * Natura = +1 Precision per pet to 3
+       * 50% Crit Cap
+       * Target 1600 (Including +300 with bow of blessing) For Ludra
+       * 10 crit = 1%
+       * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+       * Targeting 1400 for Ludra
+       1. Setup your Skills vertically like below
+       1. While leveling, just add what you have as you go
+       2. AUTOMATIC/LAZY
+       3.      4. SELF BUFF
+       5.         1. More damage with efficient usage (plan around boss dying soon/next boss)
+          2. We also stack Trap + Arrow in priority order for use
+          6.       2. Set up your Macro by clicking THE MACRO button in the top right of your skills
+    … и ещё 92
+
