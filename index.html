@@ -511,10 +511,45 @@ function renderStats(R,snap){
   <section class="box"><h2>Primary Stats и Daevanion</h2><p class="lead">Allyria: в фокусе Might и Precision (в её примере эндгейма по 309). Daevanion: оранжевые > синие > зелёные > белые; из белых — Attack > Critical Hit > HP. Иногда синий узел важнее оранжевого, если он доводит скилл до порога.</p>
     <div class="boards">${prim}</div><div class="boards">${boards}</div></section>`;
 }
+/* ---------- arcana / ring plan: 5 skills at 20 (computed 14.11.2026 from the armory) ---------- */
+const ARC_STEPS=[
+  ["arc_rings","Кольца: Sync на Gale Arrow, Deadshot, Drill Dart, Snipe","Всё, что не Gale Arrow, Deadshot, Drill Dart или Snipe (оранжевые строки ниже), перекинуть: одну строку в Deadshot, одну в Drill Dart на каждом кольце. Результат гарантирован: Deadshot 20, Drill Dart 19."],
+  ["arc_compass","Compass of Magic: доточить +3 → +5","Нужно: одна заточка в Deadshot (3 → 4), одна в Gale Arrow (1 → 2). Шанс ~1 из 8. Если ушло в Suppressing Arrow или Marking Shot — нужна новая Compass с Deadshot и Gale."],
+  ["arc_chalice","Новый Chalice of Vigor: Tempest Shot, Snipe, Gale Arrow, Drill Dart","Точить до +5: Tempest 4 · Snipe 2 · Gale 2 · Drill 1. Старый Chalice снимать, только когда новый даёт Tempest 4."]
+];
+const ARC_TARGET=[ // card category, target lines, action
+  ["Parchment","Drill Dart 3 · Tempest Shot 2 · Snipe 2 · Burst Arrow 2","+5","Оставить — уже подходит"],
+  ["Chalice","Tempest Shot 4 · Snipe 2 · Gale Arrow 2 · Drill Dart 1","+5","Новая карта"],
+  ["Compass","Deadshot 4 · Gale Arrow 2 · ещё 2 строки по 1","+4…+5","Доточить или новая"],
+  ["Bell","Hunter's Resolve · Rooting Eye · Vigilant Eye · Revitalization Contract","как есть","Не трогать"],
+  ["Mirror","Focused Eye · Concentrated Fire · Hunter's Soul · Unyielding Resolve","как есть","Не трогать"]
+];
+const ARC_SKILLS=[ // skill key, rings, parchment, chalice, compass
+  ["tempest",0,2,4,0],["snipe",2,2,2,0],["drill",2,3,1,0],["gale",2,0,2,2],["deadshot",2,0,0,4]
+];
+function arcanaBlock(R){
+  const items=DOC?.snap?.items||{};
+  const cur=cat=>{ const d=Object.values(items).find(x=>x&&x.categoryName===cat); return d?`${(d.subSkills||[]).map(x=>esc(x.name)+" "+x.level).join(" · ")} <span class="muted">(+${d.enchantLevel}, ${esc(d.grade)})</span>`:"—"; };
+  const rings=[13,14].map(k=>items[k]).filter(Boolean).map((d,i)=>`Ring ${i+1}: ${[...(d.subSkills||[]).map(x=>/gale|deadshot|drill|snipe/i.test(x.name)?esc(x.name):`<span style="color:var(--warn)">${esc(x.name)}</span>`),...(d.subStats||[]).map(x=>`<span style="color:var(--warn)">${esc(x.name)}</span>`)].join(" · ")}`).join("<br>");
+  const lv=k=>R?.skills?.[k]?.skillLevel??"—";
+  const sk=ARC_SKILLS.map(([k,r,p,c,m])=>{ const now=lv(k); return `<tr><td>${esc(ru(k))}</td><td class="n" style="${now>=20?"color:var(--good)":""}">${now}</td><td class="n">14</td><td class="n">${r||"—"}</td><td class="n">${p||"—"}</td><td class="n">${c||"—"}</td><td class="n">${m||"—"}</td><td class="n"><b>20</b></td></tr>`; }).join("");
+  const cards=ARC_TARGET.map(([cat,t,e,a])=>`<tr><td><b>${cat}</b></td><td>${esc(t)}<br><small class="muted">сейчас: ${cur(cat)}</small></td><td class="n">${e}</td><td>${esc(a)}</td></tr>`).join("");
+  const steps=ARC_STEPS.map(([id,t,s])=>`<li data-id="${id}" class="${PLANSTATE[id]?"on":""}" tabindex="0" role="checkbox" aria-checked="${!!PLANSTATE[id]}"><div class="chk">${CHECK}</div><div style="min-width:0"><b>${esc(t)}</b><small>${esc(s)}</small></div></li>`).join("");
+  return `<section class="box"><h2>Замена аркан: 5 скиллов на 20</h2>
+    <p class="lead">Цель — Snipe, Tempest Shot, Deadshot, Gale Arrow, Drill Dart на 20. База у всех 14 (10 очков + по 1 с Nezekan, Zikel, Vaizel, Triniel — уже открыто), значит с вещей нужно +6 каждому. Кольца дают только +1 за строку, арканы не перекидываются — только новая карта. С аркан в сумме нужно: Gale 4, Deadshot 4, Drill 4, Snipe 4, Tempest 6.</p>
+    <div class="tw"><table class="sk"><tr><th>Скилл</th><th class="n">Сейчас</th><th class="n">База</th><th class="n">Кольца</th><th class="n">Parchment</th><th class="n">Chalice</th><th class="n">Compass</th><th class="n">Цель</th></tr>${sk}</table></div>
+    <h3 style="font-size:19px">Арканы</h3>
+    <div class="tw"><table class="sk"><tr><th>Карта</th><th>Нужные строки и уровни</th><th class="n">Заточка</th><th>Что делать</th></tr>${cards}</table></div>
+    <p class="lead"><b>Кольца сейчас:</b><br>${rings||"—"}<br>Цель на каждом: Gale Arrow · Deadshot · Drill Dart · Snipe (оранжевым — строки на замену).</p>
+    <h3 style="font-size:19px">Шаги</h3>
+    <ul class="plan">${steps}</ul>
+    <p class="lead">Заточка поднимает случайную строку, поэтому важна сумма с аркан, а не точное распределение. Запас маленький: на Chalice и Compass не должно быть лишних строк выше 1 (Melee Fire, Suppressing Arrow, Defiance). Набор 2 Vigor + 3 Magic сохраняется.</p>
+  </section>`;
+}
 function renderPlan(R){
   const html=`<section class="box"><h2>Путь 2100 → 2800</h2><p class="lead">Дела из гайда Johnpal «Road to 2800+» и правил Allyria. Отметки сохраняются.</p>
     <ul class="plan">${PLAN.map(([id,t,s,src])=>`<li data-id="${id}" class="${PLANSTATE[id]?"on":""}" tabindex="0" role="checkbox" aria-checked="${!!PLANSTATE[id]}"><div class="chk">${CHECK}</div><div style="min-width:0"><b>${esc(t)}</b>${s?`<small>${esc(s)}</small>`:""}<span class="src">${esc(src)}</span></div></li>`).join("")}</ul></section>`;
-  $("#pane-plan").innerHTML=guidesBlock()+html;
+  $("#pane-plan").innerHTML=arcanaBlock(R)+guidesBlock()+html;
   $("#pane-plan").querySelectorAll("li[data-id]").forEach(li=>{ const tog=()=>{ PLANSTATE[li.dataset.id]=!PLANSTATE[li.dataset.id]; savePlan(); renderPlan(R); };
     li.onclick=tog; li.onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); tog(); } }; });
 }
