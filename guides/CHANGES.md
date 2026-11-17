@@ -237,3 +237,96 @@
           6.       2. Set up your Macro by clicking THE MACRO button in the top right of your skills
     … и ещё 92
 
+
+## 2026-11-17 — Johnpal — Gearing Path/Guides
+
+Добавлено строк: 117, удалено: 116. [Открыть гайд](https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit)
+
+**Добавлено:**
+
+                                        *
+                                           * NOTE: Skill levels may have different priorities.
+                                           *                                             * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+                                              * Red highlights I haven’t checked/tested yet
+                                              * 50% Crit cap means we can run 35 at 16 and 235 (Over cap) or 135 (Mana reduction lul?)
+                                              * Vaizels Authority
+                                              * Big Self buff
+                                              * At 20 Crits reset all cooldowns including self buff
+                                              * Bow of Blessing
+                                              * Big self buff
+                                              * Supporting Fire*
+                                              * 1.5% Life steal on chance to hit + additional damage
+                                              * Marking Shot*
+                                              * Watch your buff above your mana bar.  Cast it and don’t recast until it’s at 1 second, if you cast on cooldown it is a DPS loss.
+                                              * Tested 20/20/15/5 and it was break even with 20/15/15/15 but at a loss of HP/sustain.
+                                              * Abyss Farm Siege
+                                              * Abyss Commands
+                                              * Nornir Commands
+                                              * Duties
+                                              * Abyss Corridors
+                                              * Supply Request
+                                              * Currently Evaluating Crit Damage caps
+                                              * Precision Increases Accuracy by a multiplier
+                                              * Natura = +1 Precision per pet to 3
+                                              * 50% Crit Cap
+                                              * Target 1600 (Including +300 with bow of blessing) For Ludra
+                                              * 10 crit = 1%
+                                              * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+                                              * Targeting 1400 for Ludra
+                                              1. Setup your Skills vertically like below
+                                              1. While leveling, just add what you have as you go
+                                              2. AUTOMATIC/LAZY
+                                              3.                                             4. SELF BUFF
+                                              5.                                                1. More damage with efficient usage (plan around boss dying soon/next boss)
+                                                 2. We also stack Trap + Arrow in priority order for use
+                                                 6.                                              2. Set up your Macro by clicking THE MACRO button in the top right of your skills
+                                                 1.
+                                                 2. Click each skill and select the horizontal (main row) skill
+                                                 3. AUTOMATIC/LAZY LEVELING
+                                                 4.                                                5. MANUAL (MORE DAMAGE)
+    … и ещё 77
+
+**Удалено:**
+
+                                        * NOTE: Skill levels may have different priorities.
+                                        *                                          * Below in the chart this would be “235” as in skill line 2, 3, and 5.
+                                           * Red highlights I haven’t checked/tested yet
+                                           * 50% Crit cap means we can run 35 at 16 and 235 (Over cap) or 135 (Mana reduction lul?)
+                                           * Vaizels Authority
+                                           * Big Self buff
+                                           * At 20 Crits reset all cooldowns including self buff
+                                           * Bow of Blessing
+                                           * Big self buff
+                                           * Supporting Fire*
+                                           * 1.5% Life steal on chance to hit + additional damage
+                                           * Marking Shot*
+                                           * Watch your buff above your mana bar.  Cast it and don’t recast until it’s at 1 second, if you cast on cooldown it is a DPS loss.
+                                           * Tested 20/20/15/5 and it was break even with 20/15/15/15 but at a loss of HP/sustain.
+                                           * Abyss Farm Siege
+                                           * Abyss Commands
+                                           * Nornir Commands
+                                           * Duties
+                                           * Abyss Corridors
+                                           * Supply Request
+                                           * Currently Evaluating Crit Damage caps
+                                           * Precision Increases Accuracy by a multiplier
+                                           * Natura = +1 Precision per pet to 3
+                                           * 50% Crit Cap
+                                           * Target 1600 (Including +300 with bow of blessing) For Ludra
+                                           * 10 crit = 1%
+                                           * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
+                                           * Targeting 1400 for Ludra
+                                           1. Setup your Skills vertically like below
+                                           1. While leveling, just add what you have as you go
+                                           2. AUTOMATIC/LAZY
+                                           3.                                          4. SELF BUFF
+                                           5.                                             1. More damage with efficient usage (plan around boss dying soon/next boss)
+                                              2. We also stack Trap + Arrow in priority order for use
+                                              6.                                           2. Set up your Macro by clicking THE MACRO button in the top right of your skills
+                                              1.
+                                              2. Click each skill and select the horizontal (main row) skill
+                                              3. AUTOMATIC/LAZY LEVELING
+                                              4.                                             5. MANUAL (MORE DAMAGE)
+                                                 1. (Testing new macro setup, 2vigor/3magic minor mana problems if you have short fast targets)
+    … и ещё 76
+
