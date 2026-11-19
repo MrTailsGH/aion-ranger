@@ -900,7 +900,7 @@ https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIi
                                                          * Precision Increases Accuracy by a multiplier
                                                          * Natura = +1 Precision per pet to 3
                                                          * 50% Crit Cap
-                                                         * Target 1600 (Including +300 with bow of blessing) For Ludra
+                                                         * Target 1700
                                                          * 10 crit = 1%
                                                          * PVE Accuracy is additive after the final accuracy product from Precision + Base Accuracy
                                                          * Targeting 1400 for Ludra

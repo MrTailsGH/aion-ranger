@@ -330,3 +330,16 @@
                                                  1. (Testing new macro setup, 2vigor/3magic minor mana problems if you have short fast targets)
     … и ещё 76
 
+
+## 2026-11-19 — Johnpal — Gearing Path/Guides
+
+Добавлено строк: 1, удалено: 1. [Открыть гайд](https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit)
+
+**Добавлено:**
+
+                                                             * Target 1700
+
+**Удалено:**
+
+                                                             * Target 1600 (Including +300 with bow of blessing) For Ludra
+
