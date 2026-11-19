@@ -799,7 +799,7 @@ function aGoalHtml(){
     <div class="gchips"><button type="button" data-preset="5x20" aria-pressed="${JSON.stringify(ARCT.goal.skills)===JSON.stringify(A_PRESET)}">5 скиллов на 20</button><button type="button" data-preset="none">Снять все</button></div>
     <div class="gwrap"><span class="ghd">Активные</span>${A_ACT.map(chip).join("")}</div>
     <div class="gwrap"><span class="ghd">Пассивные</span>${A_PAS.map(chip).join("")}</div>
-    <div class="gchips"><span class="ghd" style="align-self:center">Кольца</span><button type="button" data-rings="plan" aria-pressed="${ARCT.goal.rings==="plan"}">Перекинуть под цель</button><button type="button" data-rings="now" aria-pressed="${ARCT.goal.rings!=="plan"}">Как сейчас</button></div>
+    <div class="gchips"><span class="ghd" style="align-self:center">Кольца</span><button type="button" data-rings="plan" aria-pressed="${ARCT.goal.rings==="plan"}">4 скилла под цель</button><button type="button" data-rings="now" aria-pressed="${ARCT.goal.rings!=="plan"}">Как сейчас</button></div>
   </section>`;
 }
 function aPlanHtml(o){
@@ -808,7 +808,7 @@ function aPlanHtml(o){
   const rn=aRingsNow();
   const rings=ARCT.goal.rings==="plan"?o.rings.map((r,i)=>{ const add=r.filter(n=>!rn[i].includes(n)), drop=rn[i].filter(n=>!r.includes(n));
       const free=A_RINGLINES-rn[i].length; // skill lines are separate from stat lines: 4 per ring
-      return `<li><span class="pk ${add.length?"lo":"ok"}">${add.length?"Перекинуть":"Оставить"}</span><div><b>Ring ${i+1}:</b> ${r.map(esc).join(", ")||"—"}${add.length?`<small>${add.map((n,j)=>`${j<drop.length?esc(drop[j]):`${rn[i].length+(j-drop.length)+1}-я строка скилла${free>0?" (сейчас пустая)":""}`} → <b>${esc(n)}</b>`).join(" · ")}. Строки-статы не трогаем.</small>`:""}</div></li>`; }).join(""):"";
+      return `<li><span class="pk ${add.length?"lo":"ok"}">${add.length?"Перекинуть":"Оставить"}</span><div><b>Ring ${i+1}:</b> ${r.map(esc).join(", ")||"—"}${add.length?`<small>${add.map((n,j)=>`${j<drop.length?esc(drop[j]):`${rn[i].length+(j-drop.length)+1}-я строка${free>0?" (ещё не выролена)":""}`} → <b>${esc(n)}</b>`).join(" · ")}.</small>`:""}</div></li>`; }).join(""):"";
   const rows=o.picks.map((c,ci)=>{ const [id,name,cat]=o.cards[ci].meta, f=o.cards[ci].f;
     const gives=o.G.map((n,i)=>c.contrib[i]?`${esc(n)} ${c.contrib[i]}`:"").filter(Boolean).join(" · ")||"для цели ничего";
     if(c.type==="keep") return `<li><span class="pk ok">Оставить</span><div><b>${name}</b><small>Даёт: ${gives}</small></div></li>`;
