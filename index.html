@@ -807,8 +807,8 @@ function aPlanHtml(o){
   if(!o) return `<section class="box"><h2>Подбор аркан</h2><p class="lead">Выберите хотя бы один скилл выше.</p></section>`;
   const rn=aRingsNow();
   const rings=ARCT.goal.rings==="plan"?o.rings.map((r,i)=>{ const add=r.filter(n=>!rn[i].includes(n)), drop=rn[i].filter(n=>!r.includes(n));
-      const st=(DOC?.snap?.items?.[13+i]?.subStats||[]).map(x=>x.name), from=[...drop,...st].slice(0,add.length);
-      return `<li><span class="pk ${add.length?"lo":"ok"}">${add.length?"Перекинуть":"Оставить"}</span><div><b>Ring ${i+1}:</b> ${r.map(esc).join(", ")||"—"}${add.length?`<small>${add.map((n,j)=>`${from[j]?esc(from[j]):"свободная строка"} → <b>${esc(n)}</b>`).join(" · ")}</small>`:""}</div></li>`; }).join(""):"";
+      const free=A_RINGLINES-rn[i].length; // skill lines are separate from stat lines: 4 per ring
+      return `<li><span class="pk ${add.length?"lo":"ok"}">${add.length?"Перекинуть":"Оставить"}</span><div><b>Ring ${i+1}:</b> ${r.map(esc).join(", ")||"—"}${add.length?`<small>${add.map((n,j)=>`${j<drop.length?esc(drop[j]):`${rn[i].length+(j-drop.length)+1}-я строка скилла${free>0?" (сейчас пустая)":""}`} → <b>${esc(n)}</b>`).join(" · ")}. Строки-статы не трогаем.</small>`:""}</div></li>`; }).join(""):"";
   const rows=o.picks.map((c,ci)=>{ const [id,name,cat]=o.cards[ci].meta, f=o.cards[ci].f;
     const gives=o.G.map((n,i)=>c.contrib[i]?`${esc(n)} ${c.contrib[i]}`:"").filter(Boolean).join(" · ")||"для цели ничего";
     if(c.type==="keep") return `<li><span class="pk ok">Оставить</span><div><b>${name}</b><small>Даёт: ${gives}</small></div></li>`;
