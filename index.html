@@ -181,6 +181,8 @@ footer a{color:var(--aether)}
 .acard h3{font-size:19px;line-height:1.15}
 .acard .sub{font-size:12px;color:var(--muted);margin-top:2px}
 .alines{display:grid;grid-template-columns:minmax(0,1fr) auto 38px;gap:6px 8px;align-items:center;margin-top:10px}
+.alines.rl{grid-template-columns:minmax(0,1fr) 44px}
+.acard.ring{grid-template-columns:1fr}
 .alines .hd{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .alines .hd.r{text-align:center}
 .pick{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;min-width:0;text-align:left;border:1px solid var(--line);background:var(--sunk);color:var(--fg);border-radius:8px;padding:6px 9px;cursor:pointer;font-size:14px}
@@ -664,11 +666,13 @@ function aInit(){
   if(ARCT) return;
   const loc=aLoad(), rep=ARCREPO;
   if(loc&&loc.target&&(!rep||loc.updatedAt>(rep.savedAt||0))) ARCT=loc;
-  else if(rep&&rep.target) ARCT={target:rep.target,goal:rep.goal,updatedAt:rep.savedAt||0,sentAt:rep.savedAt||0};
+  else if(rep&&rep.target) ARCT={target:rep.target,goal:rep.goal,rings:rep.rings,updatedAt:rep.savedAt||0,sentAt:rep.savedAt||0};
   else if(DOC?.snap) ARCT={target:aFromFact(),updatedAt:0,sentAt:0};
   if(!ARCT) return;
   for(const [id] of A_CARDS){ const r=ARCT.target[id]; ARCT.target[id]=[0,1,2,3].map(i=>Array.isArray(r?.[i])?r[i]:null); }
   if(!ARCT.goal||!Array.isArray(ARCT.goal.skills)) ARCT.goal={skills:A_PRESET.map(x=>x.slice()),rings:"plan"};
+  if(!Array.isArray(ARCT.rings)||ARCT.rings.length!==2) ARCT.rings=aRingsFactRows();
+  ARCT.rings=ARCT.rings.map(r=>[0,1,2,3].map(i=>typeof r?.[i]==="string"?r[i]:null));
 }
 const aSum=rows=>rows.reduce((s,r)=>s+(r?r[1]:1),0);           // "any skill" rows hold +1 too
 const aLvl=rows=>Math.max(0,Math.min(5,aSum(rows)-4));
@@ -702,17 +706,22 @@ function aStatus(rows,f){
 /* ---------- skill sources ---------- */
 function aNow(){ const m={}; for(const s of DOC?.snap?.skills||[]) m[s.name]=s.skillLevel||0; return m; }
 function aRingsNow(){ return [13,14].map(k=>(DOC?.snap?.items?.[k]?.subSkills||[]).map(s=>s.name)); }
+function aRingsFactRows(){ return aRingsNow().map(l=>[0,1,2,3].map(i=>l[i]||null)); }
+const aRingsMine=()=>ARCT.rings.map(r=>r.filter(Boolean));
 function aCount(lists){ const m={}; for(const l of lists) for(const n of l) m[n]=(m[n]||0)+1; return m; }
 function aArcFact(){ const m={}; for(const [,,cat] of A_CARDS) for(const [n,v] of aFact(cat)?.lines||[]) m[n]=(m[n]||0)+v; return m; }
 /* ---------- optimizer: pick, per card, keep / enchant / new, minimising expected new cards ---------- */
-function aOptimize(){
+function aOptimize(mode=ARCT.goal.rings){
   const goal=ARCT.goal.skills.filter(g=>g&&g[1]>0), G=goal.map(g=>g[0]), D=G.length; if(!D) return null;
   const now=aNow(), rn=aRingsNow(), rnC=aCount(rn), af=aArcFact();
   const base=G.map(n=>(now[n]||0)-(af[n]||0)-(rnC[n]||0));        // level without arcana and rings
   const cards=A_CARDS.map(meta=>({meta,f:aFact(meta[2])}));
   const subsets=(arr,k)=>k===0?[[]]:arr.length<k?[]:[...subsets(arr.slice(1),k-1).map(s=>[arr[0],...s]),...subsets(arr.slice(1),k)];
   const actG=G.filter(aIsAct);
-  const ringSets=ARCT.goal.rings==="plan"?(()=>{ const o=subsets(actG,Math.min(A_RINGLINES,actG.length)), r=[]; o.forEach((a,i)=>o.slice(i).forEach(b=>r.push([a,b]))); return r.length?r:[[[],[]]]; })():[rn];
+  const mineSets=()=>{ const per=aRingsMine().map(fx=>{ const free=A_RINGLINES-fx.length, pool=actG.filter(n=>!fx.includes(n));
+      return free>0&&pool.length?subsets(pool,Math.min(free,pool.length)).map(x=>fx.concat(x)):[fx]; }); // unrolled lines: best possible roll
+    const r=[]; per[0].forEach(a=>per[1].forEach(b=>r.push([a,b]))); return r; };
+  const ringSets=mode==="mine"?mineSets():mode==="plan"?(()=>{ const o=subsets(actG,Math.min(A_RINGLINES,actG.length)), r=[]; o.forEach((a,i)=>o.slice(i).forEach(b=>r.push([a,b]))); return r.length?r:[[[],[]]]; })():[rn];
   const needs=ringSets.map(rs=>{ const rc=aCount(rs); return G.map((n,i)=>Math.max(0,goal[i][1]-base[i]-(rc[n]||0))); });
   // static options per card: keep, enchant what is on it, or a new card
   const opts=cards.map(({meta,f})=>{
@@ -777,11 +786,11 @@ function aOptimize(){
   const picks=cards.map((c,i)=>(best.picks.find(p=>p[0]===i)||[i,opts[i][0]])[1]);
   return {...best,picks,G,goal,base,cards};
 }
-function aOptKey(){ return JSON.stringify([ARCT.goal,DOC?.fetchedAt]); }
+function aOptKey(){ return JSON.stringify([ARCT.goal,ARCT.rings,DOC?.fetchedAt]); }
 let AOPT_T=null;
 function aGetOpt(){ return ARCOPT&&ARCOPT.key===aOptKey()?ARCOPT.res:undefined; }   // undefined = still computing
 function aSchedule(){ clearTimeout(AOPT_T); AOPT_T=setTimeout(()=>{ const k=aOptKey(); if(ARCOPT&&ARCOPT.key===k) return;
-  const t=performance.now(); let res=null; try{ res=aOptimize(); }catch(e){ console.error(e); } ARCOPT={key:k,res,ms:performance.now()-t}; renderArcana(); },60); }
+  const t=performance.now(); let res=null, ref=null; try{ res=aOptimize(); ref=ARCT.goal.rings==="plan"?res:aOptimize("plan"); }catch(e){ console.error(e); } ARCOPT={key:k,res,ref,ms:performance.now()-t}; renderArcana(); },60); }
 /* ---------- view ---------- */
 function aSyncState(){
   if(ARCMSG) return ARCMSG;
@@ -799,8 +808,27 @@ function aGoalHtml(){
     <div class="gchips"><button type="button" data-preset="5x20" aria-pressed="${JSON.stringify(ARCT.goal.skills)===JSON.stringify(A_PRESET)}">5 скиллов на 20</button><button type="button" data-preset="none">Снять все</button></div>
     <div class="gwrap"><span class="ghd">Активные</span>${A_ACT.map(chip).join("")}</div>
     <div class="gwrap"><span class="ghd">Пассивные</span>${A_PAS.map(chip).join("")}</div>
-    <div class="gchips"><span class="ghd" style="align-self:center">Кольца</span><button type="button" data-rings="plan" aria-pressed="${ARCT.goal.rings==="plan"}">4 скилла под цель</button><button type="button" data-rings="now" aria-pressed="${ARCT.goal.rings!=="plan"}">Как сейчас</button></div>
+    <div class="gchips"><span class="ghd" style="align-self:center">Кольца</span><button type="button" data-rings="plan" aria-pressed="${ARCT.goal.rings==="plan"}">Подобрать самому</button><button type="button" data-rings="mine" aria-pressed="${ARCT.goal.rings==="mine"}">Мои кольца (ниже)</button><button type="button" data-rings="now" aria-pressed="${ARCT.goal.rings==="now"}">Как в игре</button></div>
   </section>`;
+}
+function aRingsHtml(){
+  const rn=aRingsNow(), o=aGetOpt(), ref=ARCOPT&&ARCOPT.key===aOptKey()?ARCOPT.ref:undefined, gm=Object.fromEntries(ARCT.goal.skills);
+  const box=[0,1].map(i=>{ const it=DOC?.snap?.items?.[13+i], rows=ARCT.rings[i];
+    const lines=rows.map((n,j)=>`<button type="button" class="pick${n?"":" empty"}" data-pick="ring${i}:${j}" aria-haspopup="listbox"><span>${n?esc(n)+(n in gm?" ★":""):"Не выролено"}</span></button><span class="fv ${!n?"":rn[i].includes(n)?"ok":"no"}" title="В игре сейчас">${!n?"":rn[i].includes(n)?"есть":"нет"}</span>`).join("");
+    return `<article class="acard ring"><div style="min-width:0"><h3>Ring ${i+1}</h3><div class="sub">${it?esc(it.name)+(it.enchantLevel?` +${it.enchantLevel}`:""):"нет в оружейной"} · 4 строки скиллов по +1</div>
+      <div class="alines rl"><span class="hd">Скилл</span><span class="hd r">Игра</span>${lines}</div>
+      <div class="factline">В игре: ${rn[i].map(esc).join(" · ")||"—"}</div>
+      <div class="arow"><button type="button" class="btn" data-ringfact="${i}">Взять из игры</button>${ref?.rings?`<button type="button" class="btn" data-ringbest="${i}">Как в подборе</button>`:""}</div></div></article>`; }).join("");
+  let verdict="";
+  if(ARCT.goal.rings==="mine"&&o&&ref){
+    const mine=Math.round(o.cost), best=Math.round(ref.cost);
+    const bestTxt=ref.rings.map((r,i)=>`Ring ${i+1}: ${r.map(esc).join(", ")}`).join("; ");
+    if(o.left>ref.left) verdict=`<div class="astate no"><b>С такими кольцами цель не собрать</b> (не хватает ${o.left} ур.). Лучший вариант: ${bestTxt}.</div>`;
+    else if(o.cost<=ref.cost*1.1+1) verdict=`<div class="astate ok"><b>Кольца хорошие — оставляйте.</b> С ними подбор аркан ≈ ${mine.toLocaleString("ru-RU")} карт, с идеальными кольцами ≈ ${best.toLocaleString("ru-RU")}.</div>`;
+    else verdict=`<div class="astate lo"><b>Можно лучше.</b> С этими кольцами арканы обойдутся ≈ ${mine.toLocaleString("ru-RU")} карт, а с кольцами «${bestTxt}» — ≈ ${best.toLocaleString("ru-RU")}. Если перекидывать дорого, можно оставить: разница только в сложности аркан.</div>`;
+  } else if(ARCT.goal.rings!=="mine") verdict=`<div class="astate">Впишите, что выролилось, — режим переключится на «Мои кольца», и подбор покажет, оставлять или перекидывать.</div>`;
+  else verdict=`<div class="astate">Считаю…</div>`;
+  return `<section class="box"><h2>Кольца</h2><p class="lead">На каждом кольце 4 строки скиллов, каждая даёт +1. Отметьте, что стоит или выролилось. Невыроленные строки подбор заполняет сам — лучшим, что туда может выпасть.</p>${verdict}<div class="acards">${box}</div></section>`;
 }
 function aPlanHtml(o){
   if(o===undefined) return `<section class="box"><h2>Подбор аркан</h2><div class="astate">Подбираю варианты…</div></section>`;
@@ -809,6 +837,8 @@ function aPlanHtml(o){
   const rings=ARCT.goal.rings==="plan"?o.rings.map((r,i)=>{ const add=r.filter(n=>!rn[i].includes(n)), drop=rn[i].filter(n=>!r.includes(n));
       const free=A_RINGLINES-rn[i].length; // skill lines are separate from stat lines: 4 per ring
       return `<li><span class="pk ${add.length?"lo":"ok"}">${add.length?"Перекинуть":"Оставить"}</span><div><b>Ring ${i+1}:</b> ${r.map(esc).join(", ")||"—"}${add.length?`<small>${add.map((n,j)=>`${j<drop.length?esc(drop[j]):`${rn[i].length+(j-drop.length)+1}-я строка${free>0?" (ещё не выролена)":""}`} → <b>${esc(n)}</b>`).join(" · ")}.</small>`:""}</div></li>`; }).join(""):"";
+  const rings2=ARCT.goal.rings==="mine"?o.rings.map((r,i)=>{ const fx=aRingsMine()[i], add=r.filter(n=>!fx.includes(n));
+    return `<li><span class="pk ${add.length?"lo":"ok"}">${add.length?"Выролить":"Ваше кольцо"}</span><div><b>Ring ${i+1}:</b> ${r.map(esc).join(", ")||"—"}${add.length?`<small>В невыроленные строки нужно: ${add.map(esc).join(", ")}</small>`:""}</div></li>`; }).join(""):"";
   const rows=o.picks.map((c,ci)=>{ const [id,name,cat]=o.cards[ci].meta, f=o.cards[ci].f;
     const gives=o.G.map((n,i)=>c.contrib[i]?`${esc(n)} ${c.contrib[i]}`:"").filter(Boolean).join(" · ")||"для цели ничего";
     if(c.type==="keep") return `<li><span class="pk ok">Оставить</span><div><b>${name}</b><small>Даёт: ${gives}</small></div></li>`;
@@ -821,13 +851,13 @@ function aPlanHtml(o){
     :`<div class="astate ${nNew?"lo":"ok"}">${nNew?`<b>Новых карт: ${nNew}.</b> В среднем придётся перебрать ≈ ${Math.max(1,Math.round(o.cost)).toLocaleString("ru-RU")} карт с заточкой до +5, чтобы собрать нужные.`:"<b>Новые карты не нужны.</b>"} Подбор старается не трогать Chalice: на ней нужное выпадает реже всего.</div>`;
   return `<section class="box"><h2>Подбор аркан</h2>
     <p class="lead">Скилл = база (без колец и аркан) + кольца по +1 за строку + арканы. Для каждой карты сравниваются три пути: оставить, доточить оставшимися заточками или собрать новую — и выбирается сочетание, где в среднем нужно меньше всего новых карт.</p>
-    ${total}<ul class="aplan">${rings}${rows}</ul>
+    ${total}<ul class="aplan">${rings}${rings2}${rows}</ul>
     <div class="arcbar"><button type="button" class="btn" id="arc-apply">Перенести подбор в конструктор</button><span class="arcst">Строки «любой скилл» — можно что угодно.</span></div>
     <p class="lead" style="font-size:12.5px">Оценка шансов — если новая карта получает 4 случайных скилла из своего пула, а каждая заточка поднимает любую из 4 строк с равной вероятностью. Официальных шансов NCSOFT не публиковал.</p></section>`;
 }
 function aSkillTable(o){
   const now=aNow(), af=aArcFact(), rn=aRingsNow(), rnC=aCount(rn), gm=Object.fromEntries(ARCT.goal.skills);
-  const ro=o||ARCOPT?.res; const rp=ARCT.goal.rings==="plan"&&ro?aCount(ro.rings):rnC;
+  const ro=o||ARCOPT?.res; const rp=ARCT.goal.rings==="mine"?aCount(aRingsMine()):ARCT.goal.rings==="plan"&&ro?aCount(ro.rings):rnC;
   const tv=id=>Object.fromEntries(ARCT.target[id].filter(Boolean));
   const T=Object.fromEntries(A_CARDS.map(([id])=>[id,tv(id)]));
   const names=[...A_ACT,...A_PAS].filter(n=>n in gm||A_CARDS.some(([id])=>T[id][n]));
@@ -837,7 +867,7 @@ function aSkillTable(o){
     const col=want?(tot>=want?"var(--good)":"var(--warn)"):"var(--fg)";
     const rchg=ring!==(rnC[n]||0)?` <span class="muted">(${rnC[n]||0}→${ring})</span>`:"";
     return `<tr${want?"":' class="dim"'}><td>${esc(n)}</td><td class="n">${now[n]??"—"}</td><td class="n">${base}</td><td class="n">${ring||"—"}${rchg}</td>${arc.map(v=>`<td class="n">${v||"—"}</td>`).join("")}<td class="n"><b style="color:${col}">${tot}</b></td><td class="n">${want||"—"}</td><td style="min-width:110px"><div class="rail"><i class="${want&&tot>=want?"done":""}" style="width:${Math.min(100,tot/A_SKMAX*100)}%"></i>${want?`<em style="left:calc(${Math.min(100,want/A_SKMAX*100)}% - 1px)"></em>`:""}</div></td></tr>`; }).join("");
-  return `<section class="box"><h2>Скиллы с этими арканами</h2><p class="lead">Пересчитывается при каждом изменении в конструкторе. «Сейчас» — по оружейной; «База» — без колец и аркан; кольца${ARCT.goal.rings==="plan"?" — по подбору (в скобках: было → станет)":" — как сейчас"}; колонки карт — цель из конструктора.</p>
+  return `<section class="box"><h2>Скиллы с этими арканами</h2><p class="lead">Пересчитывается при каждом изменении в конструкторе. «Сейчас» — по оружейной; «База» — без колец и аркан; кольца${ARCT.goal.rings==="plan"?" — по подбору (в скобках: было → станет)":ARCT.goal.rings==="mine"?" — ваши (в скобках: в игре → станет)":" — как в игре"}; колонки карт — цель из конструктора.</p>
     <div class="tw"><table class="sk ask"><tr><th>Скилл</th><th class="n">Сейчас</th><th class="n">База</th><th class="n">Кольца</th><th class="n">Chalice</th><th class="n">Parch.</th><th class="n">Compass</th><th class="n">Bell</th><th class="n">Mirror</th><th class="n">Итого</th><th class="n">Цель</th><th></th></tr>${rows}</table></div></section>`;
 }
 function renderArcana(){
@@ -866,7 +896,7 @@ function renderArcana(){
   pane.innerHTML=`<section class="box"><h2>Конструктор аркан</h2>
     <p class="lead">Новая карта — 4 скилла по +1, каждая заточка добавляет +1 случайной строке: максимум +5 = 9 очков. Число на карте — заточка, нужная под цель. «Игра» — что стоит сейчас по оружейной: зелёный — цель есть, жёлтый — не дотягивает, красный — такого скилла на карте нет.</p>
     <div class="arcbar"><button type="button" class="btn primary" id="arc-save" ${dirty&&!ARCBUSY?"":"disabled"}>Сохранить в репозиторий</button><span class="arcst ${sc}" id="arc-st">${esc(sm)}</span></div></section>
-    ${aGoalHtml()}${aPlanHtml(o)}${aSkillTable(o)}
+    ${aGoalHtml()}${aRingsHtml()}${aPlanHtml(o)}${aSkillTable(o)}
     <div class="acards">${cards}</div>`;
 }
 function aEdit(fn){ fn(ARCT.target,ARCT.goal); ARCT.updatedAt=Date.now(); ARCMSG=null; aSave(); }
@@ -877,7 +907,17 @@ function aPlace(){ if(!ARCPOP) return; const btn=document.querySelector(`[data-p
   const h=ARCPOP.offsetHeight, w=ARCPOP.offsetWidth;
   const top=r.bottom+6+h>innerHeight&&r.top-6-h>0?r.top-6-h:Math.min(r.bottom+6,innerHeight-h-8);
   ARCPOP.style.top=Math.max(8,top)+"px"; ARCPOP.style.left=Math.max(8,Math.min(r.left,innerWidth-w-8))+"px"; }
+function aOpenRingPop(btn,ri,i){
+  aClosePop(); const rows=ARCT.rings[ri], cur=rows[i], used=new Set(rows.filter((n,j)=>n&&j!==i)), gm=Object.fromEntries(ARCT.goal.skills), rn=aRingsNow()[ri];
+  const el=document.createElement("div"); el.className="apop"; el.setAttribute("role","listbox");
+  el.innerHTML=`<h4>Активные</h4>`+A_ACT.map(n=>`<button type="button" role="option" data-opt="${esc(n)}" class="${n===cur?"cur":""}" ${used.has(n)?"disabled":""}><span>${esc(n)}${n in gm?" ★":""}</span>${used.has(n)?"<small>уже на кольце</small>":rn.includes(n)?"<small>в игре</small>":""}</button>`).join("")+(cur?`<h4>&nbsp;</h4><button type="button" class="rm" data-opt="">Не выролено</button>`:"");
+  el.dataset.for=`ring${ri}:${i}`; document.body.appendChild(el); ARCPOP=el; aPlace();
+  el.onclick=e=>{ const o=e.target.closest("[data-opt]"); if(!o||o.disabled) return; const n=o.dataset.opt;
+    aEdit((t,g)=>{ ARCT.rings[ri][i]=n||null; g.rings="mine"; }); aClosePop(); renderArcana(); document.querySelector(`[data-pick="ring${ri}:${i}"]`)?.focus(); };
+  (el.querySelector("button.cur")||el.querySelector("button:not(:disabled)"))?.focus({preventScroll:true});
+}
 function aOpenPop(btn,id,i){
+  if(id.startsWith("ring")) return aOpenRingPop(btn,+id.slice(4),i);
   aClosePop(); const meta=A_CARDS.find(c=>c[0]===id), rows=ARCT.target[id], cur=rows[i]?.[0];
   const used=new Set(rows.filter((r,j)=>r&&j!==i).map(r=>r[0]));
   const f=aFact(meta[2]), fm=Object.fromEntries(f?.lines||[]), gm=Object.fromEntries(ARCT.goal.skills);
@@ -907,6 +947,8 @@ document.addEventListener("click",e=>{
   if(d.ginc||d.gdec){ const n=d.ginc||d.gdec; aEdit((t,g)=>{ const s=g.skills.find(x=>x[0]===n); if(!s) return; s[1]=Math.max(1,Math.min(A_SKMAX,s[1]+(d.ginc?1:-1))); }); renderArcana(); $(`[data-${d.ginc?"ginc":"gdec"}="${CSS.escape(n)}"]`)?.focus(); return; }
   if(d.preset){ aEdit((t,g)=>{ g.skills=d.preset==="5x20"?A_PRESET.map(x=>x.slice()):[]; }); renderArcana(); return; }
   if(d.rings){ aEdit((t,g)=>{ g.rings=d.rings; }); renderArcana(); return; }
+  if(d.ringfact){ aEdit((t,g)=>{ ARCT.rings[+d.ringfact]=aRingsFactRows()[+d.ringfact]; g.rings="mine"; }); renderArcana(); return; }
+  if(d.ringbest){ const r=ARCOPT?.ref?.rings?.[+d.ringbest]; if(r) aEdit((t,g)=>{ ARCT.rings[+d.ringbest]=[0,1,2,3].map(i=>r[i]||null); g.rings="mine"; }); renderArcana(); return; }
   if(b.id==="arc-apply"){ aApply(); return; }
   if(b.id==="arc-save") saveArcana();
 });
@@ -921,7 +963,7 @@ async function saveArcana(){
   const say=(c,m)=>{ ARCMSG=[c,m]; const s=$("#arc-st"); if(s){ s.className="arcst "+c; s.textContent=m; } };
   try{
     renderArcana(); say("dirty","Отправляю на GitHub…");
-    const r=await gh("/actions/workflows/arcana.yml/dispatches",{method:"POST",body:JSON.stringify({ref:"main",inputs:{data:JSON.stringify({v:1,savedAt:stamp,target:ARCT.target,goal:ARCT.goal})}})});
+    const r=await gh("/actions/workflows/arcana.yml/dispatches",{method:"POST",body:JSON.stringify({ref:"main",inputs:{data:JSON.stringify({v:1,savedAt:stamp,target:ARCT.target,goal:ARCT.goal,rings:ARCT.rings})}})});
     if(r.status===401){ setTok(""); throw new Error("Ключ не подошёл или истёк. Нажмите «Сохранить» ещё раз и вставьте новый."); }
     if(r.status===403||r.status===404) throw new Error("У ключа нет доступа. Проверьте: репозиторий aion-ranger и Actions: Read and write.");
     if(!r.ok) throw new Error("GitHub ответил "+r.status);
@@ -931,7 +973,7 @@ async function saveArcana(){
       if(!run||new Date(run.created_at).getTime()<t0-60000){ say("dirty","Ждёт очереди на GitHub…"); continue; }
       if(run.status!=="completed"){ say("dirty","Сохраняю в репозиторий…"); continue; }
       if(run.conclusion!=="success"){ ARCT.sentAt=0; aSave(); throw new Error("Сохранение на GitHub завершилось с ошибкой."); }
-      ARCREPO={v:1,savedAt:stamp,target:ARCT.target,goal:ARCT.goal}; ARCMSG=null; break;
+      ARCREPO={v:1,savedAt:stamp,target:ARCT.target,goal:ARCT.goal,rings:ARCT.rings}; ARCMSG=null; break;
     }
     if(ARCMSG&&ARCMSG[0]==="dirty") ARCMSG=null;
   }catch(e){ ARCMSG=["err",e.message]; }

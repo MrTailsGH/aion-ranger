@@ -34,7 +34,7 @@ if (d.goal !== undefined && d.goal !== null) {
   const g = d.goal;
   if (typeof g !== "object" || !Array.isArray(g.skills) || g.skills.length > ACT.length + PAS.length) fail("bad goal");
   const seen = new Set();
-  goal = { rings: g.rings === "now" ? "now" : "plan", skills: g.skills.map(x => {
+  goal = { rings: ["now", "mine"].includes(g.rings) ? g.rings : "plan", skills: g.skills.map(x => {
     if (!Array.isArray(x) || x.length !== 2) fail("bad goal row");
     const [name, lv] = x;
     if (![...ACT, ...PAS].includes(name) || seen.has(name)) fail(`goal: "${String(name).slice(0, 40)}"`);
@@ -42,6 +42,15 @@ if (d.goal !== undefined && d.goal !== null) {
     seen.add(name); return [name, lv];
   }) };
 }
+let rings = null;
+if (Array.isArray(d.rings)) {
+  if (d.rings.length !== 2) fail("rings: need 2");
+  rings = d.rings.map((r, i) => {
+    if (!Array.isArray(r) || r.length !== 4) fail(`ring ${i}: need 4 rows`);
+    const seen = new Set();
+    return r.map(n => { if (n === null) return null; if (!ACT.includes(n) || seen.has(n)) fail(`ring ${i}: "${String(n).slice(0, 40)}"`); seen.add(n); return n; });
+  });
+}
 const savedAt = Number.isFinite(d.savedAt) && d.savedAt > 0 ? Math.round(d.savedAt) : Date.now();
-await writeFile(new URL("../arcana.json", import.meta.url), JSON.stringify({ v: 1, savedAt, target, ...(goal ? { goal } : {}) }) + "\n");
+await writeFile(new URL("../arcana.json", import.meta.url), JSON.stringify({ v: 1, savedAt, target, ...(goal ? { goal } : {}), ...(rings ? { rings } : {}) }) + "\n");
 console.log("OK: arcana.json", new Date(savedAt).toISOString());
