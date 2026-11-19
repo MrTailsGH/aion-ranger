@@ -29,6 +29,19 @@ for (const [card, allowed] of Object.entries(RULES)) {
   });
   if (sum > MAX) fail(`${card}: ${sum} points > ${MAX}`);
 }
+let goal = null;
+if (d.goal !== undefined && d.goal !== null) {
+  const g = d.goal;
+  if (typeof g !== "object" || !Array.isArray(g.skills) || g.skills.length > ACT.length + PAS.length) fail("bad goal");
+  const seen = new Set();
+  goal = { rings: g.rings === "now" ? "now" : "plan", skills: g.skills.map(x => {
+    if (!Array.isArray(x) || x.length !== 2) fail("bad goal row");
+    const [name, lv] = x;
+    if (![...ACT, ...PAS].includes(name) || seen.has(name)) fail(`goal: "${String(name).slice(0, 40)}"`);
+    if (!Number.isInteger(lv) || lv < 1 || lv > 30) fail(`goal level ${lv}`);
+    seen.add(name); return [name, lv];
+  }) };
+}
 const savedAt = Number.isFinite(d.savedAt) && d.savedAt > 0 ? Math.round(d.savedAt) : Date.now();
-await writeFile(new URL("../arcana.json", import.meta.url), JSON.stringify({ v: 1, savedAt, target }) + "\n");
+await writeFile(new URL("../arcana.json", import.meta.url), JSON.stringify({ v: 1, savedAt, target, ...(goal ? { goal } : {}) }) + "\n");
 console.log("OK: arcana.json", new Date(savedAt).toISOString());

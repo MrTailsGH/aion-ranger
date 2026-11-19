@@ -210,6 +210,26 @@ footer a{color:var(--aether)}
 .apop button small{color:var(--muted);font-size:11.5px}
 .apop button.cur{color:var(--gold);font-weight:600}
 .apop .rm{color:var(--warn)}
+/* goal + plan */
+.gwrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ghd{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);min-width:84px}
+.gsk{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:99px;background:var(--panel);overflow:hidden}
+.gsk .gname{border:0;background:none;color:var(--muted);padding:5px 12px;cursor:pointer;font-size:13.5px}
+.gsk .gname:disabled{opacity:.4;cursor:default}
+.gsk.on{border-color:var(--gold);background:var(--gold-soft)}
+.gsk.on .gname{color:var(--gold);font-weight:600;padding-right:6px}
+.gsk .step{border:0;border-left:1px solid var(--line);border-radius:0}
+.gsk .step button{height:28px;width:26px;background:transparent}
+.gsk .step b{min-width:22px}
+ul.aplan{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ul.aplan li{display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;padding:9px 2px;border-bottom:1px solid var(--line);align-items:start;font-size:14px}
+ul.aplan li:last-child{border-bottom:0}
+ul.aplan small{display:block;color:var(--muted);font-size:13px}
+.pk{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:99px;text-align:center;margin-top:1px}
+.pk.ok{background:var(--good-soft);color:var(--good)} .pk.lo{background:var(--mid-soft);color:var(--mid)} .pk.no{background:var(--warn-soft);color:var(--warn)}
+table.ask td,table.ask th{padding-right:10px}
+table.ask tr.dim td{color:var(--muted)}
+@media (max-width:520px){ul.aplan li{grid-template-columns:1fr;gap:4px}.pk{justify-self:start}}
 @media (max-width:420px){.acard{grid-template-columns:1fr}.art{width:150px;justify-self:center}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -562,45 +582,10 @@ function renderStats(R,snap){
   <section class="box"><h2>Primary Stats и Daevanion</h2><p class="lead">Allyria: в фокусе Might и Precision (в её примере эндгейма по 309). Daevanion: оранжевые > синие > зелёные > белые; из белых — Attack > Critical Hit > HP. Иногда синий узел важнее оранжевого, если он доводит скилл до порога.</p>
     <div class="boards">${prim}</div><div class="boards">${boards}</div></section>`;
 }
-/* ---------- arcana / ring plan: 5 skills at 20 (computed 14.11.2026 from the armory) ---------- */
-const ARC_STEPS=[
-  ["arc_rings","Кольца: Sync на Gale Arrow, Deadshot, Drill Dart, Snipe","Всё, что не Gale Arrow, Deadshot, Drill Dart или Snipe (оранжевые строки ниже), перекинуть: одну строку в Deadshot, одну в Drill Dart на каждом кольце. Результат гарантирован: Deadshot 20, Drill Dart 19."],
-  ["arc_compass","Compass of Magic: доточить +3 → +5","Нужно: одна заточка в Deadshot (3 → 4), одна в Gale Arrow (1 → 2). Шанс ~1 из 8. Если ушло в Suppressing Arrow или Marking Shot — нужна новая Compass с Deadshot и Gale."],
-  ["arc_chalice","Новый Chalice of Vigor: Tempest Shot, Snipe, Gale Arrow, Drill Dart","Точить до +5: Tempest 4 · Snipe 2 · Gale 2 · Drill 1. Старый Chalice снимать, только когда новый даёт Tempest 4."]
-];
-const ARC_TARGET=[ // card category, target lines, action
-  ["Parchment","Drill Dart 3 · Tempest Shot 2 · Snipe 2 · Burst Arrow 2","+5","Оставить — уже подходит"],
-  ["Chalice","Tempest Shot 4 · Snipe 2 · Gale Arrow 2 · Drill Dart 1","+5","Новая карта"],
-  ["Compass","Deadshot 4 · Gale Arrow 2 · ещё 2 строки по 1","+4…+5","Доточить или новая"],
-  ["Bell","Hunter's Resolve · Rooting Eye · Vigilant Eye · Revitalization Contract","как есть","Не трогать"],
-  ["Mirror","Focused Eye · Concentrated Fire · Hunter's Soul · Unyielding Resolve","как есть","Не трогать"]
-];
-const ARC_SKILLS=[ // skill key, rings, parchment, chalice, compass
-  ["tempest",0,2,4,0],["snipe",2,2,2,0],["drill",2,3,1,0],["gale",2,0,2,2],["deadshot",2,0,0,4]
-];
-function arcanaBlock(R){
-  const items=DOC?.snap?.items||{};
-  const cur=cat=>{ const d=Object.values(items).find(x=>x&&x.categoryName===cat); return d?`${(d.subSkills||[]).map(x=>esc(x.name)+" "+x.level).join(" · ")} <span class="muted">(+${d.enchantLevel}, ${esc(d.grade)})</span>`:"—"; };
-  const rings=[13,14].map(k=>items[k]).filter(Boolean).map((d,i)=>`Ring ${i+1}: ${[...(d.subSkills||[]).map(x=>/gale|deadshot|drill|snipe/i.test(x.name)?esc(x.name):`<span style="color:var(--warn)">${esc(x.name)}</span>`),...(d.subStats||[]).map(x=>`<span style="color:var(--warn)">${esc(x.name)}</span>`)].join(" · ")}`).join("<br>");
-  const lv=k=>R?.skills?.[k]?.skillLevel??"—";
-  const sk=ARC_SKILLS.map(([k,r,p,c,m])=>{ const now=lv(k); return `<tr><td>${esc(ru(k))}</td><td class="n" style="${now>=20?"color:var(--good)":""}">${now}</td><td class="n">14</td><td class="n">${r||"—"}</td><td class="n">${p||"—"}</td><td class="n">${c||"—"}</td><td class="n">${m||"—"}</td><td class="n"><b>20</b></td></tr>`; }).join("");
-  const cards=ARC_TARGET.map(([cat,t,e,a])=>`<tr><td><b>${cat}</b></td><td>${esc(t)}<br><small class="muted">сейчас: ${cur(cat)}</small></td><td class="n">${e}</td><td>${esc(a)}</td></tr>`).join("");
-  const steps=ARC_STEPS.map(([id,t,s])=>`<li data-id="${id}" class="${PLANSTATE[id]?"on":""}" tabindex="0" role="checkbox" aria-checked="${!!PLANSTATE[id]}"><div class="chk">${CHECK}</div><div style="min-width:0"><b>${esc(t)}</b><small>${esc(s)}</small></div></li>`).join("");
-  return `<section class="box"><h2>Замена аркан: 5 скиллов на 20</h2>
-    <p class="lead">Цель — Snipe, Tempest Shot, Deadshot, Gale Arrow, Drill Dart на 20. База у всех 14 (10 очков + по 1 с Nezekan, Zikel, Vaizel, Triniel — уже открыто), значит с вещей нужно +6 каждому. Кольца дают только +1 за строку, арканы не перекидываются — только новая карта. С аркан в сумме нужно: Gale 4, Deadshot 4, Drill 4, Snipe 4, Tempest 6.</p>
-    <div class="tw"><table class="sk"><tr><th>Скилл</th><th class="n">Сейчас</th><th class="n">База</th><th class="n">Кольца</th><th class="n">Parchment</th><th class="n">Chalice</th><th class="n">Compass</th><th class="n">Цель</th></tr>${sk}</table></div>
-    <h3 style="font-size:19px">Арканы</h3>
-    <div class="tw"><table class="sk"><tr><th>Карта</th><th>Нужные строки и уровни</th><th class="n">Заточка</th><th>Что делать</th></tr>${cards}</table></div>
-    <p class="lead"><b>Кольца сейчас:</b><br>${rings||"—"}<br>Цель на каждом: Gale Arrow · Deadshot · Drill Dart · Snipe (оранжевым — строки на замену).</p>
-    <h3 style="font-size:19px">Шаги</h3>
-    <ul class="plan">${steps}</ul>
-    <p class="lead">Заточка поднимает случайную строку, поэтому важна сумма с аркан, а не точное распределение. Запас маленький: на Chalice и Compass не должно быть лишних строк выше 1 (Melee Fire, Suppressing Arrow, Defiance). Набор 2 Vigor + 3 Magic сохраняется.</p>
-  </section>`;
-}
 function renderPlan(R){
   const html=`<section class="box"><h2>Путь 2100 → 2800</h2><p class="lead">Дела из гайда Johnpal «Road to 2800+» и правил Allyria. Отметки сохраняются.</p>
     <ul class="plan">${PLAN.map(([id,t,s,src])=>`<li data-id="${id}" class="${PLANSTATE[id]?"on":""}" tabindex="0" role="checkbox" aria-checked="${!!PLANSTATE[id]}"><div class="chk">${CHECK}</div><div style="min-width:0"><b>${esc(t)}</b>${s?`<small>${esc(s)}</small>`:""}<span class="src">${esc(src)}</span></div></li>`).join("")}</ul></section>`;
-  $("#pane-plan").innerHTML=arcanaBlock(R)+guidesBlock()+html;
+  $("#pane-plan").innerHTML=guidesBlock()+html;
   $("#pane-plan").querySelectorAll("li[data-id]").forEach(li=>{ const tog=()=>{ PLANSTATE[li.dataset.id]=!PLANSTATE[li.dataset.id]; savePlan(); renderPlan(R); };
     li.onclick=tog; li.onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); tog(); } }; });
 }
@@ -655,7 +640,7 @@ function renderPets(){
   $("#pane-pets").querySelectorAll("input[data-g]").forEach(i=>i.onchange=()=>{ GHAVE[i.dataset.g]=i.checked; try{localStorage.setItem(GKEY,JSON.stringify(GHAVE));}catch(e){} renderPets(); });
 }
 
-/* ================= arcana constructor: target vs armory fact ================= */
+/* ================= arcana constructor: goal → plan → target vs armory fact ================= */
 const A_ACT=["Snipe","Tempest Shot","Deadshot","Gale Arrow","Drill Dart","Burst Arrow","Marking Shot","Snare Shot","Suppressing Arrow","Arrow Scattershot","Explosion Trap","Defiance"];
 const A_PAS=["Focused Eye","Hunter's Resolve","Hunter's Soul","Concentrated Fire","Rooting Eye","Melee Fire","Vigilant Eye","Unyielding Resolve","Revitalization Contract","Wind Vigor"];
 const A_CARDS=[ // id, game name, armory category, allowed groups, rule text
@@ -664,117 +649,269 @@ const A_CARDS=[ // id, game name, armory category, allowed groups, rule text
   ["compass","Compass of Magic","Compass",["act"],"Только активные"],
   ["bell","Bell of Magic","Bell",["pas"],"Только пассивные"],
   ["mirror","Mirror of Magic","Mirror",["pas"],"Только пассивные"]];
-const A_MAX=9, A_KEY="aion-ranger-arcana";
-let ARCT=null, ARCREPO=null, ARCPOP=null, ARCBUSY=false, ARCMSG=null;
+const A_GMAX_ACT=5, A_GMAX_PAS=4, A_MAX=9, A_KEY="aion-ranger-arcana", A_SKMAX=20, A_RINGLINES=4;
+const A_PRESET=[["Snipe",20],["Tempest Shot",20],["Deadshot",20],["Gale Arrow",20],["Drill Dart",20]];
+let ARCT=null, ARCREPO=null, ARCPOP=null, ARCBUSY=false, ARCMSG=null, ARCOPT=null;
 const aLoad=()=>{ try{ return JSON.parse(localStorage.getItem(A_KEY)||"null"); }catch(e){ return null; } };
 const aSave=()=>{ try{ localStorage.setItem(A_KEY,JSON.stringify(ARCT)); }catch(e){} };
+const aIsAct=n=>A_ACT.includes(n);
+const aOk=(meta,n)=>meta[3].includes(aIsAct(n)?"act":"pas");
+const aPool=meta=>meta[3].reduce((s,g)=>s+(g==="act"?A_ACT.length:A_PAS.length),0);
 function aFact(cat){ const d=Object.values(DOC?.snap?.items||{}).find(x=>x&&x.categoryName===cat); return d?{name:d.name,ench:d.enchantLevel||0,max:d.maxEnchantLevel||5,lines:(d.subSkills||[]).map(s=>[s.name,s.level])}:null; }
-function aFromFact(){ const t={}; for(const [id,,cat] of A_CARDS){ const f=aFact(cat); t[id]=[0,1,2,3].map(i=>f?.lines[i]?[f.lines[i][0],f.lines[i][1]]:null); } return t; }
+const aFactRows=f=>[0,1,2,3].map(i=>f?.lines[i]?[f.lines[i][0],f.lines[i][1]]:null);
+function aFromFact(){ const t={}; for(const [id,,cat] of A_CARDS) t[id]=aFactRows(aFact(cat)); return t; }
 function aInit(){
   if(ARCT) return;
   const loc=aLoad(), rep=ARCREPO;
   if(loc&&loc.target&&(!rep||loc.updatedAt>(rep.savedAt||0))) ARCT=loc;
-  else if(rep&&rep.target) ARCT={target:rep.target,updatedAt:rep.savedAt||0,sentAt:rep.savedAt||0};
+  else if(rep&&rep.target) ARCT={target:rep.target,goal:rep.goal,updatedAt:rep.savedAt||0,sentAt:rep.savedAt||0};
   else if(DOC?.snap) ARCT={target:aFromFact(),updatedAt:0,sentAt:0};
-  if(ARCT) for(const [id] of A_CARDS){ const r=ARCT.target[id]; ARCT.target[id]=[0,1,2,3].map(i=>Array.isArray(r?.[i])?r[i]:null); }
+  if(!ARCT) return;
+  for(const [id] of A_CARDS){ const r=ARCT.target[id]; ARCT.target[id]=[0,1,2,3].map(i=>Array.isArray(r?.[i])?r[i]:null); }
+  if(!ARCT.goal||!Array.isArray(ARCT.goal.skills)) ARCT.goal={skills:A_PRESET.map(x=>x.slice()),rings:"plan"};
 }
-const aSum=rows=>rows.reduce((s,r)=>s+(r?r[1]:1),0);           // an empty row will hold at least +1
+const aSum=rows=>rows.reduce((s,r)=>s+(r?r[1]:1),0);           // "any skill" rows hold +1 too
 const aLvl=rows=>Math.max(0,Math.min(5,aSum(rows)-4));
-function aChance(def,left){ // every enchant raises one of 4 lines at random (assumed equal odds)
+const A_CH=new Map();
+function aChance(def,left){ // each enchant raises one of the 4 lines at random (assumed equal odds)
+  const d0=def.slice().sort((a,b)=>b-a), k0=d0.join()+"|"+left; if(A_CH.has(k0)) return A_CH.get(k0);
   const memo=new Map();
   const go=(d,r)=>{ const need=d.reduce((a,b)=>a+b,0); if(need===0) return 1; if(need>r) return 0;
     const k=d.join()+"|"+r; if(memo.has(k)) return memo.get(k);
     let p=0; for(let i=0;i<4;i++){ const n=d.slice(); if(n[i]>0) n[i]--; p+=go(n,r-1)/4; } memo.set(k,p); return p; };
-  return go(def,left);
+  const p=go(d0.concat([0,0,0,0]).slice(0,4),left); A_CH.set(k0,p); return p;
 }
+const aComb=(n,k)=>{ if(k<0||k>n) return 0; let r=1; for(let i=1;i<=k;i++) r=r*(n-k+i)/i; return r; };
+const aPLines=(n,k)=>aComb(n-k,4-k)/aComb(n,4);                   // new card has all k wanted skills among its 4
+function aNewP(meta,mins){ return aPLines(aPool(meta),mins.length)*aChance(mins.map(m=>m-1),5); }
+const aFmt=p=>p>=.995?"почти наверняка":p>=.1?Math.round(p*100)+"%":"1 из "+(1/p>=100?Math.round(1/p/10)*10:Math.round(1/p)).toLocaleString("ru-RU");
 function aStatus(rows,f){
-  const set=rows.filter(Boolean);
-  if(set.length<4) return ["","Выберите 4 скилла — на аркане их всегда четыре."];
+  const req=rows.filter(Boolean);
+  if(!req.length) return ["","Все строки «любые» — для цели эта карта не важна."];
   if(!f) return ["","В оружейной нет этой карты — сравнить не с чем."];
-  const fm=Object.fromEntries(f.lines), tm=Object.fromEntries(set);
-  const miss=set.filter(r=>!(r[0] in fm)).map(r=>r[0]), extra=f.lines.filter(l=>!(l[0] in tm)).map(l=>l[0]);
-  if(miss.length) return ["no",`<b>Нужна новая карта.</b> Строки на аркане не перекидываются, а у этой не те скиллы: нет ${miss.map(esc).join(", ")}; вместо них ${extra.map(esc).join(", ")}.`];
-  const def=set.map(r=>Math.max(0,r[1]-fm[r[0]])), need=def.reduce((a,b)=>a+b,0), left=Math.max(0,f.max-f.ench);
-  if(!need) return ["ok",`<b>Готово.</b> Все строки на цели или выше${f.ench<f.max?`, осталось заточек: ${left}`:""}.`];
-  const where=set.map((r,i)=>def[i]?`${esc(r[0])} +${def[i]}`:"").filter(Boolean).join(", ");
-  if(need>left) return ["no",`<b>Уже не добить.</b> Не хватает ${need} (${where}), а заточек осталось ${left}. Нужна новая карта с этими скиллами.`];
-  const p=aChance(def,left);
-  return ["lo",`<b>Точить:</b> нужно ${where} — ${need} из ${left} оставшихся заточек. Шанс собрать ровно так ≈ <b>${Math.round(p*100)}%</b> <span class="muted">(если строка выбирается равновероятно)</span>.`];
+  const fm=Object.fromEntries(f.lines);
+  const miss=req.filter(r=>!(r[0] in fm)).map(r=>r[0]);
+  if(miss.length){ const tm=Object.fromEntries(req); const extra=f.lines.filter(l=>!(l[0] in tm)).map(l=>l[0]);
+    return ["no",`<b>Нужна новая карта.</b> Строки на аркане не перекидываются, а на этой нет ${miss.map(esc).join(", ")} (стоят ${extra.map(esc).join(", ")}).`]; }
+  const def=f.lines.map(l=>{ const r=req.find(x=>x[0]===l[0]); return r?Math.max(0,r[1]-l[1]):0; }), need=def.reduce((a,b)=>a+b,0), left=Math.max(0,f.max-f.ench);
+  if(!need) return ["ok",`<b>Подходит.</b> Все нужные строки на цели или выше${left?`, осталось заточек: ${left}`:""}.`];
+  const where=f.lines.map((l,i)=>def[i]?`${esc(l[0])} +${def[i]}`:"").filter(Boolean).join(", ");
+  if(need>left) return ["no",`<b>Уже не добить.</b> Не хватает ${need} (${where}), а заточек осталось ${left}. Нужна новая карта.`];
+  return ["lo",`<b>Доточить:</b> нужно ${where} — ${need} из ${left} оставшихся заточек. Шанс ≈ <b>${aFmt(aChance(def,left))}</b>.`];
 }
-function aTotals(){
-  const t={}, f={};
-  for(const [id,,cat] of A_CARDS){ for(const r of ARCT.target[id]) if(r) t[r[0]]=(t[r[0]]||0)+r[1]; const fc=aFact(cat); for(const l of fc?.lines||[]) f[l[0]]=(f[l[0]]||0)+l[1]; }
-  const names=[...A_ACT,...A_PAS].filter(n=>t[n]||f[n]);
-  return names.map(n=>{ const a=t[n]||0,b=f[n]||0,d=b-a; return `<tr><td>${esc(n)} <span class="muted" style="font-size:12px">${A_ACT.includes(n)?"активный":"пассивный"}</span></td><td class="n">${a||"—"}</td><td class="n">${b||"—"}</td><td class="n" style="color:${d<0?"var(--warn)":d>0?"var(--mid)":"var(--good)"}">${d===0?"✓":(d>0?"+":"")+d}</td></tr>`; }).join("");
+/* ---------- skill sources ---------- */
+function aNow(){ const m={}; for(const s of DOC?.snap?.skills||[]) m[s.name]=s.skillLevel||0; return m; }
+function aRingsNow(){ return [13,14].map(k=>(DOC?.snap?.items?.[k]?.subSkills||[]).map(s=>s.name)); }
+function aCount(lists){ const m={}; for(const l of lists) for(const n of l) m[n]=(m[n]||0)+1; return m; }
+function aArcFact(){ const m={}; for(const [,,cat] of A_CARDS) for(const [n,v] of aFact(cat)?.lines||[]) m[n]=(m[n]||0)+v; return m; }
+/* ---------- optimizer: pick, per card, keep / enchant / new, minimising expected new cards ---------- */
+function aOptimize(){
+  const goal=ARCT.goal.skills.filter(g=>g&&g[1]>0), G=goal.map(g=>g[0]), D=G.length; if(!D) return null;
+  const now=aNow(), rn=aRingsNow(), rnC=aCount(rn), af=aArcFact();
+  const base=G.map(n=>(now[n]||0)-(af[n]||0)-(rnC[n]||0));        // level without arcana and rings
+  const cards=A_CARDS.map(meta=>({meta,f:aFact(meta[2])}));
+  const subsets=(arr,k)=>k===0?[[]]:arr.length<k?[]:[...subsets(arr.slice(1),k-1).map(s=>[arr[0],...s]),...subsets(arr.slice(1),k)];
+  const actG=G.filter(aIsAct);
+  const ringSets=ARCT.goal.rings==="plan"?(()=>{ const o=subsets(actG,Math.min(A_RINGLINES,actG.length)), r=[]; o.forEach((a,i)=>o.slice(i).forEach(b=>r.push([a,b]))); return r.length?r:[[[],[]]]; })():[rn];
+  const needs=ringSets.map(rs=>{ const rc=aCount(rs); return G.map((n,i)=>Math.max(0,goal[i][1]-base[i]-(rc[n]||0))); });
+  // static options per card: keep, enchant what is on it, or a new card
+  const opts=cards.map(({meta,f})=>{
+    const fm=Object.fromEntries(f?.lines||[]), out=[{type:"keep",contrib:G.map(n=>fm[n]||0),cost:0}];
+    const want=G.map((n,i)=>aOk(meta,n)?i:-1).filter(i=>i>=0); if(!want.length) return out;
+    if(f&&f.ench<f.max){ const left=f.max-f.ench, li=f.lines.map(l=>G.indexOf(l[0]));
+      const rec=(j,inc,used)=>{ if(j===4){ if(!used) return; const P=aChance(inc,left);
+          const mins=f.lines.map((l,x)=>[l[0],l[1]+inc[x]]).filter((l,x)=>li[x]>=0);
+          const newCost=1/Math.max(1e-9,aNewP(meta,mins.map(m=>Math.min(6,m[1]))));
+          out.push({type:"ench",inc:inc.slice(),P,contrib:G.map(n=>{ const x=f.lines.findIndex(l=>l[0]===n); return x<0?0:f.lines[x][1]+inc[x]; }),cost:(1-P)*newCost}); return; }
+        const cap=li[j]>=0?left-used:0; for(let v=0;v<=cap;v++){ inc[j]=v; rec(j+1,inc,used+v); } inc[j]=0; };
+      rec(0,[0,0,0,0],0); }
+    for(let k=1;k<=Math.min(4,want.length);k++) for(const S of subsets(want,k)){
+      const room=A_MAX-(4-k);
+      const rec=(j,m,sum)=>{ if(j===k){ const P=aNewP(meta,m); if(P<=0) return; const c=G.map(()=>0); S.forEach((g,x)=>c[g]=m[x]);
+          out.push({type:"new",req:S.map((g,x)=>[G[g],m[x]]),P,contrib:c,cost:1/P}); return; }
+        const cap=Math.min(6,room-sum-(k-j-1)); for(let v=1;v<=cap;v++){ m[j]=v; rec(j+1,m,sum+v); } };
+      rec(0,[],0); }
+    return out; });
+  // cards that cannot hold any goal skill are simply kept. Chalice (both pools) is the outer loop;
+  // Parchment+Compass touch only active skills and Bell+Mirror only passive ones, so each pair is solved on its own.
+  const live=cards.map((c,i)=>i).filter(i=>opts[i].length>1), fixed=cards.map((c,i)=>i).filter(i=>opts[i].length===1);
+  opts.forEach((list,ci)=>{ const fm=Object.fromEntries(cards[ci].f?.lines||[]); // what each option adds on top of what is already there
+    for(const c of list) c.extra=c.type==="keep"?null:G.map((n,i)=>c.contrib[i]-(c.type==="ench"?(fm[n]||0):0)); });
+  const useful=(c,need)=>{ const e=c.extra; if(!e) return true; for(let i=0;i<D;i++) if(e[i]>0&&c.contrib[i]>need[i]) return false; return true; };
+  const bound=G.map((n,i)=>Math.max(...needs.map(v=>v[i])));
+  function makeGroup(cis,dims){
+    const K=dims.length;
+    if(!cis.length) return need=>({left:dims.reduce((s,d)=>s+need[d],0),cost:0,picks:[]});
+    const P=cis.map(ci=>opts[ci].map(c=>({c,p:dims.map(d=>c.contrib[d]),e:c.extra?dims.map(d=>c.extra[d]):null})).sort((a,b)=>a.c.cost-b.c.cost)); // cheapest first → early stop
+    const last=P.length-1, stride=[]; let box=1; for(let i=0;i<K;i++){ stride[i]=box; box*=bound[dims[i]]+1; }
+    const idx=v=>{ let k=0; for(let i=0;i<K;i++) k+=Math.min(v[i],bound[dims[i]])*stride[i]; return k; };
+    const T=new Float64Array(box).fill(Infinity), TA=new Int32Array(box).fill(-1);
+    P[last].forEach((o,j)=>{ const k=idx(o.p); if(o.c.cost<T[k]){ T[k]=o.c.cost; TA[k]=j; } });
+    for(let d=0;d<K;d++) for(let k=box-1;k>=0;k--){ const v=Math.floor(k/stride[d])%(bound[dims[d]]+1); if(v<bound[dims[d]]&&T[k+stride[d]]<T[k]){ T[k]=T[k+stride[d]]; TA[k]=TA[k+stride[d]]; } }
+    const LM=new Array(box), memo=new Map();
+    const dp=(m,need)=>{
+      if(m===last){ const k=idx(need); if(LM[k]) return LM[k]; let best=null;
+        if(T[k]<Infinity) best={left:0,cost:T[k],picks:[[cis[last],P[last][TA[k]].c]]};
+        else for(const o of P[last]){ let l=0; for(let i=0;i<K;i++) l+=Math.max(0,need[i]-o.p[i]);
+          if(!best||l<best.left||(l===best.left&&o.c.cost<best.cost)) best={left:l,cost:o.c.cost,picks:[[cis[last],o.c]]}; }
+        return LM[k]=best; }
+      const key=m+"|"+need.join(); if(memo.has(key)) return memo.get(key); let best=null;
+      for(const o of P[m]){ if(best&&best.left===0&&o.c.cost>=best.cost) break; if(o.e){ let bad=false; for(let i=0;i<K;i++) if(o.e[i]>0&&o.p[i]>need[i]){ bad=true; break; } if(bad) continue; }
+        const nn=new Array(K); for(let i=0;i<K;i++){ const x=need[i]-o.p[i]; nn[i]=x>0?x:0; }
+        const r=dp(m+1,nn), cost=r.cost+o.c.cost;
+        if(!best||r.left<best.left||(r.left===best.left&&cost<best.cost-1e-9)) best={left:r.left,cost,picks:[[cis[m],o.c],...r.picks]}; }
+      memo.set(key,best); return best; };
+    return need=>dp(0,dims.map(d=>need[d]));
+  }
+  const actD=G.map((n,i)=>aIsAct(n)?i:-1).filter(i=>i>=0), pasD=G.map((n,i)=>aIsAct(n)?-1:i).filter(i=>i>=0);
+  const grpA=makeGroup(live.filter(i=>i!==0&&cards[i].meta[3].includes("act")),actD);
+  const grpP=makeGroup(live.filter(i=>i!==0&&cards[i].meta[3].includes("pas")),pasD);
+  const chOpts=(live.includes(0)?opts[0]:[opts[0][0]]).slice().sort((a,b)=>a.cost-b.cost);
+  let best=null;
+  ringSets.forEach((rings,ri)=>{ let need=needs[ri].slice();
+    for(const ci of fixed) if(ci!==0) need=need.map((x,i)=>Math.max(0,x-opts[ci][0].contrib[i]));
+    for(const c of chOpts){ if(best&&best.left===0&&c.cost>=best.cost) break; if(!useful(c,need)) continue;
+      const nn=need.map((x,i)=>Math.max(0,x-c.contrib[i])), ra=grpA(nn), rp=grpP(nn);
+      const left=ra.left+rp.left, cost=c.cost+ra.cost+rp.cost;
+      if(!best||left<best.left||(left===best.left&&cost<best.cost-1e-9)) best={left,cost,picks:[[0,c],...ra.picks,...rp.picks],rings,need:needs[ri]}; } });
+  const picks=cards.map((c,i)=>(best.picks.find(p=>p[0]===i)||[i,opts[i][0]])[1]);
+  return {...best,picks,G,goal,base,cards};
 }
+function aOptKey(){ return JSON.stringify([ARCT.goal,DOC?.fetchedAt]); }
+let AOPT_T=null;
+function aGetOpt(){ return ARCOPT&&ARCOPT.key===aOptKey()?ARCOPT.res:undefined; }   // undefined = still computing
+function aSchedule(){ clearTimeout(AOPT_T); AOPT_T=setTimeout(()=>{ const k=aOptKey(); if(ARCOPT&&ARCOPT.key===k) return;
+  const t=performance.now(); let res=null; try{ res=aOptimize(); }catch(e){ console.error(e); } ARCOPT={key:k,res,ms:performance.now()-t}; renderArcana(); },60); }
+/* ---------- view ---------- */
 function aSyncState(){
   if(ARCMSG) return ARCMSG;
-  if(!ARCT||!ARCT.updatedAt) return ["","Пока цель совпадает с тем, что в игре. Меняйте — и сохраните."];
+  if(!ARCT||!ARCT.updatedAt) return ["","Цель пока совпадает с тем, что в игре. Меняйте — и сохраните."];
   if(ARCT.sentAt!==ARCT.updatedAt) return ["dirty","Есть несохранённые изменения (черновик хранится в этом браузере)."];
   if((ARCREPO?.savedAt||0)<ARCT.updatedAt) return ["dirty","Отправлено, GitHub сохраняет…"];
   return ["ok","Сохранено в репозитории · "+new Date(ARCT.updatedAt).toLocaleString("ru-RU",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})];
+}
+function aGoalHtml(){
+  const gm=Object.fromEntries(ARCT.goal.skills);
+  const nAct=ARCT.goal.skills.filter(x=>aIsAct(x[0])).length, nPas=ARCT.goal.skills.length-nAct;
+  const chip=n=>{ const on=n in gm, full=!on&&(aIsAct(n)?nAct>=A_GMAX_ACT:nPas>=A_GMAX_PAS); return `<span class="gsk${on?" on":""}"><button type="button" class="gname" data-gtog="${esc(n)}" aria-pressed="${on}" ${full?`disabled title="Не больше ${aIsAct(n)?A_GMAX_ACT+" активных":A_GMAX_PAS+" пассивных"}"`:""}>${esc(n)}</button>${on?`<span class="step"><button type="button" data-gdec="${esc(n)}" aria-label="Меньше" ${gm[n]<=1?"disabled":""}>−</button><b>${gm[n]}</b><button type="button" data-ginc="${esc(n)}" aria-label="Больше" ${gm[n]>=A_SKMAX?"disabled":""}>+</button></span>`:""}</span>`; };
+  return `<section class="box"><h2>Какие скиллы и на какой уровень</h2>
+    <p class="lead">Отметьте скиллы и нужный уровень — ниже подберётся, какие арканы оставить, какие доточить и какие собирать заново. До ${A_GMAX_ACT} активных и ${A_GMAX_PAS} пассивных: больше на трёх картах под активные скиллы всё равно не уместить.</p>
+    <div class="gchips"><button type="button" data-preset="5x20" aria-pressed="${JSON.stringify(ARCT.goal.skills)===JSON.stringify(A_PRESET)}">5 скиллов на 20</button><button type="button" data-preset="none">Снять все</button></div>
+    <div class="gwrap"><span class="ghd">Активные</span>${A_ACT.map(chip).join("")}</div>
+    <div class="gwrap"><span class="ghd">Пассивные</span>${A_PAS.map(chip).join("")}</div>
+    <div class="gchips"><span class="ghd" style="align-self:center">Кольца</span><button type="button" data-rings="plan" aria-pressed="${ARCT.goal.rings==="plan"}">Перекинуть под цель</button><button type="button" data-rings="now" aria-pressed="${ARCT.goal.rings!=="plan"}">Как сейчас</button></div>
+  </section>`;
+}
+function aPlanHtml(o){
+  if(o===undefined) return `<section class="box"><h2>Подбор аркан</h2><div class="astate">Подбираю варианты…</div></section>`;
+  if(!o) return `<section class="box"><h2>Подбор аркан</h2><p class="lead">Выберите хотя бы один скилл выше.</p></section>`;
+  const rn=aRingsNow();
+  const rings=ARCT.goal.rings==="plan"?o.rings.map((r,i)=>{ const add=r.filter(n=>!rn[i].includes(n)), drop=rn[i].filter(n=>!r.includes(n));
+      const st=(DOC?.snap?.items?.[13+i]?.subStats||[]).map(x=>x.name), from=[...drop,...st].slice(0,add.length);
+      return `<li><span class="pk ${add.length?"lo":"ok"}">${add.length?"Перекинуть":"Оставить"}</span><div><b>Ring ${i+1}:</b> ${r.map(esc).join(", ")||"—"}${add.length?`<small>${add.map((n,j)=>`${from[j]?esc(from[j]):"свободная строка"} → <b>${esc(n)}</b>`).join(" · ")}</small>`:""}</div></li>`; }).join(""):"";
+  const rows=o.picks.map((c,ci)=>{ const [id,name,cat]=o.cards[ci].meta, f=o.cards[ci].f;
+    const gives=o.G.map((n,i)=>c.contrib[i]?`${esc(n)} ${c.contrib[i]}`:"").filter(Boolean).join(" · ")||"для цели ничего";
+    if(c.type==="keep") return `<li><span class="pk ok">Оставить</span><div><b>${name}</b><small>Даёт: ${gives}</small></div></li>`;
+    if(c.type==="ench"){ const w=f.lines.map((l,j)=>c.inc[j]?`${esc(l[0])} ${l[1]}→${l[1]+c.inc[j]}`:"").filter(Boolean).join(", ");
+      return `<li><span class="pk lo">Доточить</span><div><b>${name}</b> <span class="muted">+${f.ench} → +${f.max}</span><small>Нужно: ${w}. Шанс ≈ ${aFmt(c.P)}; если не выйдет — новая карта.</small></div></li>`; }
+    const any=4-c.req.length;
+    return `<li><span class="pk no">Новая карта</span><div><b>${name}</b><small>Нужны ${c.req.map(r=>`${esc(r[0])} ${r[1]}`).join(" · ")}${any?` + ${any} любых`:""}. Подходящая карта с заточкой до +5 выходит ≈ <b>${aFmt(c.P)}</b>.${id==="chalice"?" Chalice — самая трудная: у неё в пуле все 22 скилла (активные и пассивные), у остальных 10–12.":""}</small></div></li>`; }).join("");
+  const nNew=o.picks.filter(c=>c.type==="new").length;
+  const total=o.left?`<div class="astate no"><b>Цель недостижима даже с идеальными арканами${ARCT.goal.rings==="plan"?" и кольцами":""}.</b> Не хватает: ${o.G.map((n,i)=>{ let need=o.need[i]; for(const c of o.picks) need-=c.contrib[i]; return need>0?`${esc(n)} +${need}`:""; }).filter(Boolean).join(", ")}. Ниже — лучшее, что можно собрать.</div>`
+    :`<div class="astate ${nNew?"lo":"ok"}">${nNew?`<b>Новых карт: ${nNew}.</b> В среднем придётся перебрать ≈ ${Math.max(1,Math.round(o.cost)).toLocaleString("ru-RU")} карт с заточкой до +5, чтобы собрать нужные.`:"<b>Новые карты не нужны.</b>"} Подбор старается не трогать Chalice: на ней нужное выпадает реже всего.</div>`;
+  return `<section class="box"><h2>Подбор аркан</h2>
+    <p class="lead">Скилл = база (без колец и аркан) + кольца по +1 за строку + арканы. Для каждой карты сравниваются три пути: оставить, доточить оставшимися заточками или собрать новую — и выбирается сочетание, где в среднем нужно меньше всего новых карт.</p>
+    ${total}<ul class="aplan">${rings}${rows}</ul>
+    <div class="arcbar"><button type="button" class="btn" id="arc-apply">Перенести подбор в конструктор</button><span class="arcst">Строки «любой скилл» — можно что угодно.</span></div>
+    <p class="lead" style="font-size:12.5px">Оценка шансов — если новая карта получает 4 случайных скилла из своего пула, а каждая заточка поднимает любую из 4 строк с равной вероятностью. Официальных шансов NCSOFT не публиковал.</p></section>`;
+}
+function aSkillTable(o){
+  const now=aNow(), af=aArcFact(), rn=aRingsNow(), rnC=aCount(rn), gm=Object.fromEntries(ARCT.goal.skills);
+  const ro=o||ARCOPT?.res; const rp=ARCT.goal.rings==="plan"&&ro?aCount(ro.rings):rnC;
+  const tv=id=>Object.fromEntries(ARCT.target[id].filter(Boolean));
+  const T=Object.fromEntries(A_CARDS.map(([id])=>[id,tv(id)]));
+  const names=[...A_ACT,...A_PAS].filter(n=>n in gm||A_CARDS.some(([id])=>T[id][n]));
+  names.sort((a,b)=>(b in gm)-(a in gm));
+  const rows=names.map(n=>{ const base=(now[n]||0)-(af[n]||0)-(rnC[n]||0), ring=rp[n]||0;
+    const arc=A_CARDS.map(([id])=>T[id][n]||0), tot=base+ring+arc.reduce((a,b)=>a+b,0), want=gm[n];
+    const col=want?(tot>=want?"var(--good)":"var(--warn)"):"var(--fg)";
+    const rchg=ring!==(rnC[n]||0)?` <span class="muted">(${rnC[n]||0}→${ring})</span>`:"";
+    return `<tr${want?"":' class="dim"'}><td>${esc(n)}</td><td class="n">${now[n]??"—"}</td><td class="n">${base}</td><td class="n">${ring||"—"}${rchg}</td>${arc.map(v=>`<td class="n">${v||"—"}</td>`).join("")}<td class="n"><b style="color:${col}">${tot}</b></td><td class="n">${want||"—"}</td><td style="min-width:110px"><div class="rail"><i class="${want&&tot>=want?"done":""}" style="width:${Math.min(100,tot/A_SKMAX*100)}%"></i>${want?`<em style="left:calc(${Math.min(100,want/A_SKMAX*100)}% - 1px)"></em>`:""}</div></td></tr>`; }).join("");
+  return `<section class="box"><h2>Скиллы с этими арканами</h2><p class="lead">Пересчитывается при каждом изменении в конструкторе. «Сейчас» — по оружейной; «База» — без колец и аркан; кольца${ARCT.goal.rings==="plan"?" — по подбору (в скобках: было → станет)":" — как сейчас"}; колонки карт — цель из конструктора.</p>
+    <div class="tw"><table class="sk ask"><tr><th>Скилл</th><th class="n">Сейчас</th><th class="n">База</th><th class="n">Кольца</th><th class="n">Chalice</th><th class="n">Parch.</th><th class="n">Compass</th><th class="n">Bell</th><th class="n">Mirror</th><th class="n">Итого</th><th class="n">Цель</th><th></th></tr>${rows}</table></div></section>`;
 }
 function renderArcana(){
   const pane=$("#pane-arcana"); aInit();
   if(!ARCT){ pane.innerHTML='<div class="empty">Нет данных персонажа — конструктор появится после первого обновления из оружейной.</div>'; return; }
   const [sc,sm]=aSyncState(); const dirty=ARCT.updatedAt&&ARCT.sentAt!==ARCT.updatedAt;
+  let o=aGetOpt(); if(o===undefined) aSchedule();
   const cards=A_CARDS.map(([id,name,cat,,rule])=>{
     const rows=ARCT.target[id], f=aFact(cat), sum=aSum(rows), lvl=aLvl(rows), fm=Object.fromEntries(f?.lines||[]);
     const lines=rows.map((r,i)=>{ const fv=r?fm[r[0]]:undefined;
       const fc=!r?"":fv===undefined?"no":fv>=r[1]?"ok":"lo";
-      return `<button type="button" class="pick${r?"":" empty"}" data-pick="${id}:${i}" aria-haspopup="listbox"><span>${r?esc(r[0]):"Выбрать скилл"}</span></button>
-        <div class="step"><button type="button" data-dec="${id}:${i}" aria-label="Меньше" ${!r||r[1]<=1?"disabled":""}>−</button><b>${r?r[1]:"—"}</b><button type="button" data-inc="${id}:${i}" aria-label="Больше" ${!r||sum>=A_MAX?"disabled":""}>+</button></div>
+      return `<button type="button" class="pick${r?"":" empty"}" data-pick="${id}:${i}" aria-haspopup="listbox"><span>${r?esc(r[0]):"Любой скилл"}</span></button>
+        <div class="step"><button type="button" data-dec="${id}:${i}" aria-label="Меньше" ${!r||r[1]<=1?"disabled":""}>−</button><b>${r?r[1]:"1"}</b><button type="button" data-inc="${id}:${i}" aria-label="Больше" ${!r||sum>=A_MAX?"disabled":""}>+</button></div>
         <span class="fv ${fc}" title="В игре сейчас">${!r?"":fv===undefined?"нет":fv}</span>`; }).join("");
     const [stc,stt]=aStatus(rows,f);
     const tm=Object.fromEntries(rows.filter(Boolean));
-    const fl=f?`В игре: ${f.lines.map(l=>`<span class="${l[0] in tm?"":"x"}">${esc(l[0])} ${l[1]}</span>`).join(" · ")} <span class="muted">(+${f.ench}${f.name!==name?`, ${esc(f.name)}`:""})</span>`:"В оружейной этой карты нет";
+    const fl=f?`В игре: ${f.lines.map(l=>`<span class="${l[0] in tm||!rows.some(r=>!r)?"":"x"}">${esc(l[0])} ${l[1]}</span>`).join(" · ")} <span class="muted">(+${f.ench}${f.name!==name?`, ${esc(f.name)}`:""})</span>`:"В оружейной этой карты нет";
     return `<article class="acard" data-card="${id}">
       <div class="art"><img src="img/arcana/${id}.webp" alt="${esc(name)}" width="210" height="320" loading="lazy">${f?`<span class="factchip" title="Заточка в игре">в игре +${f.ench}</span>`:""}<span class="badge${lvl>=5?" max":""}" data-badge="${id}" aria-label="Цель: +${lvl}">+${lvl}</span></div>
       <div style="min-width:0"><h3>${esc(name)}</h3><div class="sub">${rule} · очков ${sum} / ${A_MAX}</div>
         <div class="alines"><span class="hd">Скилл</span><span class="hd r">Цель</span><span class="hd r">Игра</span>${lines}</div>
         <div class="factline">${fl}</div>
         <div class="astate ${stc}">${stt}</div>
-        <div class="arow"><button type="button" class="btn" data-fromfact="${id}" ${f?"":"disabled"}>Взять из игры</button><button type="button" class="btn" data-clear="${id}">Очистить</button></div>
+        <div class="arow"><button type="button" class="btn" data-fromfact="${id}" ${f?"":"disabled"}>Взять из игры</button><button type="button" class="btn" data-clear="${id}">Всё «любое»</button></div>
       </div></article>`; }).join("");
   pane.innerHTML=`<section class="box"><h2>Конструктор аркан</h2>
-    <p class="lead">Соберите цель для каждой карты: выберите 4 скилла и раскиньте очки. Новая карта — это 4 скилла по +1, каждая заточка добавляет +1 случайной строке, поэтому максимум +5 = 9 очков. Число на карте — уровень заточки, который нужен под эту цель. Колонка «Игра» — что стоит сейчас по официальной оружейной: зелёный — цель есть, жёлтый — не дотягивает, красный — такого скилла на карте нет.</p>
+    <p class="lead">Новая карта — 4 скилла по +1, каждая заточка добавляет +1 случайной строке: максимум +5 = 9 очков. Число на карте — заточка, нужная под цель. «Игра» — что стоит сейчас по оружейной: зелёный — цель есть, жёлтый — не дотягивает, красный — такого скилла на карте нет.</p>
     <div class="arcbar"><button type="button" class="btn primary" id="arc-save" ${dirty&&!ARCBUSY?"":"disabled"}>Сохранить в репозиторий</button><span class="arcst ${sc}" id="arc-st">${esc(sm)}</span></div></section>
-    <div class="acards">${cards}</div>
-    <section class="box"><h2>Итого с аркан</h2><p class="lead">Сумма уровней скиллов со всех пяти карт: цель против того, что в игре сейчас.</p>
-      <div class="tw"><table class="sk"><tr><th>Скилл</th><th class="n">Цель</th><th class="n">В игре</th><th class="n">Разница</th></tr>${aTotals()}</table></div></section>`;
+    ${aGoalHtml()}${aPlanHtml(o)}${aSkillTable(o)}
+    <div class="acards">${cards}</div>`;
 }
-function aEdit(fn){ fn(ARCT.target); ARCT.updatedAt=Date.now(); ARCMSG=null; aSave(); }
+function aEdit(fn){ fn(ARCT.target,ARCT.goal); ARCT.updatedAt=Date.now(); ARCMSG=null; aSave(); }
 function aBump(id){ requestAnimationFrame(()=>{ const b=document.querySelector(`[data-badge="${id}"]`); if(b){ b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); } }); }
 function aClosePop(){ if(ARCPOP){ ARCPOP.remove(); ARCPOP=null; } }
+function aPlace(){ if(!ARCPOP) return; const btn=document.querySelector(`[data-pick="${ARCPOP.dataset.for}"]`); if(!btn){ aClosePop(); return; }
+  const r=btn.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight){ aClosePop(); return; }
+  const h=ARCPOP.offsetHeight, w=ARCPOP.offsetWidth;
+  const top=r.bottom+6+h>innerHeight&&r.top-6-h>0?r.top-6-h:Math.min(r.bottom+6,innerHeight-h-8);
+  ARCPOP.style.top=Math.max(8,top)+"px"; ARCPOP.style.left=Math.max(8,Math.min(r.left,innerWidth-w-8))+"px"; }
 function aOpenPop(btn,id,i){
   aClosePop(); const meta=A_CARDS.find(c=>c[0]===id), rows=ARCT.target[id], cur=rows[i]?.[0];
   const used=new Set(rows.filter((r,j)=>r&&j!==i).map(r=>r[0]));
-  const f=aFact(meta[2]), fm=Object.fromEntries(f?.lines||[]);
-  const grp=(t,list)=>`<h4>${t}</h4>`+list.map(n=>`<button type="button" role="option" data-opt="${esc(n)}" class="${n===cur?"cur":""}" ${used.has(n)?"disabled":""}><span>${esc(n)}</span>${used.has(n)?"<small>уже на карте</small>":fm[n]?`<small>в игре ${fm[n]}</small>`:""}</button>`).join("");
+  const f=aFact(meta[2]), fm=Object.fromEntries(f?.lines||[]), gm=Object.fromEntries(ARCT.goal.skills);
+  const grp=(t,list)=>`<h4>${t}</h4>`+list.map(n=>`<button type="button" role="option" data-opt="${esc(n)}" class="${n===cur?"cur":""}" ${used.has(n)?"disabled":""}><span>${esc(n)}${n in gm?" ★":""}</span>${used.has(n)?"<small>уже на карте</small>":fm[n]?`<small>в игре ${fm[n]}</small>`:""}</button>`).join("");
   const el=document.createElement("div"); el.className="apop"; el.setAttribute("role","listbox");
-  el.innerHTML=(meta[3].includes("act")?grp("Активные",A_ACT):"")+(meta[3].includes("pas")?grp("Пассивные",A_PAS):"")+(cur?`<h4>&nbsp;</h4><button type="button" class="rm" data-opt="">Убрать скилл</button>`:"");
+  el.innerHTML=(meta[3].includes("act")?grp("Активные",A_ACT):"")+(meta[3].includes("pas")?grp("Пассивные",A_PAS):"")+(cur?`<h4>&nbsp;</h4><button type="button" class="rm" data-opt="">Любой скилл (не важно какой)</button>`:"");
   el.dataset.for=id+":"+i; document.body.appendChild(el); ARCPOP=el; aPlace();
   el.onclick=e=>{ const o=e.target.closest("[data-opt]"); if(!o||o.disabled) return; const n=o.dataset.opt;
-    aEdit(t=>{ t[id][i]=n?[n,t[id][i]?.[1]||1]:null; }); aClosePop(); renderArcana(); aBump(id); btn=null; document.querySelector(`[data-pick="${id}:${i}"]`)?.focus(); };
+    aEdit(t=>{ t[id][i]=n?[n,t[id][i]?.[1]||1]:null; }); aClosePop(); renderArcana(); aBump(id); document.querySelector(`[data-pick="${id}:${i}"]`)?.focus(); };
   (el.querySelector("button.cur")||el.querySelector("button:not(:disabled)"))?.focus({preventScroll:true});
 }
+function aApply(){ const o=aGetOpt(); if(!o) return;
+  aEdit(t=>{ o.picks.forEach((c,ci)=>{ const [id]=o.cards[ci].meta, f=o.cards[ci].f;
+    if(c.type==="keep") t[id]=aFactRows(f);
+    else if(c.type==="ench") t[id]=f.lines.map((l,j)=>[l[0],l[1]+c.inc[j]]);
+    else t[id]=[0,1,2,3].map(i=>c.req[i]?[c.req[i][0],c.req[i][1]]:null); }); });
+  renderArcana(); A_CARDS.forEach(([id])=>aBump(id)); document.querySelector(".acards")?.scrollIntoView({behavior:"smooth",block:"start"}); }
 document.addEventListener("click",e=>{
   if(ARCPOP&&!ARCPOP.contains(e.target)&&!e.target.closest("[data-pick]")) aClosePop();
   const pane=$("#pane-arcana"); if(!pane.contains(e.target)) return;
   const b=e.target.closest("button"); if(!b||b.disabled) return; const d=b.dataset;
   if(d.pick){ const [id,i]=d.pick.split(":"); if(ARCPOP&&ARCPOP.dataset.for===d.pick){ aClosePop(); return; } aOpenPop(b,id,+i); return; }
   if(d.inc||d.dec){ const [id,i]=(d.inc||d.dec).split(":"); aEdit(t=>{ const r=t[id][+i]; if(!r) return; if(d.inc&&aSum(t[id])<A_MAX) r[1]++; if(d.dec&&r[1]>1) r[1]--; }); renderArcana(); aBump(id); return; }
-  if(d.fromfact){ const f=aFact(A_CARDS.find(c=>c[0]===d.fromfact)[2]); aEdit(t=>{ t[d.fromfact]=[0,1,2,3].map(i=>f?.lines[i]?[f.lines[i][0],f.lines[i][1]]:null); }); renderArcana(); aBump(d.fromfact); return; }
+  if(d.fromfact){ const f=aFact(A_CARDS.find(c=>c[0]===d.fromfact)[2]); aEdit(t=>{ t[d.fromfact]=aFactRows(f); }); renderArcana(); aBump(d.fromfact); return; }
   if(d.clear){ aEdit(t=>{ t[d.clear]=[null,null,null,null]; }); renderArcana(); aBump(d.clear); return; }
+  if(d.gtog){ aEdit((t,g)=>{ const i=g.skills.findIndex(x=>x[0]===d.gtog); if(i>=0) g.skills.splice(i,1); else if(g.skills.filter(x=>aIsAct(x[0])===aIsAct(d.gtog)).length<(aIsAct(d.gtog)?A_GMAX_ACT:A_GMAX_PAS)) g.skills.push([d.gtog,A_SKMAX]); }); renderArcana(); return; }
+  if(d.ginc||d.gdec){ const n=d.ginc||d.gdec; aEdit((t,g)=>{ const s=g.skills.find(x=>x[0]===n); if(!s) return; s[1]=Math.max(1,Math.min(A_SKMAX,s[1]+(d.ginc?1:-1))); }); renderArcana(); $(`[data-${d.ginc?"ginc":"gdec"}="${CSS.escape(n)}"]`)?.focus(); return; }
+  if(d.preset){ aEdit((t,g)=>{ g.skills=d.preset==="5x20"?A_PRESET.map(x=>x.slice()):[]; }); renderArcana(); return; }
+  if(d.rings){ aEdit((t,g)=>{ g.rings=d.rings; }); renderArcana(); return; }
+  if(b.id==="arc-apply"){ aApply(); return; }
   if(b.id==="arc-save") saveArcana();
 });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&ARCPOP){ const f=ARCPOP.dataset.for; aClosePop(); document.querySelector(`[data-pick="${f}"]`)?.focus(); }
   if(ARCPOP&&(e.key==="ArrowDown"||e.key==="ArrowUp")){ e.preventDefault(); const bs=[...ARCPOP.querySelectorAll("button:not(:disabled)")]; const k=bs.indexOf(document.activeElement); bs[(k+(e.key==="ArrowDown"?1:-1)+bs.length)%bs.length]?.focus(); } });
-function aPlace(){ if(!ARCPOP) return; const btn=document.querySelector(`[data-pick="${ARCPOP.dataset.for}"]`); if(!btn){ aClosePop(); return; }
-  const r=btn.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight){ aClosePop(); return; }
-  const h=ARCPOP.offsetHeight, w=ARCPOP.offsetWidth;
-  const top=r.bottom+6+h>innerHeight&&r.top-6-h>0?r.top-6-h:Math.min(r.bottom+6,innerHeight-h-8);
-  ARCPOP.style.top=Math.max(8,top)+"px"; ARCPOP.style.left=Math.max(8,Math.min(r.left,innerWidth-w-8))+"px"; }
 window.addEventListener("resize",aPlace); window.addEventListener("scroll",e=>{ if(ARCPOP&&!(e.target instanceof Node&&ARCPOP.contains(e.target))) aPlace(); },true);
 async function saveArcana(){
   if(ARCBUSY||!ARCT) return;
@@ -784,7 +921,7 @@ async function saveArcana(){
   const say=(c,m)=>{ ARCMSG=[c,m]; const s=$("#arc-st"); if(s){ s.className="arcst "+c; s.textContent=m; } };
   try{
     renderArcana(); say("dirty","Отправляю на GitHub…");
-    const r=await gh("/actions/workflows/arcana.yml/dispatches",{method:"POST",body:JSON.stringify({ref:"main",inputs:{data:JSON.stringify({v:1,savedAt:stamp,target:ARCT.target})}})});
+    const r=await gh("/actions/workflows/arcana.yml/dispatches",{method:"POST",body:JSON.stringify({ref:"main",inputs:{data:JSON.stringify({v:1,savedAt:stamp,target:ARCT.target,goal:ARCT.goal})}})});
     if(r.status===401){ setTok(""); throw new Error("Ключ не подошёл или истёк. Нажмите «Сохранить» ещё раз и вставьте новый."); }
     if(r.status===403||r.status===404) throw new Error("У ключа нет доступа. Проверьте: репозиторий aion-ranger и Actions: Read and write.");
     if(!r.ok) throw new Error("GitHub ответил "+r.status);
@@ -794,7 +931,7 @@ async function saveArcana(){
       if(!run||new Date(run.created_at).getTime()<t0-60000){ say("dirty","Ждёт очереди на GitHub…"); continue; }
       if(run.status!=="completed"){ say("dirty","Сохраняю в репозиторий…"); continue; }
       if(run.conclusion!=="success"){ ARCT.sentAt=0; aSave(); throw new Error("Сохранение на GitHub завершилось с ошибкой."); }
-      ARCREPO={v:1,savedAt:stamp,target:ARCT.target}; ARCMSG=null; break;
+      ARCREPO={v:1,savedAt:stamp,target:ARCT.target,goal:ARCT.goal}; ARCMSG=null; break;
     }
     if(ARCMSG&&ARCMSG[0]==="dirty") ARCMSG=null;
   }catch(e){ ARCMSG=["err",e.message]; }
