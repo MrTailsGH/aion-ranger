@@ -162,6 +162,55 @@ table.gn tr.key td:first-child{border-radius:8px 0 0 8px} table.gn tr.key td:las
 footer{font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 footer a{color:var(--aether)}
 .empty{padding:28px 16px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:12px}
+/* arcana constructor */
+.arcbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.arcst{font-size:13px;color:var(--muted)}
+.arcst.dirty{color:var(--mid)} .arcst.err{color:var(--warn)} .arcst.ok{color:var(--good)}
+.acards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.acard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:128px minmax(0,1fr);gap:14px;min-width:0}
+.art{position:relative;width:128px;aspect-ratio:210/320;border-radius:8px;overflow:hidden;box-shadow:0 3px 12px rgb(0 0 0/.28);align-self:start;background:#1b1a17}
+.art img{width:100%;height:100%;display:block;object-fit:cover}
+.badge{position:absolute;left:49.5%;top:85.8%;width:32%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle at 50% 38%,#2a2d33,#0b0c0f 72%);border:2px solid #8a7752;
+  box-shadow:inset 0 0 0 3px #0b0c0f,inset 0 0 0 4px rgb(214 192 140/.35),0 1px 4px rgb(0 0 0/.5);
+  display:grid;place-items:center;color:#f3eee2;font-family:var(--f-display);font-size:19px;line-height:1;transition:color .2s,border-color .2s}
+.badge.max{color:#ffd877;border-color:#e0bb62}
+.badge.pop{animation:bpop .25s ease-out}
+@keyframes bpop{50%{transform:translate(-50%,-50%) scale(1.18)}}
+.factchip{position:absolute;top:6px;right:6px;font-size:10.5px;font-weight:600;letter-spacing:.04em;padding:1px 7px;border-radius:99px;background:rgb(10 12 16/.78);color:#e8e2d2;border:1px solid rgb(214 192 140/.4)}
+.acard h3{font-size:19px;line-height:1.15}
+.acard .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.alines{display:grid;grid-template-columns:minmax(0,1fr) auto 38px;gap:6px 8px;align-items:center;margin-top:10px}
+.alines .hd{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.alines .hd.r{text-align:center}
+.pick{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;min-width:0;text-align:left;border:1px solid var(--line);background:var(--sunk);color:var(--fg);border-radius:8px;padding:6px 9px;cursor:pointer;font-size:14px}
+.pick span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pick.empty{color:var(--muted);border-style:dashed}
+.pick:hover{border-color:var(--gold)}
+.pick::after{content:"";flex:0 0 auto;width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg) translateY(-2px)}
+.step{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.step button{width:28px;height:30px;border:0;background:var(--sunk);color:var(--fg);cursor:pointer;font-size:16px;line-height:1}
+.step button:disabled{opacity:.3;cursor:default}
+.step button:not(:disabled):hover{background:var(--gold-soft);color:var(--gold)}
+.step b{min-width:26px;text-align:center;font-family:var(--f-num);font-weight:500;font-size:14px}
+.fv{font-family:var(--f-num);font-size:13px;text-align:center;border-radius:6px;padding:3px 0}
+.fv.ok{background:var(--good-soft);color:var(--good)} .fv.lo{background:var(--mid-soft);color:var(--mid)} .fv.no{background:var(--warn-soft);color:var(--warn)}
+.factline{font-size:12.5px;color:var(--muted);margin-top:8px}
+.factline .x{color:var(--warn)}
+.arow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.arow .btn{padding:4px 10px;font-size:12.5px}
+.astate{font-size:13px;border-radius:8px;padding:8px 10px;margin-top:8px;background:var(--sunk)}
+.astate.ok{background:var(--good-soft)} .astate.lo{background:var(--mid-soft)} .astate.no{background:var(--warn-soft)}
+.astate b{font-weight:600}
+.apop{position:fixed;z-index:30;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgb(0 0 0/.3);padding:6px;width:250px;max-height:min(420px,70vh);overflow-y:auto}
+.apop h4{margin:6px 8px 2px;font:600 10.5px/1.4 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.apop button{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;border:0;background:none;color:var(--fg);padding:6px 8px;border-radius:6px;cursor:pointer;font-size:14px}
+.apop button:hover:not(:disabled),.apop button:focus-visible{background:var(--gold-soft);outline:none}
+.apop button:disabled{color:var(--muted);opacity:.55;cursor:default}
+.apop button small{color:var(--muted);font-size:11.5px}
+.apop button.cur{color:var(--gold);font-weight:600}
+.apop .rm{color:var(--warn)}
+@media (max-width:420px){.acard{grid-template-columns:1fr}.art{width:150px;justify-self:center}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -183,7 +232,7 @@ footer a{color:var(--aether)}
 
   <form class="setup" id="tokform" hidden>
     <div style="flex:1 1 100%;font-size:14px;max-width:70ch">
-      <b>Один раз: ключ доступа GitHub.</b> Кнопка запускает обновление на GitHub от вашего имени, для этого нужен ключ.
+      <b>Один раз: ключ доступа GitHub.</b> Кнопки «Обновить персонажа» и «Сохранить в репозиторий» запускают задачи на GitHub от вашего имени, для этого нужен ключ.
       Он хранится только в этом браузере и не попадает на сайт и в репозиторий. На телефоне его нужно ввести отдельно.
       <ol style="margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:3px">
         <li>Откройте <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:var(--aether)">github.com → новый fine-grained token</a>.</li>
@@ -204,6 +253,7 @@ footer a{color:var(--aether)}
     <button type="button" role="tab" data-tab="skills">Skills и Stigma</button>
     <button type="button" role="tab" data-tab="stats">Arcana и статы</button>
     <button type="button" role="tab" data-tab="pets">Pets / Genus</button>
+    <button type="button" role="tab" data-tab="arcana">Конструктор аркан</button>
     <button type="button" role="tab" data-tab="plan">План</button>
   </nav>
 
@@ -212,6 +262,7 @@ footer a{color:var(--aether)}
   <div id="pane-skills" class="pane" hidden></div>
   <div id="pane-stats" class="pane" hidden></div>
   <div id="pane-pets" class="pane" hidden></div>
+  <div id="pane-arcana" class="pane" hidden></div>
   <div id="pane-plan" class="pane" hidden></div>
 
   <footer>
@@ -405,12 +456,12 @@ function renderAll(){
   const panes=["overview","gear","skills","stats","plan"];
   if(!snap){
     for(const p of panes) if(p!=="plan") $("#pane-"+p).innerHTML='<div class="empty">Данные ещё не загружены. Они появятся после первого запуска обновления на GitHub (вкладка Actions → Update character → Run workflow).</div>';
-    renderPlan(null); return;
+    renderPlan(null); renderArcana(); return;
   }
   const R=analyze(snap); const p=snap.info?.profile||{};
   $("#cname").textContent=p.characterName||"Персонаж";
   $("#cmeta").innerHTML=`<span>${esc(p.raceName)} · ${esc(p.className)} Lv ${esc(p.characterLevel)}</span><span>${esc(p.serverName)} (${esc((DOC.query?.region||"").toUpperCase())})</span><span>Legion <b>${esc(p.regionName||"—")}</b></span><span>Обновлено <b>${DOC.fetchedAt?new Date(DOC.fetchedAt).toLocaleString("ru-RU",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"—"}</b></span>`;
-  renderOverview(R,snap); renderGear(R); renderSkills(R); renderStats(R,snap); renderPlan(R);
+  renderOverview(R,snap); renderGear(R); renderSkills(R); renderStats(R,snap); renderPlan(R); renderArcana();
 }
 function histBlock(){
   if(!HIST||HIST.length<2) return "";
@@ -604,8 +655,154 @@ function renderPets(){
   $("#pane-pets").querySelectorAll("input[data-g]").forEach(i=>i.onchange=()=>{ GHAVE[i.dataset.g]=i.checked; try{localStorage.setItem(GKEY,JSON.stringify(GHAVE));}catch(e){} renderPets(); });
 }
 
+/* ================= arcana constructor: target vs armory fact ================= */
+const A_ACT=["Snipe","Tempest Shot","Deadshot","Gale Arrow","Drill Dart","Burst Arrow","Marking Shot","Snare Shot","Suppressing Arrow","Arrow Scattershot","Explosion Trap","Defiance"];
+const A_PAS=["Focused Eye","Hunter's Resolve","Hunter's Soul","Concentrated Fire","Rooting Eye","Melee Fire","Vigilant Eye","Unyielding Resolve","Revitalization Contract","Wind Vigor"];
+const A_CARDS=[ // id, game name, armory category, allowed groups, rule text
+  ["chalice","Chalice of Vigor","Chalice",["act","pas"],"Активные и пассивные"],
+  ["parchment","Parchment of Vigor","Parchment",["act"],"Только активные"],
+  ["compass","Compass of Magic","Compass",["act"],"Только активные"],
+  ["bell","Bell of Magic","Bell",["pas"],"Только пассивные"],
+  ["mirror","Mirror of Magic","Mirror",["pas"],"Только пассивные"]];
+const A_MAX=9, A_KEY="aion-ranger-arcana";
+let ARCT=null, ARCREPO=null, ARCPOP=null, ARCBUSY=false, ARCMSG=null;
+const aLoad=()=>{ try{ return JSON.parse(localStorage.getItem(A_KEY)||"null"); }catch(e){ return null; } };
+const aSave=()=>{ try{ localStorage.setItem(A_KEY,JSON.stringify(ARCT)); }catch(e){} };
+function aFact(cat){ const d=Object.values(DOC?.snap?.items||{}).find(x=>x&&x.categoryName===cat); return d?{name:d.name,ench:d.enchantLevel||0,max:d.maxEnchantLevel||5,lines:(d.subSkills||[]).map(s=>[s.name,s.level])}:null; }
+function aFromFact(){ const t={}; for(const [id,,cat] of A_CARDS){ const f=aFact(cat); t[id]=[0,1,2,3].map(i=>f?.lines[i]?[f.lines[i][0],f.lines[i][1]]:null); } return t; }
+function aInit(){
+  if(ARCT) return;
+  const loc=aLoad(), rep=ARCREPO;
+  if(loc&&loc.target&&(!rep||loc.updatedAt>(rep.savedAt||0))) ARCT=loc;
+  else if(rep&&rep.target) ARCT={target:rep.target,updatedAt:rep.savedAt||0,sentAt:rep.savedAt||0};
+  else if(DOC?.snap) ARCT={target:aFromFact(),updatedAt:0,sentAt:0};
+  if(ARCT) for(const [id] of A_CARDS){ const r=ARCT.target[id]; ARCT.target[id]=[0,1,2,3].map(i=>Array.isArray(r?.[i])?r[i]:null); }
+}
+const aSum=rows=>rows.reduce((s,r)=>s+(r?r[1]:1),0);           // an empty row will hold at least +1
+const aLvl=rows=>Math.max(0,Math.min(5,aSum(rows)-4));
+function aChance(def,left){ // every enchant raises one of 4 lines at random (assumed equal odds)
+  const memo=new Map();
+  const go=(d,r)=>{ const need=d.reduce((a,b)=>a+b,0); if(need===0) return 1; if(need>r) return 0;
+    const k=d.join()+"|"+r; if(memo.has(k)) return memo.get(k);
+    let p=0; for(let i=0;i<4;i++){ const n=d.slice(); if(n[i]>0) n[i]--; p+=go(n,r-1)/4; } memo.set(k,p); return p; };
+  return go(def,left);
+}
+function aStatus(rows,f){
+  const set=rows.filter(Boolean);
+  if(set.length<4) return ["","Выберите 4 скилла — на аркане их всегда четыре."];
+  if(!f) return ["","В оружейной нет этой карты — сравнить не с чем."];
+  const fm=Object.fromEntries(f.lines), tm=Object.fromEntries(set);
+  const miss=set.filter(r=>!(r[0] in fm)).map(r=>r[0]), extra=f.lines.filter(l=>!(l[0] in tm)).map(l=>l[0]);
+  if(miss.length) return ["no",`<b>Нужна новая карта.</b> Строки на аркане не перекидываются, а у этой не те скиллы: нет ${miss.map(esc).join(", ")}; вместо них ${extra.map(esc).join(", ")}.`];
+  const def=set.map(r=>Math.max(0,r[1]-fm[r[0]])), need=def.reduce((a,b)=>a+b,0), left=Math.max(0,f.max-f.ench);
+  if(!need) return ["ok",`<b>Готово.</b> Все строки на цели или выше${f.ench<f.max?`, осталось заточек: ${left}`:""}.`];
+  const where=set.map((r,i)=>def[i]?`${esc(r[0])} +${def[i]}`:"").filter(Boolean).join(", ");
+  if(need>left) return ["no",`<b>Уже не добить.</b> Не хватает ${need} (${where}), а заточек осталось ${left}. Нужна новая карта с этими скиллами.`];
+  const p=aChance(def,left);
+  return ["lo",`<b>Точить:</b> нужно ${where} — ${need} из ${left} оставшихся заточек. Шанс собрать ровно так ≈ <b>${Math.round(p*100)}%</b> <span class="muted">(если строка выбирается равновероятно)</span>.`];
+}
+function aTotals(){
+  const t={}, f={};
+  for(const [id,,cat] of A_CARDS){ for(const r of ARCT.target[id]) if(r) t[r[0]]=(t[r[0]]||0)+r[1]; const fc=aFact(cat); for(const l of fc?.lines||[]) f[l[0]]=(f[l[0]]||0)+l[1]; }
+  const names=[...A_ACT,...A_PAS].filter(n=>t[n]||f[n]);
+  return names.map(n=>{ const a=t[n]||0,b=f[n]||0,d=b-a; return `<tr><td>${esc(n)} <span class="muted" style="font-size:12px">${A_ACT.includes(n)?"активный":"пассивный"}</span></td><td class="n">${a||"—"}</td><td class="n">${b||"—"}</td><td class="n" style="color:${d<0?"var(--warn)":d>0?"var(--mid)":"var(--good)"}">${d===0?"✓":(d>0?"+":"")+d}</td></tr>`; }).join("");
+}
+function aSyncState(){
+  if(ARCMSG) return ARCMSG;
+  if(!ARCT||!ARCT.updatedAt) return ["","Пока цель совпадает с тем, что в игре. Меняйте — и сохраните."];
+  if(ARCT.sentAt!==ARCT.updatedAt) return ["dirty","Есть несохранённые изменения (черновик хранится в этом браузере)."];
+  if((ARCREPO?.savedAt||0)<ARCT.updatedAt) return ["dirty","Отправлено, GitHub сохраняет…"];
+  return ["ok","Сохранено в репозитории · "+new Date(ARCT.updatedAt).toLocaleString("ru-RU",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})];
+}
+function renderArcana(){
+  const pane=$("#pane-arcana"); aInit();
+  if(!ARCT){ pane.innerHTML='<div class="empty">Нет данных персонажа — конструктор появится после первого обновления из оружейной.</div>'; return; }
+  const [sc,sm]=aSyncState(); const dirty=ARCT.updatedAt&&ARCT.sentAt!==ARCT.updatedAt;
+  const cards=A_CARDS.map(([id,name,cat,,rule])=>{
+    const rows=ARCT.target[id], f=aFact(cat), sum=aSum(rows), lvl=aLvl(rows), fm=Object.fromEntries(f?.lines||[]);
+    const lines=rows.map((r,i)=>{ const fv=r?fm[r[0]]:undefined;
+      const fc=!r?"":fv===undefined?"no":fv>=r[1]?"ok":"lo";
+      return `<button type="button" class="pick${r?"":" empty"}" data-pick="${id}:${i}" aria-haspopup="listbox"><span>${r?esc(r[0]):"Выбрать скилл"}</span></button>
+        <div class="step"><button type="button" data-dec="${id}:${i}" aria-label="Меньше" ${!r||r[1]<=1?"disabled":""}>−</button><b>${r?r[1]:"—"}</b><button type="button" data-inc="${id}:${i}" aria-label="Больше" ${!r||sum>=A_MAX?"disabled":""}>+</button></div>
+        <span class="fv ${fc}" title="В игре сейчас">${!r?"":fv===undefined?"нет":fv}</span>`; }).join("");
+    const [stc,stt]=aStatus(rows,f);
+    const tm=Object.fromEntries(rows.filter(Boolean));
+    const fl=f?`В игре: ${f.lines.map(l=>`<span class="${l[0] in tm?"":"x"}">${esc(l[0])} ${l[1]}</span>`).join(" · ")} <span class="muted">(+${f.ench}${f.name!==name?`, ${esc(f.name)}`:""})</span>`:"В оружейной этой карты нет";
+    return `<article class="acard" data-card="${id}">
+      <div class="art"><img src="img/arcana/${id}.webp" alt="${esc(name)}" width="210" height="320" loading="lazy">${f?`<span class="factchip" title="Заточка в игре">в игре +${f.ench}</span>`:""}<span class="badge${lvl>=5?" max":""}" data-badge="${id}" aria-label="Цель: +${lvl}">+${lvl}</span></div>
+      <div style="min-width:0"><h3>${esc(name)}</h3><div class="sub">${rule} · очков ${sum} / ${A_MAX}</div>
+        <div class="alines"><span class="hd">Скилл</span><span class="hd r">Цель</span><span class="hd r">Игра</span>${lines}</div>
+        <div class="factline">${fl}</div>
+        <div class="astate ${stc}">${stt}</div>
+        <div class="arow"><button type="button" class="btn" data-fromfact="${id}" ${f?"":"disabled"}>Взять из игры</button><button type="button" class="btn" data-clear="${id}">Очистить</button></div>
+      </div></article>`; }).join("");
+  pane.innerHTML=`<section class="box"><h2>Конструктор аркан</h2>
+    <p class="lead">Соберите цель для каждой карты: выберите 4 скилла и раскиньте очки. Новая карта — это 4 скилла по +1, каждая заточка добавляет +1 случайной строке, поэтому максимум +5 = 9 очков. Число на карте — уровень заточки, который нужен под эту цель. Колонка «Игра» — что стоит сейчас по официальной оружейной: зелёный — цель есть, жёлтый — не дотягивает, красный — такого скилла на карте нет.</p>
+    <div class="arcbar"><button type="button" class="btn primary" id="arc-save" ${dirty&&!ARCBUSY?"":"disabled"}>Сохранить в репозиторий</button><span class="arcst ${sc}" id="arc-st">${esc(sm)}</span></div></section>
+    <div class="acards">${cards}</div>
+    <section class="box"><h2>Итого с аркан</h2><p class="lead">Сумма уровней скиллов со всех пяти карт: цель против того, что в игре сейчас.</p>
+      <div class="tw"><table class="sk"><tr><th>Скилл</th><th class="n">Цель</th><th class="n">В игре</th><th class="n">Разница</th></tr>${aTotals()}</table></div></section>`;
+}
+function aEdit(fn){ fn(ARCT.target); ARCT.updatedAt=Date.now(); ARCMSG=null; aSave(); }
+function aBump(id){ requestAnimationFrame(()=>{ const b=document.querySelector(`[data-badge="${id}"]`); if(b){ b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); } }); }
+function aClosePop(){ if(ARCPOP){ ARCPOP.remove(); ARCPOP=null; } }
+function aOpenPop(btn,id,i){
+  aClosePop(); const meta=A_CARDS.find(c=>c[0]===id), rows=ARCT.target[id], cur=rows[i]?.[0];
+  const used=new Set(rows.filter((r,j)=>r&&j!==i).map(r=>r[0]));
+  const f=aFact(meta[2]), fm=Object.fromEntries(f?.lines||[]);
+  const grp=(t,list)=>`<h4>${t}</h4>`+list.map(n=>`<button type="button" role="option" data-opt="${esc(n)}" class="${n===cur?"cur":""}" ${used.has(n)?"disabled":""}><span>${esc(n)}</span>${used.has(n)?"<small>уже на карте</small>":fm[n]?`<small>в игре ${fm[n]}</small>`:""}</button>`).join("");
+  const el=document.createElement("div"); el.className="apop"; el.setAttribute("role","listbox");
+  el.innerHTML=(meta[3].includes("act")?grp("Активные",A_ACT):"")+(meta[3].includes("pas")?grp("Пассивные",A_PAS):"")+(cur?`<h4>&nbsp;</h4><button type="button" class="rm" data-opt="">Убрать скилл</button>`:"");
+  el.dataset.for=id+":"+i; document.body.appendChild(el); ARCPOP=el; aPlace();
+  el.onclick=e=>{ const o=e.target.closest("[data-opt]"); if(!o||o.disabled) return; const n=o.dataset.opt;
+    aEdit(t=>{ t[id][i]=n?[n,t[id][i]?.[1]||1]:null; }); aClosePop(); renderArcana(); aBump(id); btn=null; document.querySelector(`[data-pick="${id}:${i}"]`)?.focus(); };
+  (el.querySelector("button.cur")||el.querySelector("button:not(:disabled)"))?.focus({preventScroll:true});
+}
+document.addEventListener("click",e=>{
+  if(ARCPOP&&!ARCPOP.contains(e.target)&&!e.target.closest("[data-pick]")) aClosePop();
+  const pane=$("#pane-arcana"); if(!pane.contains(e.target)) return;
+  const b=e.target.closest("button"); if(!b||b.disabled) return; const d=b.dataset;
+  if(d.pick){ const [id,i]=d.pick.split(":"); if(ARCPOP&&ARCPOP.dataset.for===d.pick){ aClosePop(); return; } aOpenPop(b,id,+i); return; }
+  if(d.inc||d.dec){ const [id,i]=(d.inc||d.dec).split(":"); aEdit(t=>{ const r=t[id][+i]; if(!r) return; if(d.inc&&aSum(t[id])<A_MAX) r[1]++; if(d.dec&&r[1]>1) r[1]--; }); renderArcana(); aBump(id); return; }
+  if(d.fromfact){ const f=aFact(A_CARDS.find(c=>c[0]===d.fromfact)[2]); aEdit(t=>{ t[d.fromfact]=[0,1,2,3].map(i=>f?.lines[i]?[f.lines[i][0],f.lines[i][1]]:null); }); renderArcana(); aBump(d.fromfact); return; }
+  if(d.clear){ aEdit(t=>{ t[d.clear]=[null,null,null,null]; }); renderArcana(); aBump(d.clear); return; }
+  if(b.id==="arc-save") saveArcana();
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&ARCPOP){ const f=ARCPOP.dataset.for; aClosePop(); document.querySelector(`[data-pick="${f}"]`)?.focus(); }
+  if(ARCPOP&&(e.key==="ArrowDown"||e.key==="ArrowUp")){ e.preventDefault(); const bs=[...ARCPOP.querySelectorAll("button:not(:disabled)")]; const k=bs.indexOf(document.activeElement); bs[(k+(e.key==="ArrowDown"?1:-1)+bs.length)%bs.length]?.focus(); } });
+function aPlace(){ if(!ARCPOP) return; const btn=document.querySelector(`[data-pick="${ARCPOP.dataset.for}"]`); if(!btn){ aClosePop(); return; }
+  const r=btn.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight){ aClosePop(); return; }
+  const h=ARCPOP.offsetHeight, w=ARCPOP.offsetWidth;
+  const top=r.bottom+6+h>innerHeight&&r.top-6-h>0?r.top-6-h:Math.min(r.bottom+6,innerHeight-h-8);
+  ARCPOP.style.top=Math.max(8,top)+"px"; ARCPOP.style.left=Math.max(8,Math.min(r.left,innerWidth-w-8))+"px"; }
+window.addEventListener("resize",aPlace); window.addEventListener("scroll",e=>{ if(ARCPOP&&!(e.target instanceof Node&&ARCPOP.contains(e.target))) aPlace(); },true);
+async function saveArcana(){
+  if(ARCBUSY||!ARCT) return;
+  if(!REPO){ ARCMSG=["err","Сохранять в репозиторий можно только со страницы на GitHub Pages."]; renderArcana(); return; }
+  if(!getTok()){ AFTERTOK=saveArcana; $("#tokform").hidden=false; $("#f-token").focus(); return; }
+  ARCBUSY=true; const stamp=ARCT.updatedAt, t0=Date.now();
+  const say=(c,m)=>{ ARCMSG=[c,m]; const s=$("#arc-st"); if(s){ s.className="arcst "+c; s.textContent=m; } };
+  try{
+    renderArcana(); say("dirty","Отправляю на GitHub…");
+    const r=await gh("/actions/workflows/arcana.yml/dispatches",{method:"POST",body:JSON.stringify({ref:"main",inputs:{data:JSON.stringify({v:1,savedAt:stamp,target:ARCT.target})}})});
+    if(r.status===401){ setTok(""); throw new Error("Ключ не подошёл или истёк. Нажмите «Сохранить» ещё раз и вставьте новый."); }
+    if(r.status===403||r.status===404) throw new Error("У ключа нет доступа. Проверьте: репозиторий aion-ranger и Actions: Read and write.");
+    if(!r.ok) throw new Error("GitHub ответил "+r.status);
+    ARCT.sentAt=stamp; aSave();
+    for(let i=0;i<36;i++){ await sleep(5000);
+      const j=await (await gh("/actions/workflows/arcana.yml/runs?per_page=1&event=workflow_dispatch")).json(); const run=j.workflow_runs?.[0];
+      if(!run||new Date(run.created_at).getTime()<t0-60000){ say("dirty","Ждёт очереди на GitHub…"); continue; }
+      if(run.status!=="completed"){ say("dirty","Сохраняю в репозиторий…"); continue; }
+      if(run.conclusion!=="success"){ ARCT.sentAt=0; aSave(); throw new Error("Сохранение на GitHub завершилось с ошибкой."); }
+      ARCREPO={v:1,savedAt:stamp,target:ARCT.target}; ARCMSG=null; break;
+    }
+    if(ARCMSG&&ARCMSG[0]==="dirty") ARCMSG=null;
+  }catch(e){ ARCMSG=["err",e.message]; }
+  finally{ ARCBUSY=false; renderArcana(); }
+}
+
 /* ================= tabs ================= */
-const TABS=["overview","gear","skills","stats","pets","plan"];
+const TABS=["overview","gear","skills","stats","pets","arcana","plan"];
 function showTab(t){ if(!TABS.includes(t)) t="overview";
   document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
   for(const x of TABS) $("#pane-"+x).hidden=x!==t;
@@ -637,7 +834,7 @@ const getTok=()=>{ try{ return localStorage.getItem(TOKKEY)||""; }catch(e){ retu
 const setTok=t=>{ try{ t?localStorage.setItem(TOKKEY,t):localStorage.removeItem(TOKKEY); }catch(e){} };
 const gh=(path,opt={})=>fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.repo}${path}`,{...opt,headers:{"Accept":"application/vnd.github+json","Authorization":"Bearer "+getTok(),"X-GitHub-Api-Version":"2022-11-28",...(opt.body?{"Content-Type":"application/json"}:{})}});
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-let busy=false;
+let busy=false, AFTERTOK=null;
 function prog(p){ const el=$("#prog"); el.hidden=p==null; if(p!=null) el.querySelector("i").style.width=Math.round(p*100)+"%"; }
 async function reloadData(){
   const r=await fetch("data.json?"+Date.now(),{cache:"no-store"}); if(!r.ok) return null; const d=await r.json();
@@ -682,8 +879,8 @@ async function runRefresh(){
 }
 if(!REPO) $("#btn-refresh").hidden=true;
 $("#btn-refresh").onclick=runRefresh;
-$("#btn-tokcancel").onclick=()=>{ $("#tokform").hidden=true; };
-$("#tokform").addEventListener("submit",e=>{ e.preventDefault(); const t=$("#f-token").value.trim(); if(!/^(github_pat_|ghp_)/.test(t)){ setStatus("Это не похоже на ключ GitHub: он начинается с github_pat_",true); return; } setTok(t); $("#f-token").value=""; $("#tokform").hidden=true; runRefresh(); });
+$("#btn-tokcancel").onclick=()=>{ $("#tokform").hidden=true; AFTERTOK=null; };
+$("#tokform").addEventListener("submit",e=>{ e.preventDefault(); const t=$("#f-token").value.trim(); if(!/^(github_pat_|ghp_)/.test(t)){ setStatus("Это не похоже на ключ GitHub: он начинается с github_pat_",true); return; } setTok(t); $("#f-token").value=""; $("#tokform").hidden=true; const go=AFTERTOK||runRefresh; AFTERTOK=null; go(); });
 try{ PLANSTATE=JSON.parse(localStorage.getItem("ranger-armory-plan")||"{}")||{}; }catch(e){}
 showTab(location.hash.slice(1)); renderPets();
 (async()=>{
@@ -692,6 +889,7 @@ showTab(location.hash.slice(1)); renderPets();
     DOC=await r.json();
     try{ const h=await fetch("history.json?"+Date.now(),{cache:"no-store"}); if(h.ok) HIST=await h.json(); }catch(e){}
     try{ const g=await fetch("guides/status.json?"+Date.now(),{cache:"no-store"}); if(g.ok) GSTAT=await g.json(); }catch(e){}
+    try{ const a=await fetch("arcana.json?"+Date.now(),{cache:"no-store"}); if(a.ok) ARCREPO=await a.json(); }catch(e){}
     renderAll(); setStatus("Обновляется автоматически каждые 4 часа"+(getTok()?"":" · «Обновить персонажа» — обновить прямо сейчас"));
   }catch(e){ renderAll(); setStatus("Не удалось загрузить data.json",true); }
 })();

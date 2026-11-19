@@ -1,0 +1,39 @@
+name: Save arcana target
+
+on:
+  workflow_dispatch:
+    inputs:
+      data:
+        description: "Arcana target JSON from the page"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: save-arcana
+  cancel-in-progress: false
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Validate and write arcana.json
+        env:
+          ARC_DATA: ${{ inputs.data }}
+        run: node scripts/save-arcana.mjs
+      - name: Commit
+        run: |
+          git config user.name "armory-bot"
+          git config user.email "armory-bot@users.noreply.github.com"
+          git add arcana.json
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Save arcana target"
+          for i in 1 2 3; do git pull --rebase -q && git push && exit 0; sleep 5; done
+          exit 1
