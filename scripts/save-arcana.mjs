@@ -6,7 +6,9 @@ const ACT = ["Snipe","Tempest Shot","Deadshot","Gale Arrow","Drill Dart","Burst 
 const PAS = ["Focused Eye","Hunter's Resolve","Hunter's Soul","Concentrated Fire","Rooting Eye","Melee Fire","Vigilant Eye","Unyielding Resolve","Revitalization Contract","Wind Vigor"];
 const PARCH = ["Snipe","Snare Shot","Drill Dart","Burst Arrow","Explosion Trap","Tempest Shot"];
 const COMP = ["Deadshot","Marking Shot","Suppressing Arrow","Gale Arrow","Arrow Scattershot","Defiance"];
-const RULES = { chalice: [...ACT, ...PAS], parchment: PARCH, compass: COMP, bell: PAS, mirror: PAS };
+const BELL = ["Vigilant Eye","Wind Vigor","Hunter's Resolve","Rooting Eye","Revitalization Contract"];
+const MIRR = ["Concentrated Fire","Focused Eye","Unyielding Resolve","Melee Fire","Hunter's Soul"];
+const RULES = { chalice: [...ACT, ...PAS], parchment: PARCH, compass: COMP, bell: BELL, mirror: MIRR };
 const MAX = 9;
 
 const fail = m => { console.error("Rejected: " + m); process.exit(1); };

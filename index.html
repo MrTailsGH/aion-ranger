@@ -647,12 +647,14 @@ const A_ACT=["Snipe","Tempest Shot","Deadshot","Gale Arrow","Drill Dart","Burst 
 const A_PAS=["Focused Eye","Hunter's Resolve","Hunter's Soul","Concentrated Fire","Rooting Eye","Melee Fire","Vigilant Eye","Unyielding Resolve","Revitalization Contract","Wind Vigor"];
 const A_PARCH=["Snipe","Snare Shot","Drill Dart","Burst Arrow","Explosion Trap","Tempest Shot"];          // from the in-game "Select Effects" lists
 const A_COMP=["Deadshot","Marking Shot","Suppressing Arrow","Gale Arrow","Arrow Scattershot","Defiance"];
+const A_BELL=["Vigilant Eye","Wind Vigor","Hunter's Resolve","Rooting Eye","Revitalization Contract"];
+const A_MIRR=["Concentrated Fire","Focused Eye","Unyielding Resolve","Melee Fire","Hunter's Soul"];
 const A_CARDS=[ // id, game name, armory category, groups, rule text, skills that can roll on it
   ["chalice","Chalice of Vigor","Chalice",["act","pas"],"Все активные и пассивные",[...A_ACT,...A_PAS]],
   ["parchment","Parchment of Vigor","Parchment",["act"],"6 активных: Snipe, Snare, Drill, Burst, Explosion Trap, Tempest",A_PARCH],
   ["compass","Compass of Magic","Compass",["act"],"6 активных: Deadshot, Marking, Suppressing, Gale, Scattershot, Defiance",A_COMP],
-  ["bell","Bell of Magic","Bell",["pas"],"Только пассивные",A_PAS],
-  ["mirror","Mirror of Magic","Mirror",["pas"],"Только пассивные",A_PAS]];
+  ["bell","Bell of Magic","Bell",["pas"],"5 пассивных: Vigilant Eye, Wind Vigor, Hunter's Resolve, Rooting Eye, Revitalization",A_BELL],
+  ["mirror","Mirror of Magic","Mirror",["pas"],"5 пассивных: Concentrated Fire, Focused Eye, Unyielding, Melee Fire, Hunter's Soul",A_MIRR]];
 const A_GMAX_ACT=5, A_GMAX_PAS=4, A_MAX=9, A_KEY="aion-ranger-arcana", A_SKMAX=20, A_RINGLINES=4;
 const A_PRESET=[["Snipe",20],["Tempest Shot",20],["Deadshot",20],["Gale Arrow",20],["Drill Dart",20]];
 let ARCT=null, ARCREPO=null, ARCPOP=null, ARCBUSY=false, ARCMSG=null, ARCOPT=null;
@@ -848,7 +850,7 @@ function aPlanHtml(o){
     if(c.type==="ench"){ const w=f.lines.map((l,j)=>c.inc[j]?`${esc(l[0])} ${l[1]}→${l[1]+c.inc[j]}`:"").filter(Boolean).join(", ");
       return `<li><span class="pk lo">Доточить</span><div><b>${name}</b> <span class="muted">+${f.ench} → +${f.max}</span><small>Нужно: ${w}. Шанс ≈ ${aFmt(c.P)}; если не выйдет — новая карта.</small></div></li>`; }
     const any=4-c.req.length;
-    return `<li><span class="pk no">Новая карта</span><div><b>${name}</b><small>Нужны ${c.req.map(r=>`${esc(r[0])} ${r[1]}`).join(" · ")}${any?` + ${any} любых`:""}. Подходящая карта с заточкой до +5 выходит ≈ <b>${aFmt(c.P)}</b>.${id==="chalice"?" Chalice — самая трудная: у неё в пуле все 22 скилла (активные и пассивные), у Parchment и Compass — по 6.":""}</small></div></li>`; }).join("");
+    return `<li><span class="pk no">Новая карта</span><div><b>${name}</b><small>Нужны ${c.req.map(r=>`${esc(r[0])} ${r[1]}`).join(" · ")}${any?` + ${any} любых`:""}. Подходящая карта с заточкой до +5 выходит ≈ <b>${aFmt(c.P)}</b>.${id==="chalice"?" Chalice — самая трудная: у неё в пуле все 22 скилла (активные и пассивные), у Parchment и Compass — по 6, у Bell и Mirror — по 5.":""}</small></div></li>`; }).join("");
   const nNew=o.picks.filter(c=>c.type==="new").length;
   const total=o.left?`<div class="astate no"><b>Цель недостижима даже с идеальными арканами${ARCT.goal.rings==="plan"?" и кольцами":""}.</b> Не хватает: ${o.G.map((n,i)=>{ let need=o.need[i]; for(const c of o.picks) need-=c.contrib[i]; return need>0?`${esc(n)} +${need}`:""; }).filter(Boolean).join(", ")}. Ниже — лучшее, что можно собрать.</div>`
     :`<div class="astate ${nNew?"lo":"ok"}">${nNew?`<b>Новых карт: ${nNew}.</b> В среднем придётся перебрать ≈ ${Math.max(1,Math.round(o.cost)).toLocaleString("ru-RU")} карт с заточкой до +5, чтобы собрать нужные.`:"<b>Новые карты не нужны.</b>"} Подбор старается не трогать Chalice: на ней нужное выпадает реже всего.</div>`;
