@@ -4,7 +4,9 @@ import { writeFile } from "node:fs/promises";
 
 const ACT = ["Snipe","Tempest Shot","Deadshot","Gale Arrow","Drill Dart","Burst Arrow","Marking Shot","Snare Shot","Suppressing Arrow","Arrow Scattershot","Explosion Trap","Defiance"];
 const PAS = ["Focused Eye","Hunter's Resolve","Hunter's Soul","Concentrated Fire","Rooting Eye","Melee Fire","Vigilant Eye","Unyielding Resolve","Revitalization Contract","Wind Vigor"];
-const RULES = { chalice: [...ACT, ...PAS], parchment: ACT, compass: ACT, bell: PAS, mirror: PAS };
+const PARCH = ["Snipe","Snare Shot","Drill Dart","Burst Arrow","Explosion Trap","Tempest Shot"];
+const COMP = ["Deadshot","Marking Shot","Suppressing Arrow","Gale Arrow","Arrow Scattershot","Defiance"];
+const RULES = { chalice: [...ACT, ...PAS], parchment: PARCH, compass: COMP, bell: PAS, mirror: PAS };
 const MAX = 9;
 
 const fail = m => { console.error("Rejected: " + m); process.exit(1); };

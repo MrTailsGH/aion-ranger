@@ -645,20 +645,22 @@ function renderPets(){
 /* ================= arcana constructor: goal → plan → target vs armory fact ================= */
 const A_ACT=["Snipe","Tempest Shot","Deadshot","Gale Arrow","Drill Dart","Burst Arrow","Marking Shot","Snare Shot","Suppressing Arrow","Arrow Scattershot","Explosion Trap","Defiance"];
 const A_PAS=["Focused Eye","Hunter's Resolve","Hunter's Soul","Concentrated Fire","Rooting Eye","Melee Fire","Vigilant Eye","Unyielding Resolve","Revitalization Contract","Wind Vigor"];
-const A_CARDS=[ // id, game name, armory category, allowed groups, rule text
-  ["chalice","Chalice of Vigor","Chalice",["act","pas"],"Активные и пассивные"],
-  ["parchment","Parchment of Vigor","Parchment",["act"],"Только активные"],
-  ["compass","Compass of Magic","Compass",["act"],"Только активные"],
-  ["bell","Bell of Magic","Bell",["pas"],"Только пассивные"],
-  ["mirror","Mirror of Magic","Mirror",["pas"],"Только пассивные"]];
+const A_PARCH=["Snipe","Snare Shot","Drill Dart","Burst Arrow","Explosion Trap","Tempest Shot"];          // from the in-game "Select Effects" lists
+const A_COMP=["Deadshot","Marking Shot","Suppressing Arrow","Gale Arrow","Arrow Scattershot","Defiance"];
+const A_CARDS=[ // id, game name, armory category, groups, rule text, skills that can roll on it
+  ["chalice","Chalice of Vigor","Chalice",["act","pas"],"Все активные и пассивные",[...A_ACT,...A_PAS]],
+  ["parchment","Parchment of Vigor","Parchment",["act"],"6 активных: Snipe, Snare, Drill, Burst, Explosion Trap, Tempest",A_PARCH],
+  ["compass","Compass of Magic","Compass",["act"],"6 активных: Deadshot, Marking, Suppressing, Gale, Scattershot, Defiance",A_COMP],
+  ["bell","Bell of Magic","Bell",["pas"],"Только пассивные",A_PAS],
+  ["mirror","Mirror of Magic","Mirror",["pas"],"Только пассивные",A_PAS]];
 const A_GMAX_ACT=5, A_GMAX_PAS=4, A_MAX=9, A_KEY="aion-ranger-arcana", A_SKMAX=20, A_RINGLINES=4;
 const A_PRESET=[["Snipe",20],["Tempest Shot",20],["Deadshot",20],["Gale Arrow",20],["Drill Dart",20]];
 let ARCT=null, ARCREPO=null, ARCPOP=null, ARCBUSY=false, ARCMSG=null, ARCOPT=null;
 const aLoad=()=>{ try{ return JSON.parse(localStorage.getItem(A_KEY)||"null"); }catch(e){ return null; } };
 const aSave=()=>{ try{ localStorage.setItem(A_KEY,JSON.stringify(ARCT)); }catch(e){} };
 const aIsAct=n=>A_ACT.includes(n);
-const aOk=(meta,n)=>meta[3].includes(aIsAct(n)?"act":"pas");
-const aPool=meta=>meta[3].reduce((s,g)=>s+(g==="act"?A_ACT.length:A_PAS.length),0);
+const aOk=(meta,n)=>meta[5].includes(n);
+const aPool=meta=>meta[5].length;
 function aFact(cat){ const d=Object.values(DOC?.snap?.items||{}).find(x=>x&&x.categoryName===cat); return d?{name:d.name,ench:d.enchantLevel||0,max:d.maxEnchantLevel||5,lines:(d.subSkills||[]).map(s=>[s.name,s.level])}:null; }
 const aFactRows=f=>[0,1,2,3].map(i=>f?.lines[i]?[f.lines[i][0],f.lines[i][1]]:null);
 function aFromFact(){ const t={}; for(const [id,,cat] of A_CARDS) t[id]=aFactRows(aFact(cat)); return t; }
@@ -825,6 +827,7 @@ function aRingsHtml(){
     const bestTxt=ref.rings.map((r,i)=>`Ring ${i+1}: ${r.map(esc).join(", ")}`).join("; ");
     if(o.left>ref.left) verdict=`<div class="astate no"><b>С такими кольцами цель не собрать</b> (не хватает ${o.left} ур.). Лучший вариант: ${bestTxt}.</div>`;
     else if(o.cost<=ref.cost*1.1+1) verdict=`<div class="astate ok"><b>Кольца хорошие — оставляйте.</b> С ними подбор аркан ≈ ${mine.toLocaleString("ru-RU")} карт, с идеальными кольцами ≈ ${best.toLocaleString("ru-RU")}.</div>`;
+    else if(o.cost<=ref.cost*1.3+1) verdict=`<div class="astate ok"><b>Почти как идеальные — можно оставлять.</b> С ними арканы ≈ ${mine.toLocaleString("ru-RU")} карт, с кольцами «${bestTxt}» — ≈ ${best.toLocaleString("ru-RU")}. Разница небольшая, перекидывать имеет смысл, только если это дёшево.</div>`;
     else verdict=`<div class="astate lo"><b>Можно лучше.</b> С этими кольцами арканы обойдутся ≈ ${mine.toLocaleString("ru-RU")} карт, а с кольцами «${bestTxt}» — ≈ ${best.toLocaleString("ru-RU")}. Если перекидывать дорого, можно оставить: разница только в сложности аркан.</div>`;
   } else if(ARCT.goal.rings!=="mine") verdict=`<div class="astate">Впишите, что выролилось, — режим переключится на «Мои кольца», и подбор покажет, оставлять или перекидывать.</div>`;
   else verdict=`<div class="astate">Считаю…</div>`;
@@ -845,7 +848,7 @@ function aPlanHtml(o){
     if(c.type==="ench"){ const w=f.lines.map((l,j)=>c.inc[j]?`${esc(l[0])} ${l[1]}→${l[1]+c.inc[j]}`:"").filter(Boolean).join(", ");
       return `<li><span class="pk lo">Доточить</span><div><b>${name}</b> <span class="muted">+${f.ench} → +${f.max}</span><small>Нужно: ${w}. Шанс ≈ ${aFmt(c.P)}; если не выйдет — новая карта.</small></div></li>`; }
     const any=4-c.req.length;
-    return `<li><span class="pk no">Новая карта</span><div><b>${name}</b><small>Нужны ${c.req.map(r=>`${esc(r[0])} ${r[1]}`).join(" · ")}${any?` + ${any} любых`:""}. Подходящая карта с заточкой до +5 выходит ≈ <b>${aFmt(c.P)}</b>.${id==="chalice"?" Chalice — самая трудная: у неё в пуле все 22 скилла (активные и пассивные), у остальных 10–12.":""}</small></div></li>`; }).join("");
+    return `<li><span class="pk no">Новая карта</span><div><b>${name}</b><small>Нужны ${c.req.map(r=>`${esc(r[0])} ${r[1]}`).join(" · ")}${any?` + ${any} любых`:""}. Подходящая карта с заточкой до +5 выходит ≈ <b>${aFmt(c.P)}</b>.${id==="chalice"?" Chalice — самая трудная: у неё в пуле все 22 скилла (активные и пассивные), у Parchment и Compass — по 6.":""}</small></div></li>`; }).join("");
   const nNew=o.picks.filter(c=>c.type==="new").length;
   const total=o.left?`<div class="astate no"><b>Цель недостижима даже с идеальными арканами${ARCT.goal.rings==="plan"?" и кольцами":""}.</b> Не хватает: ${o.G.map((n,i)=>{ let need=o.need[i]; for(const c of o.picks) need-=c.contrib[i]; return need>0?`${esc(n)} +${need}`:""; }).filter(Boolean).join(", ")}. Ниже — лучшее, что можно собрать.</div>`
     :`<div class="astate ${nNew?"lo":"ok"}">${nNew?`<b>Новых карт: ${nNew}.</b> В среднем придётся перебрать ≈ ${Math.max(1,Math.round(o.cost)).toLocaleString("ru-RU")} карт с заточкой до +5, чтобы собрать нужные.`:"<b>Новые карты не нужны.</b>"} Подбор старается не трогать Chalice: на ней нужное выпадает реже всего.</div>`;
@@ -923,7 +926,8 @@ function aOpenPop(btn,id,i){
   const f=aFact(meta[2]), fm=Object.fromEntries(f?.lines||[]), gm=Object.fromEntries(ARCT.goal.skills);
   const grp=(t,list)=>`<h4>${t}</h4>`+list.map(n=>`<button type="button" role="option" data-opt="${esc(n)}" class="${n===cur?"cur":""}" ${used.has(n)?"disabled":""}><span>${esc(n)}${n in gm?" ★":""}</span>${used.has(n)?"<small>уже на карте</small>":fm[n]?`<small>в игре ${fm[n]}</small>`:""}</button>`).join("");
   const el=document.createElement("div"); el.className="apop"; el.setAttribute("role","listbox");
-  el.innerHTML=(meta[3].includes("act")?grp("Активные",A_ACT):"")+(meta[3].includes("pas")?grp("Пассивные",A_PAS):"")+(cur?`<h4>&nbsp;</h4><button type="button" class="rm" data-opt="">Любой скилл (не важно какой)</button>`:"");
+  const act=A_ACT.filter(n=>aOk(meta,n)), pas=A_PAS.filter(n=>aOk(meta,n));
+  el.innerHTML=(act.length?grp("Активные",act):"")+(pas.length?grp("Пассивные",pas):"")+(cur?`<h4>&nbsp;</h4><button type="button" class="rm" data-opt="">Любой скилл (не важно какой)</button>`:"");
   el.dataset.for=id+":"+i; document.body.appendChild(el); ARCPOP=el; aPlace();
   el.onclick=e=>{ const o=e.target.closest("[data-opt]"); if(!o||o.disabled) return; const n=o.dataset.opt;
     aEdit(t=>{ t[id][i]=n?[n,t[id][i]?.[1]||1]:null; }); aClosePop(); renderArcana(); aBump(id); document.querySelector(`[data-pick="${id}:${i}"]`)?.focus(); };
