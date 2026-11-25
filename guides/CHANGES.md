@@ -343,3 +343,43 @@
 
                                                              * Target 1600 (Including +300 with bow of blessing) For Ludra
 
+
+## 2026-11-25 — Johnpal — Gearing Path/Guides
+
+Добавлено строк: 28, удалено: 1. [Открыть гайд](https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit)
+
+**Добавлено:**
+
+    Add Explosive Arrow as 5th Stigma as you get points. (Total 50?, one to 16)
+    We’ll either do explosive 20 or griffon 20 depending which tests out higher.
+    	Explosive Arrow*
+    	305 Stigma
+    	315 Stigma
+    	335 Stigma
+    	350 Stigma
+    	16*/20*
+    	16*/20*
+    	20
+    	20
+    	20
+    	20
+    	20
+    	20
+    	20
+    	20
+    	5
+    	10
+    	20
+    	20
+    	15
+    	20
+    	20
+    	20
+    	20
+    	20
+    2026.11.24 - Added in 5th stigma information.
+
+**Удалено:**
+
+    	Explosive Arrow
+

@@ -522,11 +522,14 @@ Hunters Soul
 Stigma Placement
 Some skill and stigma loadouts will have different results based on your stat breakpoints, always test your build before and after!
 
+Add Explosive Arrow as 5th Stigma as you get points. (Total 50?, one to 16)
+We’ll either do explosive 20 or griffon 20 depending which tests out higher.
+
 	Vaizels Authority
 	Supporting Fire
 	Bow of Blessing
 	Griffon Arrow
-	Explosive Arrow
+	Explosive Arrow*
 	Level 22
 
 	1-5
@@ -593,6 +596,31 @@ Some skill and stigma loadouts will have different results based on your stat br
 	20
 	20
 	20
+
+	305 Stigma
+	20
+	20
+	20
+	20
+	5
+	315 Stigma
+	20
+	20
+	20
+	20
+	10
+	335 Stigma
+	20
+	20
+	20
+	20
+	15
+	350 Stigma
+	20
+	20
+	20
+	16*/20*
+	16*/20*
 
 Why Explosive Arrow over Griffon Early Game?
 They do the same damage early, but you can reduce the cooldown of explosive arrow by 15s at rank 1. We swap to Griffon at 15 which has dot damage which helps proc other effects.
@@ -1046,13 +1074,11 @@ Nezekan’s Shield, Banner, and Empyrean’s Lord are for your flex slot.  Pick 
 	Level 27
 
 	5
-
 	5
 
 	Level 37
 
 	5
-
 	5
 
 	5
@@ -1246,6 +1272,8 @@ New Slots
 Hard Mode Sync Stones
 
 New Slot you substance morph up
+
+2026.11.24 - Added in 5th stigma information.
 
 2026.11.11 - Added in a section explaining the latest patch notes on TW/KR for combat overhaul.
 
