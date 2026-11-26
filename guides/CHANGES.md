@@ -383,3 +383,96 @@
 
     	Explosive Arrow
 
+
+## 2026-11-26 — Johnpal — Gearing Path/Guides
+
+Добавлено строк: 220, удалено: 146. [Открыть гайд](https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit)
+
+**Добавлено:**
+
+    4. Stigma (Updated 11/25 to account for 5th Stigma)
+    5. Macro & Rotation (Updated 11/25 to account for 5th Stigma)
+    5th Stigma Adjustments*
+    Add Explosive Arrow as 5th Stigma as you get points.
+    After testing for 2 hours explosive arrow was a slight DPS gain over griffons arrow at 20.  The griffons damage remains the same over the course of damage, the only benefit would be the crits from the tick damage on vaizels, but no major changes over 2.5m tests enough to warrant the change to accoun
+    Highest Griffon 20 Explosive 15
+    Highest Explosive 20 Griffon 15 Parse
+    5th Stigma Adjustments*
+    Add Explosive Arrow as 5th Stigma as you get points.
+    After testing for 2 hours explosive arrow was a slight DPS gain over griffons arrow at 20.  The griffons damage remains the same over the course of damage, the only benefit would be the crits from the tick damage on vaizels, but no major changes over 2.5m tests enough to warrant the change to accoun
+    Explosive Arrow
+    	Explosive Arrow
+    	115 Stigma
+    	121 Stigma
+    	165 Stigma
+    	185 Stigma
+    	225 Stigma
+    	265 Stigma
+    	305 Stigma
+    	16
+                                              1.                                                3. MANUAL
+                                                 1.                                                2. More damage with efficient usage (plan around boss dying soon/next boss/mechanic windows)
+                                                    4.                                                 2. Set up your Macro by clicking THE MACRO button in the top right of your skills
+                                                    1.
+                                                    2. Click each skill and select the horizontal (main row) skill
+                                                    3. AUTOMATIC/LAZY LEVELING
+                                                       1.                                                         4. MANUAL (MORE DAMAGE)
+                                                          1.                                                            3.                                                          4. Enter your settings and bind the macro key
+                                                             1.
+                                                                1. Hold left and right click
+                                                                2. Marking Shot
+                                                                1. Marking shot lasts longer than the cooldown so make sure to wait until it’s at 1 second before recasting. (Especially with Vaizels 20)
+                                                                2. Marking shot has a movement component if you’re actively holding a direction, use it for a stamina free move.
+                                                                3. Self Buff necessary for damage windows or automate with macro
+                                                                4. Manually Cast Deadshot (Hold until Max)
+    Updated Macro Information
+    Griffon 20, Explosive 15
+    Griffon 15 Explosive 20
+                                                                1. Sorc Information
+                                                                2. Sorc Daevanion Board
+    … и ещё 180
+
+**Удалено:**
+
+    4. Stigma
+    5. Macro & Rotation
+    Add Explosive Arrow as 5th Stigma as you get points. (Total 50?, one to 16)
+    We’ll either do explosive 20 or griffon 20 depending which tests out higher.
+    	Explosive Arrow*
+    	110 Stigma
+    	120 Stigma
+    	160 Stigma
+    	180 Stigma
+    	220 Stigma
+    	260 Stigma
+    	300 Stigma
+    	16*/20*
+    	16*/20*
+    Breakpoints
+                                              * Tested 20/20/15/5 and it was break even with 20/15/15/15 but at a loss of HP/sustain.
+                                              3.                                             4. SELF BUFF
+                                              5.                                                1. More damage with efficient usage (plan around boss dying soon/next boss)
+                                                 2. We also stack Trap + Arrow in priority order for use
+                                                 6.                                              2. Set up your Macro by clicking THE MACRO button in the top right of your skills
+                                                 1.
+                                                 2. Click each skill and select the horizontal (main row) skill
+                                                 3. AUTOMATIC/LAZY LEVELING
+                                                 4.                                                5. MANUAL (MORE DAMAGE)
+                                                    1. (Testing new macro setup, 2vigor/3magic minor mana problems if you have short fast targets)
+                                                    6.                                                      3. Enter your settings and bind the macro key
+                                                       1.
+                                                          1. Hold left and right click
+                                                          2. Marking Shot
+                                                          1. Marking shot lasts longer than the cooldown so make sure to wait until it’s at 1 second before recasting. (Especially with Vaizels 20)
+                                                          2. Marking shot has a movement component if you’re actively holding a direction, use it for a stamina free move.
+                                                          3. Self Buff necessary for damage windows or automate with macro
+                                                          4. Manually Cast Deadshot (Hold until Max)
+                                                          1. Sorc Information
+                                                          2. Sorc Daevanion Board
+                                                          3. Sorc Skills and Specialties
+                                                          4. Sorc Macro & Rotation
+                                                          5. Sorc Stigma
+                                                          6. Sorc Stat Prio
+                                                          * There’s some min maxing to be down for focusing on damage or accuracy as well as damage reduction.  This setup will get you mostly started.
+    … и ещё 106
+

@@ -2,7 +2,7 @@
  "allyria": {
   "name": "Allyria — Ranger Guide",
   "link": "https://docs.google.com/document/d/1evrt_6e6WSHRT1vMem2i3O7ZlfANJbqyZoSn66IFrBo/edit",
-  "checkedAt": "2026-11-25T15:58:29.392Z",
+  "checkedAt": "2026-11-26T15:40:08.489Z",
   "authorDate": "18.09.2026",
   "error": null,
   "firstSeen": "2026-11-03T10:48:16.705Z"
@@ -10,27 +10,27 @@
  "johnpal": {
   "name": "Johnpal — Gearing Path/Guides",
   "link": "https://docs.google.com/document/d/1aHnkPMLdt-n4yClxq2dvuStCciKQ-jYimFOmRBaohKE/edit",
-  "checkedAt": "2026-11-25T15:58:29.392Z",
+  "checkedAt": "2026-11-26T15:40:08.489Z",
   "error": null,
   "firstSeen": "2026-11-03T10:48:16.705Z",
-  "changedAt": "2026-11-25T15:58:29.392Z",
-  "lastAdded": 28,
-  "lastRemoved": 1,
+  "changedAt": "2026-11-26T15:40:08.489Z",
+  "lastAdded": 220,
+  "lastRemoved": 146,
   "lastSample": [
-   "Add Explosive Arrow as 5th Stigma as you get points. (Total 50?, one to 16)",
-   "We’ll either do explosive 20 or griffon 20 depending which tests out higher.",
-   "\tExplosive Arrow*",
-   "\t305 Stigma",
-   "\t315 Stigma",
-   "\t335 Stigma",
-   "\t350 Stigma",
-   "\t16*/20*"
+   "4. Stigma (Updated 11/25 to account for 5th Stigma)",
+   "5. Macro & Rotation (Updated 11/25 to account for 5th Stigma)",
+   "5th Stigma Adjustments*",
+   "Add Explosive Arrow as 5th Stigma as you get points.",
+   "After testing for 2 hours explosive arrow was a slight DPS gain over griffons arrow at 20.  The griffons damage remains the same over the course of damage, the only benefit would be the crits from the tick damage on vaizels, but no major changes over 2.5m tests enough to warrant the change to account for crit reduction.",
+   "Highest Griffon 20 Explosive 15",
+   "Highest Explosive 20 Griffon 15 Parse",
+   "5th Stigma Adjustments*"
   ]
  },
  "johnpal-stats": {
   "name": "Johnpal — Ranger Stat Priorities",
   "link": "https://docs.google.com/spreadsheets/d/1KrSNUdm1zDVKpYTbJ1bkWMFKg0Q2gdD5BA8z7dIie6U/edit?gid=0",
-  "checkedAt": "2026-11-25T15:58:29.392Z",
+  "checkedAt": "2026-11-26T15:40:08.489Z",
   "error": null,
   "firstSeen": "2026-11-03T10:48:16.705Z",
   "changedAt": "2026-11-06T13:10:59.189Z",
